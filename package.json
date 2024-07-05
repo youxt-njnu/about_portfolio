@@ -38,5 +38,5 @@
     "typescript": "^5.2.2",
     "vite": "^5.0.8"
   },
-  "homepage": "./"
+  "homepage": "./about_portfolio/"
 }
