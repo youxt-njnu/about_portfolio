@@ -25,21 +25,21 @@ const renderContent = {
   2: (
     <InfoBox
       text="Worked with many companies and picked upu many skills along the way"
-      link="/about"
+      link="/about_portfolio/about"
       btnText="Learn more"
     />
   ),
   3: (
     <InfoBox
       text="Led multiple projects to success over the years. Curious about the impact?"
-      link="/projects"
+      link="/about_portfolio/projects"
       btnText="Visit my protfolio"
     />
   ),
   4: (
     <InfoBox
       text="Need a project done or looking for a dev? I'm just a few keystrokes away!"
-      link="/contact"
+      link="/about_portfolio/contact"
       btnText="Let's talk"
     />
   ),
