@@ -1,3 +1,4 @@
+import Earth from './Earth.png'
 import postprocessLut from './postprocessLut.png'
 
-export { postprocessLut }
+export { Earth, postprocessLut }

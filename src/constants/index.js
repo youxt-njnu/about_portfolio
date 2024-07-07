@@ -26,8 +26,8 @@ import {
 } from '../assets/icons'
 import { meta, shopify, starbucks, tesla } from '../assets/images'
 
-import { postprocessLut } from '../assets/arts'
-import { Bird, Sky } from '../models'
+import { Earth as earthImg, postprocessLut } from '../assets/arts'
+import { Earth, PostProcessingExp } from '../models'
 
 export const skills = [
   {
@@ -236,19 +236,22 @@ export const projects = [
   },
 ]
 
+const prefix = '/about_portfolio/arts/'
 export const arts = [
   {
     name: 'postprocessLut',
     img: postprocessLut,
-    model: Bird,
-    type: '后处理postprocessing',
+    path: prefix + 'bird',
+    component: PostProcessingExp,
+    type: '后处理',
     info: '3dlut-头盔',
   },
   {
-    name: 'postprocessLut1',
-    img: postprocessLut,
-    model: Sky,
-    type: '后处理postprocessing',
-    info: '3dlut-头盔1',
+    name: '地球',
+    img: earthImg,
+    path: prefix + 'sky',
+    component: Earth,
+    type: '贴图',
+    info: '3dlut-地球',
   },
 ]

@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&family=Work+Sans:wght@100;200;300;400;500;600;700;800;900&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&family=Work+Sans:wght@100;200;300;400;500;600;700;800;900&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -10,14 +10,14 @@
 }
 
 body {
-  font-family: "Work Sans", sans-serif;
+  font-family: 'Work Sans', sans-serif;
 }
 
-body:has(.card[data-color="blue"]:hover) {
+body:has(.card[data-color='blue']:hover) {
   background-color: rgb(var(--blue-rgb) / 25%);
 }
 
-body:has(.card[data-color="green"]:hover) {
+body:has(.card[data-color='green']:hover) {
   background-color: rgb(var(--green-rgb) / 25%);
 }
 
@@ -180,4 +180,9 @@ body:has(.card[data-color="green"]:hover) {
   border: #fff;
   box-shadow: 0.6vmin 0.6vmin #fff, 1vmin 1vmin #d2e4ff, 1vmin 1vmin #d2e4ff,
     0.65vmin 1vmin #d2e4ff, 1vmin 0.65vmin #d2e4ff;
+}
+.shadow-text {
+  /* 设置文字白色描边 */
+  text-shadow: -1px -1px 0 #ffffffc7, 1px -1px 0 #ffffffc7, -1px 1px 0 #ffffffc7,
+    1px 1px 0 #ffffffc7;
 }
