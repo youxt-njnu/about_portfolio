@@ -47,6 +47,58 @@ export default {
 
 [link](): 外层的README.md
 
+### 配置scss
+
+在使用 Vite 和 React 的项目中集成 SCSS，你可以通过几个简单的步骤来配置。Vite 提供了内置支持，所以集成过程相对简单。以下是设置步骤：
+
+首先，你需要安装 SCSS 的编译器，通常是 `sass` 包。在你的项目目录中打开终端，然后运行以下命令：
+
+```bash
+npm install sass --save-dev
+```
+
+或者使用 `yarn`：
+
+```bash
+yarn add sass --dev
+```
+
+由于 Vite 已经预配置了对预处理器（如 SCSS）的支持，你不需要在 Vite 配置文件中做额外设置。安装 `sass` 包后，Vite 会自动处理 `.scss` 或 `.sass` 文件。
+
+现在你可以开始在你的 React 项目中使用 SCSS 了。创建一个 SCSS 文件，例如 `App.scss`，并在你的 React 组件中引入它。
+
+**App.scss**
+
+```scss
+$primary-color: blue;
+
+.container {
+  color: $primary-color;
+  padding: 20px;
+  font-size: 18px;
+}
+```
+
+**App.jsx**
+
+```jsx
+import './App.scss';
+
+function App() {
+  return (
+    <div className="container">
+      Hello, World!
+    </div>
+  );
+}
+```
+
+如果你的 Vite 配置和依赖都设置好了，你应该可以正常运行你的项目并看到 SCSS 被正确应用。
+
+```bash
+npm run dev
+```
+
 
 # 报错
 
@@ -64,10 +116,7 @@ E:/PersonalCV/about_portfolio/src/components/modelThreeExp/Earth/index.styl
 npm install -D stylus
 ```
 
-
 ---
-
-
 
 我npm run dev之后，报错为 src/components/modelThreeExp/Earth/index.js:131:6:
       131 │       `<div className="earth_page">`
@@ -115,3 +164,11 @@ export default {
 ```
 
 根据你的项目设置选择适合的方法来调整。如果你使用的是其他集成 esbuild 的框架（如 Next.js 或 Gatsby），那么也可能需要查看特定框架的文档来了解如何覆盖默认的加载器设置。
+
+使用的CSS
+
+index.css里
+
+### NPM包安装有问题
+
+[npm报错：request to https://registry.npm.taobao.org failed, reason certificate has expired-CSDN博客](https://blog.csdn.net/maoge_666/article/details/136038003)

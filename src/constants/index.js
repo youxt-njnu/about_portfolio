@@ -27,7 +27,7 @@ import {
 import { meta, shopify, starbucks, tesla } from '../assets/images'
 
 import { Earth as earthImg, postprocessLut } from '../assets/arts'
-import { Earth, PostProcessingExp } from '../models'
+import { Earth, EarthDigital, FoxDemo, PostProcessingExp } from '../models'
 
 export const skills = [
   {
@@ -171,7 +171,7 @@ export const socialLinks = [
   {
     name: 'Contact',
     iconUrl: contact,
-    link: '/contact',
+    link: '/about_portfolio/contact',
   },
   {
     name: 'GitHub',
@@ -242,7 +242,7 @@ export const arts = [
     name: 'postprocessLut',
     img: postprocessLut,
     path: prefix + 'bird',
-    component: PostProcessingExp,
+    component: PostProcessingExp, // 自己写的react-three-fiber组件
     type: '后处理',
     info: '3dlut-头盔',
   },
@@ -250,8 +250,24 @@ export const arts = [
     name: '地球',
     img: earthImg,
     path: prefix + 'sky',
-    component: Earth,
+    component: Earth, // js很多文字的react组件
     type: '贴图',
     info: '3dlut-地球',
+  },
+  {
+    name: '狐狸',
+    img: "https://s2.loli.net/2024/08/05/hBc1om3X5euCRkt.png",
+    path: prefix + 'fox', //导入用react-three-fiber创建的模型组件,加工后的组件
+    component: FoxDemo,
+    type: '动画',
+    info: '包含动画的狐狸模型',
+  },
+  {
+    name: '大屏',
+    img: "https://s2.loli.net/2024/08/05/hBc1om3X5euCRkt.png",
+    path: prefix + 'earth-digital', //导入用react-three-fiber创建的模型组件,加工后的组件
+    component: EarthDigital,
+    type: '综合',
+    info: '大屏3D地球',
   },
 ]

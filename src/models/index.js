@@ -1,6 +1,8 @@
 import Earth from '../assets/3d/Earth'
+import EarthDigital from '../assets/3d/EarthDigital'
 import Bird from './Bird.jsx'
+import FoxDemo from './FoxDemo.jsx'
 import PostProcessingExp from './PostProcessingExp.jsx'
-import Sky from './Sky.jsx'
 
-export { Bird, Earth, PostProcessingExp, Sky }
+export { Bird, Earth, EarthDigital, FoxDemo, PostProcessingExp }
+

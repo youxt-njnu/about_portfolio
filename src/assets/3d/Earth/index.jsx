@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import cloudsImg from './images/clouds.jpeg';
@@ -10,16 +10,49 @@ import moonNormalImg from './images/moon_normal.jpeg';
 import moonRoughnessImg from './images/moon_roughness.jpeg';
 import './index.styl';
 
-// import Stats from 'three/examples/jsm/libs/stats.module';
+import Stats from 'three/examples/jsm/libs/stats.module';
 
-export default class Earth extends React.Component {
-  componentDidMount () {
-    this.initThree()
-  }
+const Earth = () => {
+  const canvasRef = useRef(null);
+  const rendererRef = useRef(null);
+  const sceneRef = useRef(null);
+  const cameraRef = useRef(null);
+  const controlsRef = useRef(null);
+  const moonRef = useRef(null);
+  const earthRef = useRef(null);
+  const atmosphereRef = useRef(null);
+  let stats = null;
+  let earth = null;
+  
+  let moon = null;
+  let atmosphere =null;
+  let textLoader = new THREE.TextureLoader()
+  
+  useEffect(() => {
+    initThree();
+    
+    stats = new Stats();
+    stats.showPanel(0);
+    document.body.appendChild(stats.dom);
 
-  initThree = () => {
+    window.addEventListener('resize', handleResize);
+    return () => {
+      document.body.removeChild(stats.dom);
+      window.removeEventListener('resize', handleResize); // 在组件卸载（unmount）或下一次副作用执行之前执行
+    }
+  }, []); // mount之后执行一次
+
+  const handleResize = () => {
+    if (cameraRef.current && rendererRef.current) {
+      cameraRef.current.aspect = window.innerWidth / window.innerHeight;
+      cameraRef.current.updateProjectionMatrix();
+      rendererRef.current.setSize(window.innerWidth, window.innerHeight);
+    }
+  };
+
+  const initThree = () => {
     const renderer = new THREE.WebGLRenderer({
-      canvas: document.querySelector('canvas.webgl'),
+      canvas: canvasRef.current,
       antialias: true,
     })
     renderer.setPixelRatio(window.devicePixelRatio)
@@ -27,8 +60,11 @@ export default class Earth extends React.Component {
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
     renderer.shadowMap.enabled = true
     renderer.toneMapping = THREE.CineonToneMapping
+    rendererRef.current = renderer;
 
     const scene = new THREE.Scene()
+    sceneRef.current = scene;
+
     const frustumSize = 96
     const aspect = window.innerWidth / window.innerHeight
     const camera = new THREE.OrthographicCamera(
@@ -41,29 +77,23 @@ export default class Earth extends React.Component {
     )
     camera.position.set(0, 20, 200)
     camera.lookAt(new THREE.Vector3(0, 0, 0))
+    cameraRef.current = camera;
 
-    const earth = new THREE.Group()
     const controls = new OrbitControls(camera, renderer.domElement)
     controls.enableDamping = true
+    controlsRef.current = controls;
 
-    // const stats = new Stats();
-    // document.documentElement.appendChild(stats.dom);
+    setupLights(scene);
+    setupEarth(scene);
+    setupMoon(scene);
+    animate()
+  };
 
-    window.addEventListener(
-      'resize',
-      () => {
-        camera.aspect = window.innerWidth / window.innerHeight
-        camera.updateProjectionMatrix()
-        renderer.setSize(window.innerWidth, window.innerHeight)
-      },
-      false
-    )
-
-    const light = new THREE.DirectionalLight(0xffffff, 1)
-    light.intensity = 1.2
+  const setupLights = (scene) => {
+    const light = new THREE.DirectionalLight(0xffffff, 1.2)
     light.position.set(-10, 10, 5)
     light.castShadow = true
-    light.target = earth
+    // light.target = earth // 一开始的时候earth并没有被初始化，所以这里不需要这一句
     light.shadow.mapSize.width = 512
     light.shadow.mapSize.height = 512
     light.shadow.camera.top = 10
@@ -74,9 +104,11 @@ export default class Earth extends React.Component {
 
     const ambientLight = new THREE.AmbientLight(0xffffff, 0.8)
     scene.add(ambientLight)
+  }
 
+  const setupEarth = (scene) => {
     // 🌏
-    const textLoader = new THREE.TextureLoader()
+    earth = new THREE.Group()
     const planet = new THREE.Mesh(
       new THREE.SphereGeometry(10, 64, 64),
       new THREE.MeshStandardMaterial({
@@ -88,7 +120,7 @@ export default class Earth extends React.Component {
       })
     )
     planet.rotation.y = -Math.PI
-    const atmosphere = new THREE.Mesh(
+    atmosphere = new THREE.Mesh(
       new THREE.SphereGeometry(10.6, 64, 64),
       new THREE.MeshLambertMaterial({
         alphaMap: textLoader.load(cloudsImg),
@@ -98,12 +130,17 @@ export default class Earth extends React.Component {
       })
     )
     earth.add(planet)
+    
+    atmosphereRef.current = atmosphere;
     earth.add(atmosphere)
     earth.scale.set(6, 6, 6)
+    earthRef.current = earth;
     scene.add(earth)
+  }
 
+  const setupMoon = (scene) => {
     // 🌑
-    const moon = new THREE.Mesh(
+    moon = new THREE.Mesh(
       new THREE.SphereGeometry(2, 32, 32),
       new THREE.MeshStandardMaterial({
         map: textLoader.load(moonBasicImg),
@@ -115,30 +152,32 @@ export default class Earth extends React.Component {
     )
     moon.position.set(-120, 0, -120)
     moon.scale.set(6, 6, 6)
+    moonRef.current = moon;
     scene.add(moon)
-
-    const clock = new THREE.Clock()
-    const animate = () => {
-      const elapsedTime = clock.getElapsedTime()
-      requestAnimationFrame(animate)
-      earth && (earth.rotation.y += 0.002)
-      atmosphere && (atmosphere.rotation.y += 0.004)
-      atmosphere && (atmosphere.rotation.x += 0.002)
-      // stats && stats.update();
-      controls && controls.update()
-      // 公转
-      moon && (moon.position.x = Math.sin(elapsedTime * 0.5) * -120)
-      moon && (moon.position.z = Math.cos(elapsedTime * 0.5) * -120)
-      renderer.render(scene, camera)
-    }
-    animate()
   }
 
-  render () {
-    return (
-      <div className="earth_page">
-        <canvas className="webgl"></canvas>
-      </div>
-    )
-  }
+  const clock = new THREE.Clock()
+  const animate = () => {
+    if (!rendererRef.current || !sceneRef.current || !cameraRef.current) return;
+
+    const elapsedTime = clock.getElapsedTime()
+    earth && (earth.rotation.y += 0.002)
+    atmosphere && (atmosphere.rotation.y += 0.004)
+    atmosphere && (atmosphere.rotation.x += 0.002)
+    stats && stats.update();
+    controlsRef.current && controlsRef.current.update()
+    // 公转
+    moon && (moon.position.x = Math.sin(elapsedTime * 0.5) * -120)
+    moon && (moon.position.z = Math.cos(elapsedTime * 0.5) * -120)
+    rendererRef.current.render(sceneRef.current, cameraRef.current)
+    requestAnimationFrame(animate);
+  };
+
+  return (
+    <div className="earth_page">
+      <canvas ref={canvasRef} className='webgl'></canvas>
+    </div>
+  )
 }
+
+export default Earth;
