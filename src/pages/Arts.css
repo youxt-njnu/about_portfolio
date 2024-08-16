@@ -1,0 +1,23 @@
+/* 在你的全局样式文件中，比如 index.css 或 tailwind.css */
+.masonry-grid {
+  columns: 1;
+  column-gap: 1.5rem; /* Tailwind 的间距单位，例如使用 '6' 代表 1.5rem */
+}
+
+.masonry-item {
+  break-inside: avoid;
+  box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  margin-bottom: 1.5rem;
+}
+
+@media (min-width: 640px) { /* 对应 sm: */
+  .masonry-grid {
+    columns: 2;
+  }
+}
+
+@media (min-width: 1024px) { /* 对应 lg: */
+  .masonry-grid {
+    columns: 3;
+  }
+}
