@@ -24,10 +24,17 @@ import {
   threads,
   typescript,
 } from '../assets/icons'
-import { meta, shopify, starbucks, tesla } from '../assets/images'
+import { shopify, starbucks, tesla } from '../assets/images'
 
 import { Earth as earthImg, postprocessLut } from '../assets/arts'
 import { Earth, EarthDigital, FoxDemo, PostProcessingExp } from '../models'
+
+// Languages: Javascript, HTML+CSS, C#, Python, SQL
+// Libraries : React, Vue, ThreeJS, Cesium, Vuforia, Mapbox, Matplotlib
+// Software: QGIS, Unity, Adobe Illustrator, PostgreSQL&PostGIS, drawio
+// 软件类：ArcGIS、QGIS、SuperMap、ENVI、SPSS、Adobe Illustrator、Visio/Drawio
+// 编程类：R、C++、C#、PostgreSQL&PostGIS、Mapbox、Bootstrap、Python
+// 专业技能：ArcGIS, QGIS, Unity, PS&AI; JavaScript, Mapbox , C#, C++, Python, PostgreSQL&PostGIS PostGIS, Apifox
 
 export const skills = [
   {
@@ -112,39 +119,38 @@ export const skills = [
   },
 ]
 
+
 export const experiences = [
   {
-    title: 'React.js Developer',
-    company_name: 'Starbucks',
-    icon: starbucks,
-    iconBg: '#accbe1',
-    date: 'March 2020 - April 2021',
+    title: '测绘内业工程师-实习生',
+    company_name: '江苏苏海信息科技有限公司',
+    icon: tesla,
+    iconBg: '#fbc3bc',
+    date: '2021.07-2021.08',
     points: [
-      'Developing and maintaining web applications using React.js and other related technologies.',
-      'Collaborating with cross-functional teams including designers, product managers, and other developers to create high-quality products.',
-      'Implementing responsive design and ensuring cross-browser compatibility.',
-      'Participating in code reviews and providing constructive feedback to other developers.',
+      '工作：参与了“江宁一张图”的本地数据库更新工作和部分省市三调工作底图整理，完成数据整理、汇编、入库、交付沟通等工作。此外，协助经理进行日常工作维护，如数据维护、报销管理、图纸整理。',
+      '收获：接触了传统测绘方向的基础数据处理和加工工作，认识到数据和数据安全的重要性。'
     ],
   },
   {
-    title: 'React Native Developer',
-    company_name: 'Tesla',
-    icon: tesla,
-    iconBg: '#fbc3bc',
-    date: 'Jan 2021 - Feb 2022',
+    title: '研发工程师-实习生',
+    company_name: '视网么AR',
+    icon: starbucks,
+    iconBg: '#accbe1',
+    date: '2023.07 -2023.08',
     points: [
-      'Developing and maintaining web applications using React.js and other related technologies.',
-      'Collaborating with cross-functional teams including designers, product managers, and other developers to create high-quality products.',
-      'Implementing responsive design and ensuring cross-browser compatibility.',
-      'Participating in code reviews and providing constructive feedback to other developers.',
+      '背景：该公司主要业务在元宇宙、AR 方面，涵盖科教、文旅、零售等方面，并自研了AR 内容编辑器。',
+      '培训协助：协助完成对南京师范大学出版社人员的视网么平台使用培训，包括现场拍照、记录和答疑。',
+      '项目参与：独立完成了大国重器项目、看镜南京项目中的两个重要场景，参与了Windows 端的盾构机项目。实现了AR 内容的制作和打包，基于手机APP 端、Windows 大屏端完成了AR 内容的呈现、用户和AR 内容的交互。',
+      '收获：学习了unity 使用、模型调整和打包、c# 和Lua 脚本构建等内容，了解并对AR 及元宇宙赛道产生兴趣。',
     ],
   },
   {
     title: 'Web Developer',
-    company_name: 'Shopify',
+    company_name: '邻里邻外',
     icon: shopify,
     iconBg: '#b7e4c7',
-    date: 'Jan 2022 - Jan 2023',
+    date: '2024.06-2024.08',
     points: [
       'Developing and maintaining web applications using React.js and other related technologies.',
       'Collaborating with cross-functional teams including designers, product managers, and other developers to create high-quality products.',
@@ -153,18 +159,19 @@ export const experiences = [
     ],
   },
   {
-    title: 'Full stack Developer',
-    company_name: 'Meta',
-    icon: meta,
-    iconBg: '#a2d2ff',
-    date: 'Jan 2023 - Present',
+    title: '实验室科研人员',
+    company_name: '数字人文与超媒体GIS实验室',
+    icon: tesla,
+    iconBg: '#fbc3bc',
+    date: '2023.09至今',
     points: [
-      'Developing and maintaining web applications using React.js and other related technologies.',
-      'Collaborating with cross-functional teams including designers, product managers, and other developers to create high-quality products.',
-      'Implementing responsive design and ensuring cross-browser compatibility.',
-      'Participating in code reviews and providing constructive feedback to other developers.',
+      '地图学助教',
+      '实验室财务管理',
+      '会议参与',
+      '科研项目',
     ],
   },
+  
 ]
 
 export const socialLinks = [
@@ -176,12 +183,12 @@ export const socialLinks = [
   {
     name: 'GitHub',
     iconUrl: github,
-    link: 'https://github.com/YourGitHubUsername',
+    link: 'https://github.com/youxt-njnu',
   },
   {
     name: 'LinkedIn',
     iconUrl: linkedin,
-    link: 'https://www.linkedin.com/in/YourLinkedInUsername',
+    link: '#',
   },
 ]
 
@@ -189,51 +196,52 @@ export const projects = [
   {
     iconUrl: pricewise,
     theme: 'btn-back-red',
-    name: 'Amazon Price Tracker',
+    name: '徐霞客的旅行世界',
     description:
-      'Developed a web application that tracks and notifies users of price changes for products on Amazon, helping users find the best deals.',
-    link: 'https://github.com/adrianhajdin/pricewise',
-  },
-  {
-    iconUrl: threads,
-    theme: 'btn-back-green',
-    name: 'Full Stack Threads Clone',
-    description:
-      'Created a full-stack replica of the popular discussion platform "Threads," enabling users to post and engage in threaded conversations.',
-    link: 'https://github.com/adrianhajdin/threads',
-  },
-  {
-    iconUrl: car,
-    theme: 'btn-back-blue',
-    name: 'Car Finding App',
-    description:
-      'Designed and built a mobile app for finding and comparing cars on the market, streamlining the car-buying process.',
-    link: 'https://github.com/adrianhajdin/project_next13_car_showcase',
+      '徐霞客的旅行世界：已发表软件著作权(2021.10 -2021.12)\n项目背景：为了更清晰、直观地展现徐霞客游历各地的足迹，为人们分析研究徐霞客及其著作提供便利。\n动态地图探索：利用了KeplerKepler.gl 制作在线电子地图页面用于嵌入系统，采用热力图、三维柱状图、OD 流和时间轴实现时空动态可视化；\n网页制作和整合：基于HTML 、CSS 、BootStrap 搭建框架，使用supermap iclient for leaflet 构建地图和数据，借助SuperMapSuperMap.iserver 的数据服务、SQL 属性表查询和交通网络分析APIAPI，完成了POI 信息查询界面和出行路径规划界面',
+    link: 'https://github.com/youxt-njnu/XuXiaKe',
   },
   {
     iconUrl: snapgram,
     theme: 'btn-back-pink',
-    name: 'Full Stack Instagram Clone',
+    name: '土壤图斑识别与属性预测系统',
     description:
-      'Built a complete clone of Instagram, allowing users to share photos and connect with friends in a familiar social media environment.',
-    link: 'https://github.com/adrianhajdin/social_media_app',
+      '土壤图斑识别与属性预测系统：C#与GIS二次开发结课作业(2021.10 -2021.12) \n基于dotspatial 进行C# .net 开发，搭建了三层架构实现了项目整合，并完成几乎所有基础GIS 功能和相关性分析及可视化模块。此外，协助完成了需求分析 概要设计,详细设计,功能实现, 技术文档撰写，锻炼了系统思维和沟通协作能力。',
+    link: 'https://github.com/youxt-njnu/ProjectSnapshot/blob/master/c%23%E4%B8%8EGIS%E4%BA%8C%E6%AC%A1%E5%BC%80%E5%8F%91-%E5%9C%9F%E5%A3%A4%E5%9B%BE%E6%96%91%E8%AF%86%E5%88%AB%E4%B8%8E%E5%B1%9E%E6%80%A7%E9%A2%84%E6%B5%8B%E7%B3%BB%E7%BB%9F.pdf',
   },
   {
-    iconUrl: estate,
-    theme: 'btn-back-black',
-    name: 'Real-Estate Application',
+    iconUrl: threads,
+    theme: 'btn-back-green',
+    name: '图说中国乳业发展',
     description:
-      'Developed a web application for real estate listings, facilitating property searches and connecting buyers with sellers.',
-    link: 'https://github.com/adrianhajdin/projects_realestate',
+      '图说中国乳业发展：地图设计与电子地图学结课作业(2022.04-2022.06) \n项目背景：以乳业发展全况分析可视化为目标，实现对中国乳业发展全方位、多维度、多形式的表达和分析。数据查找及整理：通过多渠道获取乳业工厂点数据、品牌发展情况数据和地方奶业供需数据，进行预处理、时间轴梳理和坐标空间化；\n时空分析和可视化：使用交互流图、热点图、热力图、折线图、 3D柱状图等形式，结合空间冷热点分析，从时空角度，对乳业发展情况进行分析和可视化；\n网页制作与整合：使用Mapbox 为地图JS 库，基于JS, 结合Bootstrap 、Echarts 等进行网页开发，实现交互式效果。通过“故事地图”“工厂分布”“品牌发展”“供需分析”四个模块的设计和整合，得到最终实验成果，完成整个网页框架的开发。',
+    link: 'https://github.com/youxt-njnu/Milk',
+  },
+  {
+    iconUrl: car,
+    theme: 'btn-back-blue',
+    name: '清史GIS系统',
+    description:
+      '清史GIS 系统：WebGIS 服务结课作业(2022.10 -2022.12)\n采用Axure 进行原型设计，在QGIS 平台中完成数据处理，基于postgresql 数据库进行数据存储，利用geoserver进行数据发布，并学习Jquery 、Ajax 、httphttp-server 完成前后端交互和跨域数据访问，最后基于openlayer 、Mapbox 进行地图渲染，使用echarts 进行图表可视化。',
+    link: 'https://github.com/youxt-njnu/hgisworkHD',
   },
   {
     iconUrl: summiz,
     theme: 'btn-back-yellow',
-    name: 'AI Summarizer Application',
+    name: 'Flappy Bird',
     description:
-      'App that leverages AI to automatically generate concise & informative summaries from lengthy text content, or blogs.',
-    link: 'https://github.com/adrianhajdin/project_ai_summarizer',
+      'Xlua重写Flappy Bird的原始c#游戏逻辑(2023.08-2023.09)\nFlappy Bird is a mobile game developed by Vietnamese video game artist and programmer Dong Nguyen. The game is a side-scroller where the player controls a bird, attempting to fly between columns of green pipes without hitting them.',
+    link: 'https://github.com/youxt-njnu/flappy_bird_xlua',
   },
+  {
+    iconUrl: estate,
+    theme: 'btn-back-black',
+    name: '南京安全区AR故事地图',
+    description:
+      '漫漫长夜中的人性之光：南京安全区AR故事地图(2023.12-2024.06)\n 通过文献数字化、GIS及AR、游戏引擎等技术，从“时空数据库构建及信息梳理—数字制图与地图设计——AR故事地图交互”三个层面进行南京安全区历史记忆的时空构建，研制AR故事地图，导引社会公众重启约翰·拉贝等国际友人的救助历程，重温这段黑暗历史中闪耀的人性之光',
+    link: 'https://mp.weixin.qq.com/s?__biz=MzU4MTc2MDAyNg==&mid=2247484289&idx=1&sn=ca9ab0ac73791c6a453b5d0364130248&chksm=fc6d6a49da4532c55ff74676bd34092d37bd742f1ee040c1740ca72043ab6e9050428ac70ce1&scene=126&sessionid=1724225266#rd',
+  },
+  
 ]
 
 const prefix = '/about_portfolio/arts/'
@@ -264,7 +272,7 @@ export const arts = [
   },
   {
     name: '大屏',
-    img: "https://s2.loli.net/2024/08/05/hBc1om3X5euCRkt.png",
+    img: "https://dragonir.github.io/3d/static/media/earthDigital.8c221282f247bb724b85.png",
     path: prefix + 'earth-digital', //导入用react-three-fiber创建的模型组件,加工后的组件
     component: EarthDigital,
     type: '综合',

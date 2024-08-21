@@ -63,12 +63,9 @@ const index = () => {
 
     let earthTexture = new Three.TextureLoader().load(earthImg);
 
-    let vertexShader = null;
-    let fragmentShader = null;
-
     let maxImpactAmount = 10;
     let impacts = [];
-    // let trails = [];
+    let trails = [];
     for (let i = 0; i < maxImpactAmount; i++) {
       impacts.push({
         impactPosition: new Three.Vector3().random().subScalar(0.5).setLength(5), // 生成一个随机的三维向量，然后减去0.5，然后设置长度为5
@@ -78,7 +75,7 @@ const index = () => {
         trailRatio: { value: 0 },
         trailLength: { value: 0 }
       });
-      // makeTrail(i);
+      makeTrail(i);
     }
 
     let params = {
@@ -127,7 +124,7 @@ const index = () => {
         shader.uniforms.gradInner = uniforms.gradInner;
         shader.uniforms.gradOuter = uniforms.gradOuter;
         shader.uniforms.tex = { value: earthTexture };
-        // console.log("shader.vertexShader: ", shader.vertexShader);
+        console.log("shader.vertexShader: ", shader.vertexShader);
         shader.vertexShader = `
             struct impact {
               vec3 impactPosition;
@@ -184,7 +181,7 @@ const index = () => {
             // shaping the point, pretty much from The Book of Shaders
             vec2 hUv = (vUv - 0.5);
             int N = 8;
-            float a = atan(hUv.x,hUv.y);
+            float a = atan(hUv.x,hUv.y); 
             float r = PI2/float(N);
             float d = cos(floor(.5+a/r)*r-a)*length(hUv);
             float f = cos(PI / float(N)) * 0.5;
@@ -193,7 +190,7 @@ const index = () => {
             vec3 grad = mix(gradInner, gradOuter, clamp( d / f, 0., 1.)); // gradient
             vec3 diffuseMap = diffuse * ((vMap > 0.5) ? 0.5 : 1.);
             vec3 col = mix(diffuseMap, grad, vFinalStep); // color on wave
-            //if (!gl_FrontFacing) col *= 0.25; // moderate the color on backside
+            if (!gl_FrontFacing) col *= 0.25; // moderate the color on backside
             vec4 diffuseColor = vec4( col , opacity );
             `);
       }

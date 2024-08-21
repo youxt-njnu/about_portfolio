@@ -480,9 +480,10 @@ export default index
 
 - **循环遍历每个冲击点**：计算每个顶点与每个冲击点的距离，根据距离和冲击点的影响范围计算一个平滑的步进(`sstep`)。这个步进是基于 `smoothstep` 函数，用于创建冲击波的边界更加平滑的过渡效果。
 - **`finalStep`的计算**：累加所有冲击点对当前顶点的影响，使用 `clamp` 函数确保值在0到1之间。
-- **`map`变量的计算**：从纹理中获取当前顶点的green值，用于决定顶点的尺寸是 `maxSize` 还是 `minSize`。
+- **`map`变量的计算**：从纹理中获取当前顶点的green值，用于决定顶点的尺寸是 `maxSize` 还是 `minSize`，区分了陆地和海洋。
 - **顶点位置(`transformed`)的更新**：根据 `map` 的结果和计算出的 `finalStep` 调整顶点位置，以实现位置的缩放和波纹效果。使用 `mix` 函数根据冲击波影响程度在原始尺寸和放大后的尺寸之间进行插值。波高(`waveHeight`)和 `finalStep` 的乘积决定了顶点沿法线方向的位移量。
 - 这段代码通过计算每个顶点与一组冲击波的相对位置和影响，动态调整顶点位置和大小，从而在渲染过程中创建出动态的波纹效果。这种类型的着色器编程允许开发者创建复杂和动态的视觉效果，用于游戏开发、视觉艺术和模拟等领域。
+- 补充：`baseUv` 在 Three.js 中是作为每个顶点的二维纹理坐标（`vec2`）被处理的。这些坐标是作为顶点属性上传到 GPU 的，后续在 GLSL 着色器中可以直接访问。
 
 ```jsx
         shader.vertexShader = `
@@ -534,15 +535,17 @@ export default index
 
 * 传入对逐个点起作用的冲击强度和顶点纹理的g值；
 * **形状处理** :
-* 计算以屏幕中心为原点的 UV 坐标 `hUv`。
-* `a` 是 `hUv` 点的角度。
+* 计算以屏幕中心为原点的 UV 坐标 `hUv`。（vUv是一个从0到1的二维向量，表示纹理坐标或顶点着色器传递给片段着色器的顶点位置）
+* N=8常用于表示某种图形或模式中重复元素的数量
+* `a` 是计算得到的向量 `hUv`的角度（相对于原点），使用的是反正切函数 `atan`，它返回从x轴到向量的角度。
 * `r` 是每个扇区的角度范围，计算为 `2π` 除以扇区数量 `N`。
 * `d` 是当前点到最近扇区边界的距离。
 * `f` 是扇区中心到边界的距离。
-* 如果 `d` 大于 `f`，则丢弃该片元（`discard`），这有助于创建具有 N 边形形状的效果。
-* **颜色和渐变处理** :
+* 如果 `d` 大于 `f`，则丢弃该片元（`discard`），只有距离扇区中心非常近的像素才能通过测试，这样可以创建更加锐利和明显的边界；
+* 这有助于创建具有 N 边形形状的效果。
+* **颜色和渐变处理**:
 * `grad` 是内外渐变颜色的混合，基于 `d / f` 的值进行插值。
-* `diffuseMap` 是根据 `vMap` 调整的漫反射颜色。
+* `diffuseMap` 是根据 `vMap` 调整的漫反射颜色。 区分了陆地和海洋
 * `col` 是漫反射颜色和渐变颜色的最终混合，其中使用了 `vFinalStep` 进行插值。
 * 使用最终计算出的颜色 `col` 和原始的不透明度 `opacity` 创建新的 `vec4 diffuseColor`。
 
@@ -574,6 +577,98 @@ shader.fragmentShader = `
 ```
 
 #### 补充 | replace方法
+
+上述vertex shader代码replace前：
+
+```
+shader.vertexShader:  #include <common>
+#include <batching_pars_vertex>
+#include <uv_pars_vertex>
+#include <envmap_pars_vertex>
+#include <color_pars_vertex>
+#include <fog_pars_vertex>
+#include <morphtarget_pars_vertex>
+#include <skinning_pars_vertex>
+#include <logdepthbuf_pars_vertex>
+#include <clipping_planes_pars_vertex>
+void main() {
+	#include <uv_vertex>
+	#include <color_vertex>
+	#include <morphinstance_vertex>
+	#include <morphcolor_vertex>
+	#include <batching_vertex>
+	#if defined ( USE_ENVMAP ) || defined ( USE_SKINNING )
+		#include <beginnormal_vertex>
+		#include <morphnormal_vertex>
+		#include <skinbase_vertex>
+		#include <skinnormal_vertex>
+		#include <defaultnormal_vertex>
+	#endif
+	#include <begin_vertex>
+	#include <morphtarget_vertex>
+	#include <skinning_vertex>
+	#include <project_vertex>
+	#include <logdepthbuf_vertex>
+	#include <clipping_planes_vertex>
+	#include <worldpos_vertex>
+	#include <envmap_vertex>
+	#include <fog_vertex>
+}
+```
+
+上述fragment shader代码replace前：
+
+```glsl
+shader.fragmentShader:  uniform vec3 diffuse;
+uniform float opacity;
+#ifndef FLAT_SHADED
+	varying vec3 vNormal;
+#endif
+#include <common>
+#include <dithering_pars_fragment>
+#include <color_pars_fragment>
+#include <uv_pars_fragment>
+#include <map_pars_fragment>
+#include <alphamap_pars_fragment>
+#include <alphatest_pars_fragment>
+#include <alphahash_pars_fragment>
+#include <aomap_pars_fragment>
+#include <lightmap_pars_fragment>
+#include <envmap_common_pars_fragment>
+#include <envmap_pars_fragment>
+#include <fog_pars_fragment>
+#include <specularmap_pars_fragment>
+#include <logdepthbuf_pars_fragment>
+#include <clipping_planes_pars_fragment>
+void main() {
+	vec4 diffuseColor = vec4( diffuse, opacity );
+	#include <clipping_planes_fragment>
+	#include <logdepthbuf_fragment>
+	#include <map_fragment>
+	#include <color_fragment>
+	#include <alphamap_fragment>
+	#include <alphatest_fragment>
+	#include <alphahash_fragment>
+	#include <specularmap_fragment>
+	ReflectedLight reflectedLight = ReflectedLight( vec3( 0.0 ), vec3( 0.0 ), vec3( 0.0 ), vec3( 0.0 ) );
+	#ifdef USE_LIGHTMAP
+		vec4 lightMapTexel = texture2D( lightMap, vLightMapUv );
+		reflectedLight.indirectDiffuse += lightMapTexel.rgb * lightMapIntensity * RECIPROCAL_PI;
+	#else
+		reflectedLight.indirectDiffuse += vec3( 1.0 );
+	#endif
+	#include <aomap_fragment>
+	reflectedLight.indirectDiffuse *= diffuseColor.rgb;
+	vec3 outgoingLight = reflectedLight.indirectDiffuse;
+	#include <envmap_fragment>
+	#include <opaque_fragment>
+	#include <tonemapping_fragment>
+	#include <colorspace_fragment>
+	#include <fog_fragment>
+	#include <premultiplied_alpha_fragment>
+	#include <dithering_fragment>
+}
+```
 
 在 WebGL 或 OpenGL 的着色器编程中，使用 `.replace` 方法来修改着色器代码是一种常见的技术，尤其是在处理复杂的、可配置的着色器系统时。这种方法提供了灵活性和动态生成或调整着色器代码的能力。这里的 `.replace` 方法的使用具体有以下几个目的和优点：
 
@@ -616,16 +711,50 @@ shader.fragmentShader = `
 
 通过这种方式，如果 `m.defines` 包含 `USE_UV`，则着色器中依赖 UV 坐标的部分会被编译和执行；如果没有定义 `USE_UV`，则相关代码块不会被执行，从而可能减少计算负担。这种技术非常适合在运行时根据不同的材质属性或图形设置调整着色器行为，是图形编程中一种常见且强大的优化手段。
 
+#### 补充 | 内部代码定义的变量
+
+在上述提供的 Three.js 的默认着色器代码中，`vUv` 变量的定义和使用确实存在，但它是通过 Three.js 的标准着色器系统内部的代码片段进行的。这里是具体的分析：
+
+在顶点着色器代码中，有如下几行代码是关键：
+
+```glsl
+#include <uv_pars_vertex>
+...
+#include <uv_vertex>
+```
+
+- **`<uv_pars_vertex>`**: 这个代码片段通常包含了与 UV 相关的参数定义，包括对 `vUv` 的声明。这个片段的作用是准备所有必要的 UV 相关数据，以便在顶点着色器中使用。
+- **`<uv_vertex>`**: 这个代码片段负责将 UV 数据从顶点属性传递到 `vUv` 变量中。这通常包括从顶点数据中读取 UV 坐标，并将其赋值给 `vUv`。
+
+在片元着色器中，相关的代码片段包括：
+
+```glsl
+#include <uv_pars_fragment>
+...
+```
+
+- **`<uv_pars_fragment>`**: 这个代码片段包括对 `vUv` 的使用，它从顶点着色器传递的数据中接收 UV 坐标。这在处理纹理映射和其他基于 UV 的操作时非常关键。
+
+在你的代码中，`vUv` 的处理是通过标准的 Three.js 着色器代码片段间接实现的。这种方法的优点是你无需直接在你的着色器代码中声明和定义 `vUv`，Three.js 已经在其着色器库中处理了所有这些操作。
+
 
 🔁 后话2-callback 🍵
 
 * unforms统一存shader里uniform的初始值
 
-冲击点
+## 飞线
 
 🔁 后话1-callback 🍵
 
-* 构造位于半径为5的球面上的冲击点、冲击最大半径、冲击比例、之前的点位置、尾迹的比例和长度
+* 构造位于半径为5的球面上的冲击点、冲击最大半径、冲击比例、之前的点位置、飞线的比例和长度
+* 取消注释
+
+#### 制作飞线
+
+
+#### 飞线动画
+
+
 
 TODO
 
