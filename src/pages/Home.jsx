@@ -6,6 +6,7 @@ import HomeInfo from '../components/HomeInfo'
 import Loader from '../components/Loader'
 import Bird from '../models/Bird'
 import Island from '../models/Island'
+import Map2D from '../models/Map2D'
 import Plane from '../models/Plane'
 import Sky from '../models/Sky'
 
@@ -31,14 +32,14 @@ const Home = () => {
 
   const adjustIslandForScreenSize = () => {
     let screenScale = null;
-    let screenPosition = [0, -6.5, -43];
+    let screenPosition = [0, 7.5, -43];
     let rotation = [0.1, 4.7, 0];
 
     if (window.innerWidth < 768) {
-      screenScale = [0.9, 0.9, 0.9];
+      screenScale = [0.2, 0.2, 0.2];
 
     } else {
-      screenScale = [1, 1, 1];
+      screenScale = [0.4, 0.4, 0.4];
     }
     return [screenScale, screenPosition, rotation];
   }
@@ -50,11 +51,11 @@ const Home = () => {
 
     if (window.innerWidth < 768) {
       screenScale = [1.5, 1.5, 1.5];
-      screenPosition = [0, -1.5, 0];
+      screenPosition = [2, 0, -1];
 
     } else {
       screenScale = [3, 3, 3];
-      screenPosition = [0, -4, -4];
+      screenPosition = [8, 0, -4];
     }
     return [screenScale, screenPosition];
   }
@@ -84,7 +85,7 @@ const Home = () => {
             scale={planeScale}
             position={planePosition}
             isRotating={isRotating}
-            rotation={[0, 20, 0]} />
+            rotation={[10, 0, 10]} />
           {/* 使用planeScale和planePosition会使得拖动之后Plane和Island越来越大，所以换成了scale和position */}
           <Sky isRotating={isRotating} />
           <Island
@@ -95,7 +96,18 @@ const Home = () => {
             setIsRotating={setIsRotating}
             setCurrentStage={setCurrentStage}
           />
-
+          <Map2D
+            rotation={[0.1, 90, 0]}
+            position={[0, -10, -80]}
+            scale={[.6, .6, .6]}
+          />
+          {/* <Map3D
+            position={[0, -0.5, 0]}
+            rotation={islandRotation}
+            isRotating={isRotating}
+            setIsRotating={setIsRotating}
+            scale={[2, 2, 2]}
+          /> */}
         </Suspense>
       </Canvas>
 
