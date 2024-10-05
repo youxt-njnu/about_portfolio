@@ -1,12 +1,55 @@
 import * as dat from 'dat.gui';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import * as Three from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import TWEEN from 'three/examples/jsm/libs/tween.module.js';
+import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer.js';
+import { GlitchPass } from 'three/examples/jsm/postprocessing/GlitchPass.js';
+import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js';
 import { mergeGeometries } from 'three/examples/jsm/utils/BufferGeometryUtils';
+import { chart_1_option, chart_2_option, chart_3_option, chart_4_option, chart_5_option, tips, weekMap } from './constant.js';
+import earthImg from './images/earth.jpg';
 import './index.scss';
 import lineFragmentShader from './line.frag.glsl';
-import earthImg from '/src/assets/3d/EarthDigital/images/earth.jpg';
+
+
+// 引入 echarts 核心模块，核心模块提供了 echarts 使用必须要的接口。
+import * as echarts from 'echarts/core';
+// 引入柱状图图表，图表后缀都为 Chart
+import { BarChart, LineChart, PieChart } from 'echarts/charts';
+// 引入标题，提示框，直角坐标系，数据集，内置数据转换器组件，组件后缀都为 Component
+import {
+  DatasetComponent,
+  GridComponent,
+  LegendComponent,
+  PolarComponent,
+  TitleComponent,
+  ToolboxComponent,
+  TooltipComponent,
+  TransformComponent
+} from 'echarts/components';
+// 标签自动布局、全局过渡动画等特性
+import { LabelLayout, UniversalTransition } from 'echarts/features';
+// 引入 Canvas 渲染器，注意引入 CanvasRenderer 或者 SVGRenderer 是必须的一步
+import { CanvasRenderer } from 'echarts/renderers';
+
+// 注册必须的组件
+echarts.use([
+  TitleComponent,
+  TooltipComponent,
+  GridComponent,
+  DatasetComponent,
+  TransformComponent,
+  PolarComponent,
+  LegendComponent,
+  ToolboxComponent,
+  LineChart,
+  PieChart,
+  BarChart,
+  LabelLayout,
+  UniversalTransition,
+  CanvasRenderer
+]);
 
 // 得把下面的变量设置和函数写在const index = () => {}里面，否则会报错
 
@@ -16,6 +59,7 @@ const index = () => {
   let renderer = null;
   let orbitControls = null;
   let earth = null;
+  let composer = null;
   let canvasRef = useRef(null);
 
 
@@ -39,16 +83,39 @@ const index = () => {
 
   let maxImpactAmount = 10;
 
+  const [week, setWeek] = useState(weekMap[new Date().getDay()]);
+  const [time, setTime] = useState(new Date().toLocaleTimeString());
+  const [showModal, setShowModal] = useState(false);
+  const [modelText, setModelText] = useState(tips[0]);
+  const [renderGlithPass, setRenderGlithPass] = useState(false);
+  const renderGlithPassRef = useRef(renderGlithPass); // 用于解决useEffect中的闭包问题
+
   useEffect(() => {
     initThree();
-    createPoints();
+    initChart();
+    for (let i = 0; i < maxImpactAmount; i++) {
+      impacts.push({
+        impactPosition: new Three.Vector3().random().subScalar(0.5).setLength(5), // 生成一个随机的三维向量，然后减去0.5，然后设置长度为5
+        impactMaxRadius: 5 * Three.MathUtils.randFloat(0.5, 0.75), // Three.Math.randFloat会报错
+        impactRatio: 0,
+        prevPosition: new Three.Vector3().random().subScalar(0.5).setLength(5),
+        trailRatio: { value: 0 },
+        trailLength: { value: 0 }
+      });
+      makeTrail(i);
+    }
     setTrailAnimation();
     animate();
+    // guiControls();
     window.addEventListener('resize', handleResize);
     return () => {
       window.removeEventListener('resize', handleResize);
     }
   }, []);
+
+  useEffect(() => {
+    renderGlithPassRef.current = renderGlithPass;
+  }, [renderGlithPass]);
 
   const initThree = () => {
     scene = new Three.Scene();
@@ -70,6 +137,9 @@ const index = () => {
     orbitControls.enableDamping = true;
     orbitControls.enablePan = false;
 
+    composer = new EffectComposer(renderer);
+    composer.addPass(new RenderPass(scene, camera));
+    composer.addPass(new GlitchPass());
   }
 
   const createPoints = () => {
@@ -85,19 +155,10 @@ const index = () => {
     let dummyObj = new Three.Object3D(); // 用于调整后续球面上plane的位置和朝向
     let geoms = []; // 存储所有的plane
 
+    // let earthTexture = new Three.TextureLoader().load(earthImg, function (texture) {
+    //   console.log('texture loaded successfully');
+    // }, undefined, function (err) { console.log('texture load failed', err); });
     let earthTexture = new Three.TextureLoader().load(earthImg);
-
-    for (let i = 0; i < maxImpactAmount; i++) {
-      impacts.push({
-        impactPosition: new Three.Vector3().random().subScalar(0.5).setLength(5), // 生成一个随机的三维向量，然后减去0.5，然后设置长度为5
-        impactMaxRadius: 5 * Three.MathUtils.randFloat(0.5, 0.75), // Three.Math.randFloat会报错
-        impactRatio: 0,
-        prevPosition: new Three.Vector3().random().subScalar(0.5).setLength(5),
-        trailRatio: { value: 0 },
-        trailLength: { value: 0 }
-      });
-      makeTrail(i);
-    }
 
     for (let i = 0; i < counter; i++) {
       r = Math.sqrt(1 - z * z);
@@ -112,10 +173,15 @@ const index = () => {
       plane.applyMatrix4(dummyObj.matrix);
       plane.translate(p.x, p.y, p.z);
       let centers = [p.x, p.y, p.z, p.x, p.y, p.z, p.x, p.y, p.z, p.x, p.y, p.z];
-      plane.setAttribute('center', new Three.BufferAttribute(new Float32Array(centers), 3));
-      let uv = [(sph + Math.PI) / (2 * Math.PI), 1 - (sph.theta / Math.PI)];
+      // plane.setAttribute('center', new Three.BufferAttribute(new Float32Array(centers), 3)); // 这种写法也可以的
+      plane.setAttribute('center', new Three.Float32BufferAttribute(centers, 3));
+
+      let uv = new Three.Vector2((sph.theta + Math.PI) / (2 * Math.PI), 1 - (sph.phi / Math.PI));
       let uvs = [uv.x, uv.y, uv.x, uv.y, uv.x, uv.y, uv.x, uv.y];
-      plane.setAttribute('baseUv', new Three.BufferAttribute(new Float32Array(uvs), 2));
+      // let uv = [(sph.theta + Math.PI) / (2 * Math.PI), 1 - (sph.phi / Math.PI)];
+      // let uvs = [uv[0], uv[1], uv[0], uv[1], uv[0], uv[1], uv[0], uv[1]];
+      // plane.setAttribute('baseUv', new Three.BufferAttribute(new Float32Array(uvs), 2));
+      plane.setAttribute('baseUv', new Three.Float32BufferAttribute(uvs, 2));
       geoms.push(plane);
     }
 
@@ -131,7 +197,6 @@ const index = () => {
         shader.uniforms.gradInner = uniformsSettings.gradInner;
         shader.uniforms.gradOuter = uniformsSettings.gradOuter;
         shader.uniforms.tex = { value: earthTexture };
-        console.log("shader.vertexShader: ", shader.vertexShader);
         shader.vertexShader = `
             struct impact {
               vec3 impactPosition;
@@ -175,7 +240,6 @@ const index = () => {
             transformed += normal * finalStep * waveHeight; // lift on wave
             `
         );
-        console.log("shader.fragmentShader: ", shader.fragmentShader);
         shader.fragmentShader = `
             uniform vec3 gradInner;
             uniform vec3 gradOuter;
@@ -205,12 +269,10 @@ const index = () => {
     m.defines = { 'USE_UV': '' };
     earth = new Three.Mesh(g, m);
     earth.rotation.y = Math.PI;
-    // earth.add(new Three.Mesh(new Three.SphereGeometry(4.995,72,36), new Three.MeshBasicMaterial( { color: 0x000000})));
+    // earth.add(new Three.Mesh(new Three.SphereGeometry(4.995, 72, 36), new Three.MeshBasicMaterial({ map: earthTexture })));
     trails.forEach(t => earth.add(t));
     earth.position.set(0, -0.4, 0);
     scene.add(earth);
-
-    guiControls();
   }
 
   // 初始化100个点，得到一条路径；添加index属性，形成起止正确的路径，加入trails
@@ -220,7 +282,8 @@ const index = () => {
     g.setAttribute("position", new Three.Float32BufferAttribute(pts, 3));
     let m = new Three.LineDashedMaterial({
       color: params.colors.gradOuter,
-      transparent: true,
+      transparent: true, // 设置为false，trail的尾部有白色残影
+      // opacity: 1,
       onBeforeCompile: shader => {
         shader.uniforms.actionRatio = impacts[idx].trailRatio;
         shader.uniforms.lineLength = impacts[idx].trailLength;
@@ -235,7 +298,7 @@ const index = () => {
 
   const setPath = (l, startPoint, endPoint, peakHeight, cycles) => {
     let pos = l.geometry.attributes.position; //预存点的最新位置
-    let division = pos - 1; //l上的分段数目
+    let division = pos.count - 1; //l上的分段数目
     let cycle = cycles || 1; //??
     let peak = peakHeight || 1; //峰高
     let radius = startPoint.length(); // 对应球的半径
@@ -272,7 +335,7 @@ const index = () => {
 
     //更新完了点数据后需要加上这句
     pos.needsUpdate = true;
-
+    // console.log(l.geometry.attributes.position.array);
     l.computeLineDistances();  // 计算每个顶点到起点的累加距离
     l.geometry.attributes.lineDistance.needsUpdate = true;
     impacts[l.userData.idx].trailLength.value = l.geometry.attributes.lineDistance.array[99];
@@ -302,7 +365,7 @@ const index = () => {
             .onComplete(val => {
               impacts[i].prevPosition.copy(impacts[i].impactPosition);
               impacts[i].impactPosition.random().subScalar(0.5).setLength(5);
-              setPath(path, impacts[i].prevPosition, impacts[i].impactPosition, 1);
+              setPath(path, impacts[i].prevPosition, impacts[i].impactPosition);
               uniformsSettings.impacts.value[i].impactMaxRadius = 5 * Three.MathUtils.randFloat(0.5, 0.75);
               tweens[i].runTween();
             });
@@ -315,6 +378,14 @@ const index = () => {
     createPoints(); // 更新点的内容
   }
 
+  let chartsRef = Array.from({ length: 5 }).map(() => useRef(null));
+  const initChart = () => {
+    const chartsOption = [chart_1_option, chart_2_option, chart_3_option, chart_4_option, chart_5_option];
+    const charts = chartsRef.map(ref => ref.current && echarts.init(ref.current, 'dark'));
+    charts.forEach((chart, idx) => {
+      chart && chart.setOption(chartsOption[idx]);
+    });
+  }
   const guiControls = () => {
     const gui = new dat.GUI();
     gui.add(uniformsSettings.maxSize, 'value', 0.01, 0.06).step(0.001).name('陆地');
@@ -335,6 +406,7 @@ const index = () => {
     earth.rotation.y += 0.001;
     renderer && scene && camera && renderer.render(scene, camera);
     requestAnimationFrame(animate);
+    renderGlithPassRef.current && composer.render();
   }
 
   const handleResize = () => {
@@ -344,15 +416,48 @@ const index = () => {
     // composer.setSize(window.innerWidth, window.innerHeight);
   }
 
+  const handleStartButtonClick = () => {
+    setRenderGlithPass(!renderGlithPass);
+  }
+
   return (
-    <div className="earth-digital">
-      <canvas ref={canvasRef} className="webgl"></canvas>
-      <header className="hud-header">header</header>
-      <header>header</header>
-      <aside className="hud-aside-left">left</aside>
-      <aside className="hud-aside-right">right</aside>
-      <footer className="hud-footer">footer</footer>
-      <section className="background">section</section>
+    <div className="earth-digital bg-black h-screen w-full overflow-hidden select-none">
+      <div className="p-0 m-0 box-border">
+        <canvas ref={canvasRef} className="relative z-1 cursor-pointer"></canvas>
+        <header className="hud header w-full left-0 top-0">
+          <div className="left">
+            <p className="date">
+              <span className="text">{`${week}曜日 `}</span>
+              <span className="text">{time}</span>
+            </p>
+          </div>
+          <div className="middle"></div>
+          <div className="right">
+            <p className="date">
+              <span className="text">Kepler-90 +49°18′18.58″</span>
+            </p>
+          </div>
+        </header>
+        <div className="logo-pic" title='Cyberpunk 2077'></div>
+        <aside className="hud aside left">
+          <div className="box box_0 inverse">
+            <div className="cover"></div>
+            <div className="info">
+              <p className='text'><b>Cyberpunk</b> is a subgenre of science fiction in a dystopian futuristic setting that tends to focus on a "combination of lowlife and high tech", featuring futuristic technological and scientific achievements, such as artificial intelligence and cybernetics, juxtaposed with societal collapse or decay. </p>
+              <button className="startBtn" onClick={handleStartButtonClick}>START</button>
+            </div>
+          </div>
+          <div className="box"><div className="chart" ref={chartsRef[0]}></div></div>
+          <div className="box inverse dotted"><div className="chart" ref={chartsRef[1]}></div></div>
+        </aside>
+        <aside className="hud aside right">
+          <div className="box"><div className="chart" ref={chartsRef[2]}></div></div>
+          <div className="box"><div className="chart" ref={chartsRef[3]}></div></div>
+          <div className="box inverse dotted"><div className="chart" ref={chartsRef[4]}></div></div>
+        </aside>
+        <footer className="hud footer">footer</footer>
+        <section className="background">section</section>
+      </div>
     </div>
   )
 }

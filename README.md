@@ -178,6 +178,10 @@ index.css里
 
 参考案例：https://dragonir.github.io/3d/#/earthDigital
 
+将类组件转为函数式组件，将stylus预处理器形式css改为scss形式；
+
+对代码结构进行梳理，对模型构建和渲染等复杂逻辑进行手绘展示。
+
 ## 基础环境
 
 react+vite+three.js+scss
@@ -759,6 +763,8 @@ gui设置隐藏，通过键盘H键唤起；
 
 * 取消注释
 
+![image-20240913170816909](C:\Users\Xiangting\AppData\Roaming\Typora\typora-user-images\image-20240913170816909.png)
+
 #### 制作飞线
 
 初始化100个点，得到一条路径；添加index属性，形成起止正确的路径，加入trails
@@ -784,13 +790,13 @@ gui设置隐藏，通过键盘H键唤起；
   }
 ```
 
-设置路径上点的位置和长度：传入当前路径、起点、终点、峰高、？
+设置路径上点的位置和长度：传入当前路径、起点、终点、峰高、出现后经过几次弧度再进入后消失
 
 ```jsx
   const setPath = (l, startPoint, endPoint, peakHeight,cycles) => {
     let pos = l.geometry.attributes.position; //预存点的最新位置
     let division = pos - 1; //l上的分段数目
-    let cycle = cycles || 1; //??
+    let cycle = cycles || 1; // cycle=4:↷↷↷↷
     let peak = peakHeight || 1; //峰高
     let radius = startPoint.length(); // 对应球的半径
     let angle = startPoint.angleTo(endPoint); //起始点和终点的夹角
@@ -849,7 +855,7 @@ gui设置隐藏，通过键盘H键唤起；
    import { defineConfig } from 'vite'
    import vue from '@vitejs/plugin-vue'
    import glsl from 'vite-plugin-glsl'
-
+   
    export default defineConfig({
      plugins: [
        vue(),
@@ -880,7 +886,7 @@ shader内容：
 
 actionRatio 代码中是0 _ 动画中修改 
 
-vLineDistance // varying值，from where ??
+vLineDistance // 在使用 Three.js 的 LineDashedMaterial 时，确保顶点着色器正确地计算并传递 vLineDistance 变量到片元着色器是非常关键的，因为这个变量决定了线段的虚线效果。
 
 totalSize 一整个没用到
 
@@ -929,6 +935,7 @@ lineLength 到起点的累积距离
 
 float grad = ((vLineDistance + halfDash) - (currPos - halfDash)) / halfDash; 这里 grad 用于计算当前片段在虚线边缘的位置，用于实现边缘的渐变效果。这可以让虚线的开始和结束更加平滑，不会突然截断。
 
+![ac03418e3341f086f3b780056121b39.jpg](https://s2.loli.net/2024/09/11/yfOMo2NWJZVekbq.jpg)
 
 ##### 补充 | `negate`
 
@@ -1059,7 +1066,7 @@ const setTrailAnimation = () => {
       })
     }
     tweens.forEach(t=>t.runTween());
-    // createPoints();
+    createPoints(); // 因为runTween会影响到points的效果
   }
 ```
 
@@ -1079,12 +1086,12 @@ for循环里的设置
           let tweenTrail = new TWEEN.Tween({ value: 0 })
             .to({ value: 1 }, dur * 1000)
             .onUpdate(val => {
-              impacts[i].trailRatio.value = val.value;
+              impacts[i].trailRatio.value = val.value; // 通过Tween来控制trailRatio/actionRatio
             });
           var tweenImpact = new TWEEN.Tween({ value: 0 })
             .to({ value: 1 }, Three.MathUtils.randInt(2500, 5000))
             .onUpdate(val => {
-              uniformsSettings.impacts.value[i].impactRatio = val.value;
+              uniformsSettings.impacts.value[i].impactRatio = val.value; // 通过Tween来控制impactRatio
             })
             .onComplete(val => {
               impacts[i].prevPosition.copy(impacts[i].impactPosition);
@@ -1099,9 +1106,478 @@ for循环里的设置
       })
     }
 ```
-问题：
 
-line的glsl没起作用，看不到内容
+## 机甲风head和card
+
+新建constant.js，存放一些固定的内容文本数组；
+``` js
+export const weekMap ={...};
+export const tips = [...];
+```
+
+设置state存放显示的内容；
+在 React 中，组件可以是类组件或函数式组件。在函数式组件中，传统的类组件中的 state 和生命周期方法被 React Hooks 提供的功能所替代。最常用的 Hook 是 useState，它用于在函数式组件中添加状态管理功能。
+
+``` jsx
+const [week, setWeek] = useState(weekMap[new Date().getDay()]);
+const [time, setTime] = useState(new Date().toLocaleTimeString());
+const [showModal, setShowModal] = useState(false);
+const [modelText, setModelText] = useState(tips[0]);
+const [renderGlithPass, setRenderGlithPass] = useState(false);
+```
+
+header结构
+
+``` html
+<header className="hud-header">
+  <div className="left"></div>
+  <div className="middle"></div>
+   <div className="right">
+     <p className="date">
+       <span className="text">{`${week}曜日`}</span>
+       <span className="text">{time}</span>
+       <span className="text">Kepler-90 +49°18′18.58″</span>
+     </p>
+   </div>
+</header>
+```
+
+scss里写clip-path
+
+``` scss
+  $yellow-color: #f9f002;
+  $border-color: #8ae66e;
+  $blue-color: #00e6f6;
+  $header-height: 90px;
+  $aside-width: 400px;
+  $glitched-duration: 0.9s;
+  $clip-height: 18px;
+
+.earth-digital {
+  // overflow: hidden; // 这样子就没有了右侧拖动条，多出来的直接消失了
+  // user-select: none; // 禁止选中文字
+  filter: saturate(0.85); // 饱和度 体现在哪儿？？
+
+}
+
+.hud {
+  position: fixed;
+  z-index: 2;
+  &.header {
+    height: $header-height;
+    color: black; // 里面的文字颜色
+    background: $yellow-color; // header 的背景颜色
+    clip-path: polygon(0 0, 100% 0, 100% calc(100% - #{$clip-height}),75% calc(100% - #{$clip-height}), 72.5% 100%, 27.5% 100%, 25% calc(100% - #{$clip-height}),0 calc(100% - #{$clip-height}),0 0); // 使用calc的时候，里面操作符前后要有空格
+  }
+}
+
+```
+
+![27e2baa8c3a79d08953b367291a0195.jpg](https://s2.loli.net/2024/09/11/ZL9FgtrxEBW2ame.jpg)
+
+logo和aside部分的结构
+
+``` 
+<div className="logo-pic" title='Cyberpunk 2077'></div>
+<aside className="hud aside left">
+  <div className="box inverse">
+    <div className="cover"></div>
+    <div className="info">
+      <p><b>Cyberpunk</b> is a subgenre of science fiction in a dystopian futuristic setting that tends to focus on a "combination of lowlife and high tech", featuring futuristic technological and scientific achievements, such as artificial intelligence and cybernetics, juxtaposed with societal collapse or decay. </p>
+      <button></button>
+    </div>
+  </div>
+  <div className="box"></div>
+  <div className="box inverse dotted"></div>
+</aside>
+<aside className="hud aside right">
+  <div className="box"></div>
+  <div className="box"></div>
+  <div className="box inverse dotted"></div>
+</aside>
+```
+
+## button点击后出现故障风
+
+点击触发函数：
+
+```
+const handleStartButtonClick = () => {
+    setRenderGlithPass(!renderGlithPass);
+  }
+```
+
+动画中更新：
+```
+  const animate = () => {
+   ......
+    renderGlithPass && composer.render();
+  }
+```
+
+### 后处理效果
+
+导入composer和pass
+
+``` jsx
+import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer.js';
+import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js';
+import { GlitchPass } from 'three/examples/jsm/postprocessing/GlitchPass.js';
+```
+
+initThree里初始化
+
+``` jsx
+composer = new EffectComposer(renderer);
+composer.addPass(new RenderPass(scene, camera));
+composer.addPass(new GlitchPass());
+```
+### btn的样式
+
+利用linear-gradient，实现了45度方向上，从透明到红色的按钮的突变（5%，5%），这个和《CSS揭秘》里的内容呼应了。
+
+``` css
+.startBtn,
+.startBtn::after {
+  cursor: pointer;
+  width: 120px;
+  height: 40px;
+  font-size: 1.2rem;
+  background: linear-gradient(45deg, transparent 5%, #FF013C 5%);
+  border: 0;
+  color: #fff;
+  letter-spacing: 0.2em;
+  box-shadow: 6px 0 0 $blue-color;
+  outline: transparent;
+  position: relative;
+}
+```
+
+## echarts
+
+https://echarts.apache.org/handbook/zh/basics/import/
+
+按需引入：
+
+``` jsx
+// 引入 echarts 核心模块，核心模块提供了 echarts 使用必须要的接口。
+import * as echarts from 'echarts/core';
+// 引入柱状图图表，图表后缀都为 Chart
+import { BarChart } from 'echarts/charts';
+// 引入标题，提示框，直角坐标系，数据集，内置数据转换器组件，组件后缀都为 Component
+import {
+  TitleComponent,
+  TooltipComponent,
+  GridComponent,
+  DatasetComponent,
+  TransformComponent
+} from 'echarts/components';
+// 标签自动布局、全局过渡动画等特性
+import { LabelLayout, UniversalTransition } from 'echarts/features';
+// 引入 Canvas 渲染器，注意引入 CanvasRenderer 或者 SVGRenderer 是必须的一步
+import { CanvasRenderer } from 'echarts/renderers';
+
+// 注册必须的组件
+echarts.use([
+  TitleComponent,
+  TooltipComponent,
+  GridComponent,
+  DatasetComponent,
+  TransformComponent,
+  BarChart,
+  LabelLayout,
+  UniversalTransition,
+  CanvasRenderer
+]);
+```
+
+构建数据 constant.js
+
+导入：
+`import { chart_1_option, chart_2_option, chart_3_option, chart_4_option, chart_5_option, weekMap, tips } from '@/containers/EarthDigital/scripts/config';`
+
+初始化chart
+
+```
+ const chart_1 = echarts.init(document.getElementsByClassName('chart_1')[0], 'dark');
+    chart_1 && chart_1.setOption(chart_1_option);
+```
+
+使用useRef进行简化
+
+```
+  let chartsRef = Array.from({ length: 5 }).map(() => useRef(null));
+  const initChart = () => {
+    const chartsOption = [chart_1_option, chart_2_option, chart_3_option, chart_4_option, chart_5_option];
+    const charts = chartsRef.map(ref => ref.current && echarts.init(ref.current, 'dark'));
+    charts.forEach((chart, idx) => {
+      chart && chart.setOption(chartsOption[idx]);
+    });
+  }
+```
+
+最后的aside
+
+```
+<aside className="hud aside left">
+  <div className="box box_0 inverse">
+    <div className="cover"></div>
+    <div className="info">
+      <p className='text'><b>Cyberpunk</b> is a subgenre of science fiction in a dystopian futuristic setting that tends to focus on a "combination of lowlife and high tech", featuring futuristic technological and scientific achievements, such as artificial intelligence and cybernetics, juxtaposed with societal collapse or decay. </p>
+      <button className="startBtn" onClick={handleStartButtonClick}>START</button>
+    </div>
+  </div>
+  <div className="box"><div className="chart" ref={chartsRef[0]}></div></div>
+  <div className="box inverse dotted"><div className="chart" ref={chartsRef[1]}></div></div>
+</aside>
+<aside className="hud aside right">
+  <div className="box"><div className="chart" ref={chartsRef[2]}></div></div>
+  <div className="box"><div className="chart" ref={chartsRef[3]}></div></div>
+  <div className="box inverse dotted"><div className="chart" ref={chartsRef[4]}></div></div>
+</aside>
+```
+
+echarts里的option配置
+
+![7d30adb4f9c8155b133b9b7b6a939fa.jpg](https://s2.loli.net/2024/09/26/29DpPhmGLj16kyb.jpg)
+
+注意：每一种图表形式的使用，都要按需导入；
+
+针对areaStyle里的颜色，可以不导入echarts，直接colorStops来实现；
+
+``` js
+// 原来：
+areaStyle: {
+  opacity: 0.8,
+  color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+      offset: 0,
+      color: 'rgb(128, 255, 165)'
+    },
+    {
+      offset: 1,
+      color: 'rgb(1, 191, 236)'
+    }
+  ])
+},
+
+// 修改后：
+areaStyle: {
+  opacity: 0.8,
+  color: {
+    type: 'linear', // 线性渐变
+    x: 0,
+    y: 0,
+    x2: 0,
+    y2: 1,
+    colorStops: [
+      { offset: 0, color: 'rgb(255, 191, 0)' },
+      { offset: 1, color: 'rgb(224, 62, 76)' },
+    ],
+  },
+},
+```
+
+
+
+## css动画
+
+
+
+### 补充 | clip-path属性
+
+CSS 中的 `clip-path` 属性允许你定义一个元素的可见区域。通过这个属性，你可以指定一个路径，在这个路径内的内容会被显示，而路径外的内容则会被隐藏。这是一个非常强大的工具，因为它可以用来创建各种复杂的形状和动态效果。
+
+1. **创建复杂形状**：使用 `clip-path`，你可以轻松创建圆形、椭圆、多边形或者自定义路径（使用 SVG 路径语法）等形状。这对于设计先进的用户界面和特殊的图形效果非常有用。
+   
+2. **交互效果**：你可以结合动画和过渡效果使用 `clip-path`，以实现视觉上吸引人的交互动画。例如，当用户悬停或点击元素时改变 `clip-path` 的形状。
+
+3. **掩盖和显示内容**：它可以被用来掩盖元素的某部分或只显示某部分，这在创建仪表板、卡片或其他包含隐藏详细信息的界面元素时尤其有用。
+
+**基本语法**：
+  ```css
+  clip-path: shape | none;
+  ```
+  其中 `shape` 可以是以下几种类型：
+
+- **圆形**（`circle()`）：
+  ```css
+  clip-path: circle(50%);
+  ```
+  这会创建一个圆形剪裁区域，其中 `50%` 是圆的半径。
+
+- **椭圆**（`ellipse()`）：
+  ```css
+  clip-path: ellipse(50% 25%);
+  ```
+  这将创建一个椭圆剪裁区域，其中第一个值是水平半径，第二个值是垂直半径。
+
+- **多边形**（`polygon()`）：
+  ```css
+  clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+  ```
+  这将创建一个菱形剪裁区域，每个百分比对是多边形一个顶点的坐标。
+
+- **使用 URL**（SVG 剪裁路径）：
+  ```css
+  clip-path: url(#clip-shape);
+  ```
+  这里 `#clip-shape` 是 SVG 内的 `<clipPath>` 元素的 ID，允许你使用 SVG 的复杂路径定义剪裁形状。
+
+通过使用 `clip-path`，开发者可以在不需要额外图像或 SVG 文件的情况下，直接在 CSS 中创建视觉上吸引人的形状和效果。这使得页面加载更快，也使得动态效果的实现更为简便。
+
+## echarts图表
+
+## 底部仪表盘
+
+## 后期交互
+
+### 故障风
+
+### 点击事件
+
+
+
+
+# 问题
+
+## 球体的陆地和海洋并没有区分出来
+
+尝试1：看看texture是否正确加载
+
+``` jsx
+let earthTexture = new Three.TextureLoader().load(earthImg, function (texture) {
+      console.log('texture loaded successfully');
+    }, undefined, function (err) { console.log('texture load failed', err); });
+```
+问题是对UV的计算错了：
+错处1：` let uv = [(sph + Math.PI) / (2 * Math.PI), 1 - (sph.theta / Math.PI)];`
+
+需要使用new Three.Vector2(),而不是直接构建数组；如果是直接构建数组，那下面就访问不到.x和.y，需要使用[0]和[1]来访问对应的内容。
+
+错处2：`let uv = new Three.Vector2(sph + Math.PI) / (2 * Math.PI), 1 - (sph.theta / Math.PI));`
+
+这里对UV的映射计算错了
+
+> 在 Three.js 中，`Spherical` 类表示的球坐标系统是基于三维右手笛卡尔坐标系，其中 `phi`（仰角）和 `theta`（方位角）的定义具体如下：
+> 1. **`phi`（仰角）** - 这是从正Y轴向下至点P的线段与Y轴之间的角度。在 Three.js 中，`phi` 的范围通常是从0到π（即从0到180度），其中0对应于正Y轴（向上）的方向，而π对应于负Y轴（向下）的方向。
+> 2. **`theta`（方位角）** - 这是在XZ平面上，从正Z轴向正X轴的角度。`theta` 的范围是从0到2π（即从0到360度），其中0开始于正Z轴，增加方向是逆时针（从屏幕向里到屏幕向外看为正Z方向）。
+因此，`Spherical` 的 `phi` 和 `theta` 的直观理解如下：
+> - `phi = 0`：点位于Y轴的正方向（向上）。
+> - `phi = π/2`：点位于XZ平面。
+> - `phi = π`：点位于Y轴的负方向（向下）。
+> - `theta = 0`：点位于Z轴的正方向（向屏幕外）。
+> - `theta = π/2`：点位于X轴的正方向（向右）。
+> - `theta = π`：点位于Z轴的负方向（向屏幕里）。
+> - `theta = 3π/2`：点位于X轴的负方向（向左）。
+> 这种球坐标系统非常有用于处理与球面或者环绕运动相关的场景，如天体模拟、相机环绕目标物体的动作等。
+
+
+正确写法：`let uv = new Three.Vector2((sph.theta + Math.PI) / (2 * Math.PI), 1 - (sph.phi / Math.PI));` 
+
+为了正确理解这段代码 `let uv = [(sph.theta + Math.PI) / (2 * Math.PI), 1 - (sph.phi / Math.PI)];` 并将二维贴图UV映射到球面上，让我们逐一分析每个部分：
+
+1. **`(sph.theta + Math.PI) / (2 * Math.PI)`**:
+   - `sph.theta` 表示球坐标中的方位角，通常的取值范围是从 0 到 2π，表示从正Z轴顺时针到X轴再回到Z轴的全周角度。
+   - `+ Math.PI` 的作用是将θ的起始点从正Z轴（前面）调整到负Z轴（后面）。通常，这种调整是为了使UV映射的起点对应于模型的后方，从而使得当模型前向朝向观察者时，贴图的“前面”能够正对观察者。
+   - 除以 `(2 * Math.PI)` 将调整后的θ值归一化到 [0, 1] 的范围内，这样可以映射到贴图的水平坐标U。
+
+2. **`1 - (sph.phi / Math.PI)`**:
+   - `sph.phi` 是从正Y轴向球面的点的仰角，取值范围是从 0 到 π。
+   - `(sph.phi / Math.PI)` 将φ值归一化到 [0, 1] 范围内，其中0代表北极，1代表南极。
+   - `1 -` 的作用是反转V坐标，使得在UV贴图中，V = 0 对应于球体的北极，V = 1 对应于球体的南极。这样的反转是必要的，因为在大多数图形处理系统中，贴图的V坐标从下到上增加，而球坐标系统中的φ是从上到下增加的。
+
+
+(Three.js地理坐标和三维空间坐标的转换)[https://blog.csdn.net/qihoo_tech/article/details/101443066]
+
+![image-20240908162225403.png](https://s2.loli.net/2024/09/09/pbtr2HfNW7xTSkC.png)
+
+## trail没显示出来
+
+vLineDistance // 在使用 Three.js 的 LineDashedMaterial 时，确保顶点着色器正确地计算并传递 vLineDistance 变量到片元着色器是非常关键的，因为这个变量决定了线段的虚线效果。
+
+原先是再setPath里修改点的位置，然后计算lineDistance，由于lineDistance计算有问题，所以在fragment shader里，vLineDistance就都是0
+
+在setPath的代码里，求division需要用pos.count来-1，之前是pos直接-1，导致了错误，使得trail的pos都没有正确更新；
+
+## 按钮切换效果不出来
+
+如果在 `useEffect` 中的依赖数组（第二个参数）设置为空数组 `[]`，这意味着 `useEffect` 只会在组件首次挂载时运行一次，而不会在组件的状态或属性更新时再次运行。这常用于执行那些只需一次的初始化操作，如 API 调用或设置初始配置。
+
+
+在您的情况中，如果 `animate` 函数在 `useEffect` 内定义，并且依赖数组为空，这会导致 `animate` 函数捕获到初始渲染时的状态值，例如 `renderGlithPass` 的初始值（`false`）。即使后续 `renderGlithPass` 状态更新，`animate` 函数中的值也不会更新，因为 `useEffect` 不会重新执行来更新闭包中的状态值。
+
+解决方法
+
+要让 `animate` 函数能够访问最新的 `renderGlithPass` 状态，您有两个选择：
+
+1. **更新 `useEffect` 的依赖数组**：在依赖数组中包含 `renderGlithPass`，这样每次 `renderGlithPass` 改变时，`useEffect` 都会重新执行，`animate` 函数也将重新定义，从而捕获到最新的状态值。
+
+```javascript
+useEffect(() => {
+  const animate = () => {
+    console.log(renderGlithPass);
+  };
+
+  const animationId = requestAnimationFrame(animate);
+
+  return () => cancelAnimationFrame(animationId);
+}, [renderGlithPass]); // 现在包含 renderGlithPass 作为依赖
+```
+
+2. **使用 `useRef` 追踪最新的状态**：如之前所述，您可以使用 `useRef` 来追踪 `renderGlithPass` 的最新值，这样 `animate` 函数可以通过 ref 访问当前的状态，而无需重新定义 `animate` 函数。
+
+```javascript
+const renderGlithPassRef = useRef(renderGlithPass);
+renderGlithPassRef.current = renderGlithPass;
+
+useEffect(() => {
+  const animate = () => {
+    console.log(renderGlithPassRef.current); // 使用 ref 访问最新状态
+  };
+
+  const animationId = requestAnimationFrame(animate);
+
+  return () => cancelAnimationFrame(animationId);
+}, []); // 依赖数组仍然为空
+```
+
+这两种方法各有优势，选择哪一种取决于您的具体需求和组件的其他逻辑。如果 `animate` 函数对性能要求较高并且状态更新频繁，使用 `useRef` 可能是一个更好的选择。如果状态更新对 `animate` 的影响比较大，并且确保每次都是最新的状态很重要，那么更新 `useEffect` 的依赖数组可能更适合。
+
+## animate里的renderGlithPass总是false，未更新
+
+在你的React代码中，你遇到的问题是由于闭包（closure）引起的。在JavaScript和React中，闭包会捕获它们创建时的环境状态。当你在 `useEffect` 钩子里调用 `animate()` 函数时，这个函数被“固定”在了那一刻的状态，包括 `renderGlithPass` 的值。
+
+因为 `useEffect` 仅在组件挂载时执行一次（因为它的依赖列表是空的 `[]`），所以 `animate` 函数只会捕获 `renderGlithPass` 最初的值，即 `false`。之后即使状态更新了，`animate` 函数中捕获的 `renderGlithPass` 的值仍然是最初的 `false`。
+
+解决这个问题的一个方法是使用 `useRef` 钩子来持久化 `renderGlithPass` 的值，这样 `animate` 函数总是能获取到最新的状态。这里是如何修改你的代码：
+
+```javascript
+
+  const [renderGlitchPass, setRenderGlitchPass] = useState(false);
+  const renderGlitchPassRef = useRef(renderGlitchPass);  // 使用 useRef 来持久化状态
+
+  useEffect(() => {
+    renderGlitchPassRef.current = renderGlitchPass;  // 更新 ref 的值
+  }, [renderGlitchPass]);  // 每当 renderGlitchPass 更新时，更新 ref
+
+  useEffect(() => {
+    const animate = () => {
+      TWEEN.update();
+      earth.rotation.y += 0.001;
+      renderer && scene && camera && renderer.render(scene, camera);
+      requestAnimationFrame(animate);
+
+      // 使用 ref 的 current 值来获取最新状态
+      renderGlitchPassRef.current && composer.render();
+    };
+
+    animate();  // 启动动画循环
+  }, []);  // 空依赖列表，仅在组件挂载时执行
+
+  const handleStartButtonClick = () => {
+    setRenderGlitchPass(!renderGlitchPass);  // 切换状态
+  };
+```
 
 TODO
 

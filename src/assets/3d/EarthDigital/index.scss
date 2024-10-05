@@ -1,13 +1,300 @@
-$primary-color: blue;
-
-.container {
-  color: $primary-color;
-  padding: 20px;
-  font-size: 18px;
-}
+$yellow-color: #f9f002;
+$border-color: #8ae66e;
+$blue-color: #00e6f6;
+$header-height: 70px;
+$aside-width: 400px;
+$glitched-duration: 0.9s;
+$clip-height: 18px;
 
 .dg .c input {
-    height: 27px;
-    box-sizing: border-box;
-    margin: 0 !important;
+  height: 27px;
+  box-sizing: border-box;
+  margin: 0 !important;
 }
+
+.earth-digital {
+  // overflow: hidden; // 这样子就没有了右侧拖动条，多出来的直接消失了
+  // user-select: none; // 禁止选中文字
+  filter: saturate(0.85); // 饱和度 体现在哪儿？？
+}
+
+.hud {
+  position: fixed;
+  z-index: 2;
+
+  &.header {
+    height: $header-height;
+    color: black; // 里面的文字颜色
+    background: $yellow-color; // header 的背景颜色
+    clip-path: polygon(0 0,
+      100% 0,
+      100% calc(100% - #{$clip-height}),
+      73% calc(100% - #{$clip-height}),
+      71% 100%,
+      0 100%,
+      0 0); // 使用calc的时候，里面操作符前后要有空格
+
+    display: flex;
+    justify-content: space-between;
+    max-width: inherit;
+
+    // animation: ;
+    // animation-fill-mode: ;
+    .left {
+      width: 27.5%;
+      max-width: $aside-width;
+      height: 100%;
+    }
+
+    .middle {
+      width: 45%;
+      height: 100%;
+    }
+
+    .right {
+      // width: 27.5%;
+      max-width: $aside-width;
+      // height: 100%;
+      // text-align: right;
+      // padding-right: 16px;
+    }
+
+    .date {
+      text-align: left;
+      padding: 8px 16px;
+      position: relative;
+
+      // animation-name: ;
+      // animation-duration: ;
+      // animation-iteration-count: ;
+      // animation-timing-function: ;
+      &::before {
+        content: '';
+        display: block;
+        position: absolute;
+        bottom: 2px;
+        left: -20px;
+        width: 100%;
+        height: 8px;
+        background-color: #000;
+        clip-path: polygon(0px 0px,
+            85px 0px,
+            90px 5px,
+            100% 5px,
+            100% 6px,
+            85px 6px,
+            80px 10px,
+            0px 10px);
+        // animation-name: ;
+        // animation-duration: ;
+        // animation-iteration-count: ;
+        // animation-timing-function: ;
+      }
+
+      &::after {
+        content: '_';
+        color: #000;
+        font-size: 22px;
+        font-weight: 600;
+        // animation-name: ;
+        // animation-duration: ;
+        // animation-iteration-count: ;
+        // animation-timing-function: ;
+      }
+
+      .text {
+        font-size: 18px;
+        font-weight: 600;
+        color: #000;
+        padding-right: 8px;
+      }
+    }
+  }
+
+  &.aside {
+    height: calc(100vh - #{$header-height});
+    width: $aside-width;
+    bottom: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    overflow: hidden;
+    padding: 0 16px 16px;
+
+    &.left {
+      left: 0;
+      // animation: ;
+      // animation-fill-mode: ;
+    }
+
+    &.right {
+      right: 0;
+      // animation: ;
+      // animation-fill-mode: ;
+    }
+
+    .box {
+      width: 100%;
+      height: 31%;
+      padding: 4px;
+      box-sizing: border-box;
+      position: relative;
+      font-size: 1.2rem;
+      color: $yellow-color;
+      border: solid $yellow-color;
+      border-width: 30px 5px 24px 5px; // border的宽度分别为上右下左
+      background-color: #000;
+      clip-path: polygon(0px 25px,
+          26px 0px,
+          calc(60% - 25px) 0px,
+          60% 25px,
+          100% 25px,
+          100% calc(100% - 10px),
+          calc(100% - 15px) calc(100% - 10px),
+          calc(80% - 10px) calc(100% - 10px),
+          calc(80% - 15px) 100%,
+          80px calc(100% - 0px),
+          65px calc(100% - 15px),
+          0% calc(100% - 15px));
+
+      //transition: ;
+      &::before {
+        content: 'p-14';
+        display: block;
+        position: absolute;
+        bottom: -12px;
+        right: 25px;
+        padding: 2px 2px 0 2px;
+        font-size: 0.6rem;
+        line-height: 0.6rem;
+        border-left: 2px solid $border-color;
+        background-color: #000;
+        color: $yellow-color;
+      }
+
+      &.inverse {
+        border: none;
+        padding: 40px 15px 30px;
+        color: #000;
+        background-color: $yellow-color;
+        border-right: 2px solid $border-color;
+
+        // clip-path: polygon(0px 25px, 26px 0px, calc(60% - 25px) 0px, 60% 25px, 100% 25px, 100% 25px, 100% calc(100% - 10px), calc(100% - 15px) calc(100% - 10px), calc(80% - 10px) calc(100% - 10px), calc(80% - 15px) 100%, 80px calc(100% - 0px), 65px calc(100% - 15px), 0% calc(100% - 15px));
+        &::before {
+          content: 'T-71';
+          right: 90px;
+          bottom: 9px;
+          // background-color: #000; // 会继承上面的&::before
+          // color: $yellow-color;
+        }
+      }
+
+      &.dotted {
+        background-color: $yellow-color;
+        background-image: radial-gradient(#5d070721 1px, transparent 0);
+        background-size: 5px 5px;
+      }
+
+      &.box_0 {
+        display: flex;
+        justify-content: space-between;
+
+        .cover {
+          width: 45%;
+          height: 100%;
+          background: url('./images/role_0.png') no-repeat center;
+          background-size: auto 100%;
+        }
+
+        .info {
+          width: 55%;
+          height: 100%;
+          padding-left: 16px;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+          align-items: center;
+
+          .text {
+            font-size: 14px;
+            text-align: justify; // 两端对齐
+            text-align-last: left; // 最后一行左侧对其
+            word-break: break-all; // 换行的时候打断单词
+            line-height: 1.5;
+            overflow: hidden auto;
+            // text-overflow: ellipsis;
+            white-space: pre-wrap;
+            height: calc(100% - 50px);
+          }
+        }
+      }
+
+      .chart {
+        width: 100%;
+        height: 100%;
+      }
+    }
+  }
+}
+
+.logo-pic {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: $header-height;
+  z-index: 25;
+
+  &::after {
+    display: inline-block;
+    content: '';
+    width: 90%;
+    height: 180%;
+    background: url('./images/logo.png') no-repeat center;
+    background-size: auto 100%;
+    filter: drop-shadow(0 1px 5px rgba(0, 100, 200, 0.5));
+  }
+}
+
+.startBtn,
+.startBtn::after {
+  cursor: pointer;
+  width: 120px;
+  height: 40px;
+  font-size: 1.2rem;
+  background: linear-gradient(45deg, transparent 5%, #FF013C 5%);
+  border: 0;
+  color: #fff;
+  letter-spacing: 0.2em;
+  box-shadow: 6px 0 0 $blue-color;
+  outline: transparent;
+  position: relative;
+}
+
+.startBtn {
+  &::after {
+    --slice-0: inset(50% 50% 50% 50%);
+    --slice-1: inset(80% -6px 0 0);
+    --slice-2: inset(50% -6px 30% 0);
+    --slice-3: inset(10% -6px 85% 0);
+    --slice-4: inset(40% -6px 43% 0);
+    --slice-5: inset(80% -6px 5% 0);
+    content: 'START';
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(45deg, transparent 3%, #00e6f6 3%, #0036f6 5%, #ff013c 5%);
+    text-shadow: -3px -3px 0px $yellow-color, 3px 3px 0px $blue-color;
+    clip-path: var(--slice-0);
+  }
+
+  &:hover::after {
+    animation: 1s glitch;
+    animation-timing-function: steps(2, end);
+  }
+}
+
+// tips_modal, footer ,bg以及后面的
