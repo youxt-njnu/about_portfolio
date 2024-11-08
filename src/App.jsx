@@ -2,8 +2,9 @@ import { Suspense } from 'react';
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import Loader from './components/Loader';
 import Navbar from "./components/Navbar";
-import { arts } from './constants';
+import { arts, mapboxDemos, cssLayouts } from './constants';
 import { About, Arts, Contact, Home, Projects } from "./pages";
+
 
 const App = () => {
 
@@ -18,6 +19,12 @@ const App = () => {
             <Route path="/about_portfolio/projects" element={<Projects />} />
             <Route path="/about_portfolio/arts" element={<Arts />} />
             {arts.map((route, index) => (
+              <Route key={index} path={route.path} element={<route.component />} />
+            ))}
+            {mapboxDemos.map((route, index) => (
+              <Route key={index} path={route.path} element={<route.component />} />
+            ))}
+            {cssLayouts.map((route, index) => (
               <Route key={index} path={route.path} element={<route.component />} />
             ))}
             <Route path="/about_portfolio/contact" element={<Contact />} />

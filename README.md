@@ -172,11 +172,11 @@ index.css里
 
 [npm报错：request to https://registry.npm.taobao.org failed, reason certificate has expired-CSDN博客](https://blog.csdn.net/maoge_666/article/details/136038003)
 
-# TEMP
+# 赛博大屏实现教程
 
 ## 前言
 
-参考案例：https://dragonir.github.io/3d/#/earthDigital
+参考案例：<https://dragonir.github.io/3d/#/earthDigital>
 
 将类组件转为函数式组件，将stylus预处理器形式css改为scss形式；
 
@@ -356,17 +356,17 @@ export default index
 >
 > 避免极点的聚集
 >
-> * 球体的顶部和底部（即极点）是特殊的位置，如果从 z = 0 或 z = 1 开始，可能会在这些极点处导致点过度聚集或分布不均。
-> * 通过将 `z` 的初始值设置为 `1 - dz / 2`，相当于在 z 轴上对点的位置进行了微小的偏移，使得第一个点和最后一个点都不会精确地位于球体的极点上，而是稍微偏离中心。这有助于改善球面上点的分布均匀性。
+> - 球体的顶部和底部（即极点）是特殊的位置，如果从 z = 0 或 z = 1 开始，可能会在这些极点处导致点过度聚集或分布不均。
+> - 通过将 `z` 的初始值设置为 `1 - dz / 2`，相当于在 z 轴上对点的位置进行了微小的偏移，使得第一个点和最后一个点都不会精确地位于球体的极点上，而是稍微偏离中心。这有助于改善球面上点的分布均匀性。
 >
 > 确保覆盖全球
 >
-> * 由于 `dz = 2 / counter`，这意味着 z 值将从 1 开始，逐渐递减至 -1，覆盖整个球体。
-> * 初始值 `1 - dz / 2` 实际上将第一个点的 z 值设置为接近 1，但略低于 1，确保点从球体的顶部开始，同时不会与球顶重合。
+> - 由于 `dz = 2 / counter`，这意味着 z 值将从 1 开始，逐渐递减至 -1，覆盖整个球体。
+> - 初始值 `1 - dz / 2` 实际上将第一个点的 z 值设置为接近 1，但略低于 1，确保点从球体的顶部开始，同时不会与球顶重合。
 >
 > 均匀分布
 >
-> * 此方法确保了点在垂直方向上也是均匀分布的。通过从 `1 - dz / 2` 开始，每个点的 z 值都是均匀地在 z 轴上偏移的，从而避免了在接近极点区域的不均匀密度。
+> - 此方法确保了点在垂直方向上也是均匀分布的。通过从 `1 - dz / 2` 开始，每个点的 z 值都是均匀地在 z 轴上偏移的，从而避免了在接近极点区域的不均匀密度。
 
 ➡️ 后话1 ☕️
 
@@ -470,7 +470,7 @@ export default index
 - **`varying float vFinalStep`** 和 **`varying float vMap`**: 这些是从顶点着色器传递到片段着色器的变量，用于进一步的渲染计算。
 
 ```jsx
-	shader.uniforms.impacts = uniforms.impacts;
+ shader.uniforms.impacts = uniforms.impacts;
         shader.uniforms.maxSize = uniforms.maxSize;
         shader.uniforms.minSize = uniforms.minSize;
         shader.uniforms.waveHeight = uniforms.waveHeight;
@@ -537,21 +537,21 @@ export default index
 
 片元着色器逻辑
 
-* 传入对逐个点起作用的冲击强度和顶点纹理的g值；
-* **形状处理** :
-* 计算以屏幕中心为原点的 UV 坐标 `hUv`。（vUv是一个从0到1的二维向量，表示纹理坐标或顶点着色器传递给片段着色器的顶点位置）
-* N=8常用于表示某种图形或模式中重复元素的数量
-* `a` 是计算得到的向量 `hUv`的角度（相对于原点），使用的是反正切函数 `atan`，它返回从x轴到向量的角度。
-* `r` 是每个扇区的角度范围，计算为 `2π` 除以扇区数量 `N`。
-* `d` 是当前点到最近扇区边界的距离。
-* `f` 是扇区中心到边界的距离。
-* 如果 `d` 大于 `f`，则丢弃该片元（`discard`），只有距离扇区中心非常近的像素才能通过测试，这样可以创建更加锐利和明显的边界；
-* 这有助于创建具有 N 边形形状的效果。
-* **颜色和渐变处理**:
-* `grad` 是内外渐变颜色的混合，基于 `d / f` 的值进行插值。
-* `diffuseMap` 是根据 `vMap` 调整的漫反射颜色。 区分了陆地和海洋
-* `col` 是漫反射颜色和渐变颜色的最终混合，其中使用了 `vFinalStep` 进行插值。
-* 使用最终计算出的颜色 `col` 和原始的不透明度 `opacity` 创建新的 `vec4 diffuseColor`。
+- 传入对逐个点起作用的冲击强度和顶点纹理的g值；
+- **形状处理** :
+- 计算以屏幕中心为原点的 UV 坐标 `hUv`。（vUv是一个从0到1的二维向量，表示纹理坐标或顶点着色器传递给片段着色器的顶点位置）
+- N=8常用于表示某种图形或模式中重复元素的数量
+- `a` 是计算得到的向量 `hUv`的角度（相对于原点），使用的是反正切函数 `atan`，它返回从x轴到向量的角度。
+- `r` 是每个扇区的角度范围，计算为 `2π` 除以扇区数量 `N`。
+- `d` 是当前点到最近扇区边界的距离。
+- `f` 是扇区中心到边界的距离。
+- 如果 `d` 大于 `f`，则丢弃该片元（`discard`），只有距离扇区中心非常近的像素才能通过测试，这样可以创建更加锐利和明显的边界；
+- 这有助于创建具有 N 边形形状的效果。
+- **颜色和渐变处理**:
+- `grad` 是内外渐变颜色的混合，基于 `d / f` 的值进行插值。
+- `diffuseMap` 是根据 `vMap` 调整的漫反射颜色。 区分了陆地和海洋
+- `col` 是漫反射颜色和渐变颜色的最终混合，其中使用了 `vFinalStep` 进行插值。
+- 使用最终计算出的颜色 `col` 和原始的不透明度 `opacity` 创建新的 `vec4 diffuseColor`。
 
 ```jsx
 shader.fragmentShader = `
@@ -596,27 +596,27 @@ shader.vertexShader:  #include <common>
 #include <logdepthbuf_pars_vertex>
 #include <clipping_planes_pars_vertex>
 void main() {
-	#include <uv_vertex>
-	#include <color_vertex>
-	#include <morphinstance_vertex>
-	#include <morphcolor_vertex>
-	#include <batching_vertex>
-	#if defined ( USE_ENVMAP ) || defined ( USE_SKINNING )
-		#include <beginnormal_vertex>
-		#include <morphnormal_vertex>
-		#include <skinbase_vertex>
-		#include <skinnormal_vertex>
-		#include <defaultnormal_vertex>
-	#endif
-	#include <begin_vertex>
-	#include <morphtarget_vertex>
-	#include <skinning_vertex>
-	#include <project_vertex>
-	#include <logdepthbuf_vertex>
-	#include <clipping_planes_vertex>
-	#include <worldpos_vertex>
-	#include <envmap_vertex>
-	#include <fog_vertex>
+ #include <uv_vertex>
+ #include <color_vertex>
+ #include <morphinstance_vertex>
+ #include <morphcolor_vertex>
+ #include <batching_vertex>
+ #if defined ( USE_ENVMAP ) || defined ( USE_SKINNING )
+  #include <beginnormal_vertex>
+  #include <morphnormal_vertex>
+  #include <skinbase_vertex>
+  #include <skinnormal_vertex>
+  #include <defaultnormal_vertex>
+ #endif
+ #include <begin_vertex>
+ #include <morphtarget_vertex>
+ #include <skinning_vertex>
+ #include <project_vertex>
+ #include <logdepthbuf_vertex>
+ #include <clipping_planes_vertex>
+ #include <worldpos_vertex>
+ #include <envmap_vertex>
+ #include <fog_vertex>
 }
 ```
 
@@ -626,7 +626,7 @@ void main() {
 shader.fragmentShader:  uniform vec3 diffuse;
 uniform float opacity;
 #ifndef FLAT_SHADED
-	varying vec3 vNormal;
+ varying vec3 vNormal;
 #endif
 #include <common>
 #include <dithering_pars_fragment>
@@ -645,32 +645,32 @@ uniform float opacity;
 #include <logdepthbuf_pars_fragment>
 #include <clipping_planes_pars_fragment>
 void main() {
-	vec4 diffuseColor = vec4( diffuse, opacity );
-	#include <clipping_planes_fragment>
-	#include <logdepthbuf_fragment>
-	#include <map_fragment>
-	#include <color_fragment>
-	#include <alphamap_fragment>
-	#include <alphatest_fragment>
-	#include <alphahash_fragment>
-	#include <specularmap_fragment>
-	ReflectedLight reflectedLight = ReflectedLight( vec3( 0.0 ), vec3( 0.0 ), vec3( 0.0 ), vec3( 0.0 ) );
-	#ifdef USE_LIGHTMAP
-		vec4 lightMapTexel = texture2D( lightMap, vLightMapUv );
-		reflectedLight.indirectDiffuse += lightMapTexel.rgb * lightMapIntensity * RECIPROCAL_PI;
-	#else
-		reflectedLight.indirectDiffuse += vec3( 1.0 );
-	#endif
-	#include <aomap_fragment>
-	reflectedLight.indirectDiffuse *= diffuseColor.rgb;
-	vec3 outgoingLight = reflectedLight.indirectDiffuse;
-	#include <envmap_fragment>
-	#include <opaque_fragment>
-	#include <tonemapping_fragment>
-	#include <colorspace_fragment>
-	#include <fog_fragment>
-	#include <premultiplied_alpha_fragment>
-	#include <dithering_fragment>
+ vec4 diffuseColor = vec4( diffuse, opacity );
+ #include <clipping_planes_fragment>
+ #include <logdepthbuf_fragment>
+ #include <map_fragment>
+ #include <color_fragment>
+ #include <alphamap_fragment>
+ #include <alphatest_fragment>
+ #include <alphahash_fragment>
+ #include <specularmap_fragment>
+ ReflectedLight reflectedLight = ReflectedLight( vec3( 0.0 ), vec3( 0.0 ), vec3( 0.0 ), vec3( 0.0 ) );
+ #ifdef USE_LIGHTMAP
+  vec4 lightMapTexel = texture2D( lightMap, vLightMapUv );
+  reflectedLight.indirectDiffuse += lightMapTexel.rgb * lightMapIntensity * RECIPROCAL_PI;
+ #else
+  reflectedLight.indirectDiffuse += vec3( 1.0 );
+ #endif
+ #include <aomap_fragment>
+ reflectedLight.indirectDiffuse *= diffuseColor.rgb;
+ vec3 outgoingLight = reflectedLight.indirectDiffuse;
+ #include <envmap_fragment>
+ #include <opaque_fragment>
+ #include <tonemapping_fragment>
+ #include <colorspace_fragment>
+ #include <fog_fragment>
+ #include <premultiplied_alpha_fragment>
+ #include <dithering_fragment>
 }
 ```
 
@@ -745,11 +745,11 @@ void main() {
 
 🔁 后话2-callback 🍵
 
-* unforms统一存shader里uniform的初始值
+- unforms统一存shader里uniform的初始值
 
 🔁 后话1-callback 🍵
 
-* 构造位于半径为5的球面上的冲击点、冲击最大半径、冲击比例、之前的点位置、飞线的比例和长度
+- 构造位于半径为5的球面上的冲击点、冲击最大半径、冲击比例、之前的点位置、飞线的比例和长度
 
 安装dat.gui的库：`npm i dat.gui @types/dat.gui`
 
@@ -761,9 +761,9 @@ gui设置隐藏，通过键盘H键唤起；
 
 🔁 后话1-callback 🍵
 
-* 取消注释
+- 取消注释
 
-![image-20240913170816909](C:\Users\Xiangting\AppData\Roaming\Typora\typora-user-images\image-20240913170816909.png)
+![image-20240913170816909.png](https://s2.loli.net/2024/10/12/tsKlSnbCucMwm2O.png)
 
 #### 制作飞线
 
@@ -847,10 +847,13 @@ gui设置隐藏，通过键盘H键唤起；
 下面是如何在你的 Vite 配置中添加对 `.glsl` 文件的支持的步骤：
 
 1. 安装 `vite-plugin-glsl`：
+
    ```
    npm install vite-plugin-glsl
    ```
+
 2. 在你的 Vite 配置文件中（通常是 `vite.config.js` 或 `vite.config.ts`）添加插件：
+
    ```
    import { defineConfig } from 'vite'
    import vue from '@vitejs/plugin-vue'
@@ -875,7 +878,6 @@ import textVertexShader from './Shader/text.vert.glsl'
 
 这些文件现在应该会被正确地作为字符串导入，可以直接使用在 Three.js 的 `ShaderMaterial` 中。这应该解决你遇到的关于 GLSL 代码导入的问题。
 
-
 页面中导入：
 
 ```
@@ -884,14 +886,13 @@ import lineFragmentShader from './line.frag.glsl';
 
 shader内容：
 
-actionRatio 代码中是0 _ 动画中修改 
+actionRatio 代码中是0 _ 动画中修改
 
 vLineDistance // 在使用 Three.js 的 LineDashedMaterial 时，确保顶点着色器正确地计算并传递 vLineDistance 变量到片元着色器是非常关键的，因为这个变量决定了线段的虚线效果。
 
 totalSize 一整个没用到
 
 lineLength 到起点的累积距离
-
 
 这段代码是一个在 Three.js 中使用的 GLSL shader，具体是用来处理具有虚线效果的线条材料（`LineDashedMaterial`）。这个 shader 控制着如何根据距离和虚线模式显示线条的片段。
 
@@ -907,9 +908,10 @@ lineLength 到起点的累积距离
   - `vLineDistance`: 表示当前片段在整个线条中的位置。
 
 **虚线计算**:
-  - 首先计算出当前应显示的虚线位置。
-  - 根据 `vLineDistance` 和虚线参数计算出当前片段是否在虚线中还是在空白间隔中。如果在间隔中，使用 `discard` 抛弃这个片段，不进行渲染。
-  - 使用渐变 (`grad`) 来处理虚线的边缘，使得虚线边缘平滑过渡。
+
+- 首先计算出当前应显示的虚线位置。
+- 根据 `vLineDistance` 和虚线参数计算出当前片段是否在虚线中还是在空白间隔中。如果在间隔中，使用 `discard` 抛弃这个片段，不进行渲染。
+- 使用渐变 (`grad`) 来处理虚线的边缘，使得虚线边缘平滑过渡。
 
 1. 顶点着色器中的计算:
 
@@ -965,8 +967,8 @@ let basisMinor = new THREE.Vector3().copy(startPoint).negate().setLength(radiusM
 
 旋转的中心点是坐标系统的原点 (0, 0, 0)。向量从它当前的位置开始，绕通过原点的轴旋转。这意味着：
 
-* 如果向量的一个端点位于原点，旋转将直接改变向量的方向，而长度保持不变。
-* 如果向量的一个端点不在原点，向量会在想象中被拉直至原点，然后绕轴旋转，再放回原位置。
+- 如果向量的一个端点位于原点，旋转将直接改变向量的方向，而长度保持不变。
+- 如果向量的一个端点不在原点，向量会在想象中被拉直至原点，然后绕轴旋转，再放回原位置。
 
 如果你需要绕一个不在原点的点旋转向量，你需要先将系统平移到那个点变成新的原点，执行旋转，然后再平移回去。这可以通过以下步骤完成：
 
@@ -1052,7 +1054,6 @@ material.needsUpdate = true;
 
 要查找Three.js中可用的所有shader chunks，最好的方法是直接查看Three.js的源代码。在GitHub上的Three.js库中，这些shader chunk文件位于`src/renderers/shaders/ShaderChunk/`目录下。
 
-
 #### 飞线动画
 
 内容结构：
@@ -1110,6 +1111,7 @@ for循环里的设置
 ## 机甲风head和card
 
 新建constant.js，存放一些固定的内容文本数组；
+
 ``` js
 export const weekMap ={...};
 export const tips = [...];
@@ -1177,7 +1179,7 @@ scss里写clip-path
 
 logo和aside部分的结构
 
-``` 
+```
 <div className="logo-pic" title='Cyberpunk 2077'></div>
 <aside className="hud aside left">
   <div className="box inverse">
@@ -1208,6 +1210,7 @@ const handleStartButtonClick = () => {
 ```
 
 动画中更新：
+
 ```
   const animate = () => {
    ......
@@ -1232,6 +1235,7 @@ composer = new EffectComposer(renderer);
 composer.addPass(new RenderPass(scene, camera));
 composer.addPass(new GlitchPass());
 ```
+
 ### btn的样式
 
 利用linear-gradient，实现了45度方向上，从透明到红色的按钮的突变（5%，5%），这个和《CSS揭秘》里的内容呼应了。
@@ -1255,7 +1259,7 @@ composer.addPass(new GlitchPass());
 
 ## echarts
 
-https://echarts.apache.org/handbook/zh/basics/import/
+<https://echarts.apache.org/handbook/zh/basics/import/>
 
 按需引入：
 
@@ -1377,70 +1381,82 @@ areaStyle: {
 },
 ```
 
-
-
 ## css动画
-
-
 
 ### 补充 | clip-path属性
 
 CSS 中的 `clip-path` 属性允许你定义一个元素的可见区域。通过这个属性，你可以指定一个路径，在这个路径内的内容会被显示，而路径外的内容则会被隐藏。这是一个非常强大的工具，因为它可以用来创建各种复杂的形状和动态效果。
 
 1. **创建复杂形状**：使用 `clip-path`，你可以轻松创建圆形、椭圆、多边形或者自定义路径（使用 SVG 路径语法）等形状。这对于设计先进的用户界面和特殊的图形效果非常有用。
-   
+
 2. **交互效果**：你可以结合动画和过渡效果使用 `clip-path`，以实现视觉上吸引人的交互动画。例如，当用户悬停或点击元素时改变 `clip-path` 的形状。
 
 3. **掩盖和显示内容**：它可以被用来掩盖元素的某部分或只显示某部分，这在创建仪表板、卡片或其他包含隐藏详细信息的界面元素时尤其有用。
 
 **基本语法**：
+
   ```css
   clip-path: shape | none;
   ```
+
   其中 `shape` 可以是以下几种类型：
 
 - **圆形**（`circle()`）：
+
   ```css
   clip-path: circle(50%);
   ```
+
   这会创建一个圆形剪裁区域，其中 `50%` 是圆的半径。
 
 - **椭圆**（`ellipse()`）：
+
   ```css
   clip-path: ellipse(50% 25%);
   ```
+
   这将创建一个椭圆剪裁区域，其中第一个值是水平半径，第二个值是垂直半径。
 
 - **多边形**（`polygon()`）：
+
   ```css
   clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
   ```
+
   这将创建一个菱形剪裁区域，每个百分比对是多边形一个顶点的坐标。
 
 - **使用 URL**（SVG 剪裁路径）：
+
   ```css
   clip-path: url(#clip-shape);
   ```
+
   这里 `#clip-shape` 是 SVG 内的 `<clipPath>` 元素的 ID，允许你使用 SVG 的复杂路径定义剪裁形状。
 
 通过使用 `clip-path`，开发者可以在不需要额外图像或 SVG 文件的情况下，直接在 CSS 中创建视觉上吸引人的形状和效果。这使得页面加载更快，也使得动态效果的实现更为简便。
 
-## echarts图表
-
 ## 底部仪表盘
 
-## 后期交互
-
-### 故障风
+1. 三个square构成，每个包括了radar和文字部分；
+2. 写css
+  1. radial-gradient
+  2. animation相关
 
 ### 点击事件
 
+1. 新建rayCaster, mouse记录鼠标点位
+2. 给系统添加左键双击的事件，记录鼠标位置（坐标轴变换到中心点，右正上正），
+3. 利用rayCaster判断是否与earth相交
+4. 相交，则显示模态框和文本
+5. 构建界面，写css
+
+`<i className='close' onClick={() => setShowModal(false)}>CLOSE</i>`, 而不是写成 `<i className='close' onClick={setShowModal(false)>CLOSE</i>`;
+因为第一种是函数引用，点击i的时候才会触发；第二种在渲染的时候直接触发了。
 
 
+## 问题
 
-# 问题
-
-## 球体的陆地和海洋并没有区分出来
+### 球体的陆地和海洋并没有区分出来
 
 尝试1：看看texture是否正确加载
 
@@ -1449,8 +1465,9 @@ let earthTexture = new Three.TextureLoader().load(earthImg, function (texture) {
       console.log('texture loaded successfully');
     }, undefined, function (err) { console.log('texture load failed', err); });
 ```
+
 问题是对UV的计算错了：
-错处1：` let uv = [(sph + Math.PI) / (2 * Math.PI), 1 - (sph.theta / Math.PI)];`
+错处1：`let uv = [(sph + Math.PI) / (2 * Math.PI), 1 - (sph.theta / Math.PI)];`
 
 需要使用new Three.Vector2(),而不是直接构建数组；如果是直接构建数组，那下面就访问不到.x和.y，需要使用[0]和[1]来访问对应的内容。
 
@@ -1459,9 +1476,11 @@ let earthTexture = new Three.TextureLoader().load(earthImg, function (texture) {
 这里对UV的映射计算错了
 
 > 在 Three.js 中，`Spherical` 类表示的球坐标系统是基于三维右手笛卡尔坐标系，其中 `phi`（仰角）和 `theta`（方位角）的定义具体如下：
+>
 > 1. **`phi`（仰角）** - 这是从正Y轴向下至点P的线段与Y轴之间的角度。在 Three.js 中，`phi` 的范围通常是从0到π（即从0到180度），其中0对应于正Y轴（向上）的方向，而π对应于负Y轴（向下）的方向。
 > 2. **`theta`（方位角）** - 这是在XZ平面上，从正Z轴向正X轴的角度。`theta` 的范围是从0到2π（即从0到360度），其中0开始于正Z轴，增加方向是逆时针（从屏幕向里到屏幕向外看为正Z方向）。
 因此，`Spherical` 的 `phi` 和 `theta` 的直观理解如下：
+>
 > - `phi = 0`：点位于Y轴的正方向（向上）。
 > - `phi = π/2`：点位于XZ平面。
 > - `phi = π`：点位于Y轴的负方向（向下）。
@@ -1471,8 +1490,7 @@ let earthTexture = new Three.TextureLoader().load(earthImg, function (texture) {
 > - `theta = 3π/2`：点位于X轴的负方向（向左）。
 > 这种球坐标系统非常有用于处理与球面或者环绕运动相关的场景，如天体模拟、相机环绕目标物体的动作等。
 
-
-正确写法：`let uv = new Three.Vector2((sph.theta + Math.PI) / (2 * Math.PI), 1 - (sph.phi / Math.PI));` 
+正确写法：`let uv = new Three.Vector2((sph.theta + Math.PI) / (2 * Math.PI), 1 - (sph.phi / Math.PI));`
 
 为了正确理解这段代码 `let uv = [(sph.theta + Math.PI) / (2 * Math.PI), 1 - (sph.phi / Math.PI)];` 并将二维贴图UV映射到球面上，让我们逐一分析每个部分：
 
@@ -1486,12 +1504,11 @@ let earthTexture = new Three.TextureLoader().load(earthImg, function (texture) {
    - `(sph.phi / Math.PI)` 将φ值归一化到 [0, 1] 范围内，其中0代表北极，1代表南极。
    - `1 -` 的作用是反转V坐标，使得在UV贴图中，V = 0 对应于球体的北极，V = 1 对应于球体的南极。这样的反转是必要的，因为在大多数图形处理系统中，贴图的V坐标从下到上增加，而球坐标系统中的φ是从上到下增加的。
 
-
-(Three.js地理坐标和三维空间坐标的转换)[https://blog.csdn.net/qihoo_tech/article/details/101443066]
+[Three.js地理坐标和三维空间坐标的转换](https://blog.csdn.net/qihoo_tech/article/details/101443066)
 
 ![image-20240908162225403.png](https://s2.loli.net/2024/09/09/pbtr2HfNW7xTSkC.png)
 
-## trail没显示出来
+### trail没显示出来
 
 vLineDistance // 在使用 Three.js 的 LineDashedMaterial 时，确保顶点着色器正确地计算并传递 vLineDistance 变量到片元着色器是非常关键的，因为这个变量决定了线段的虚线效果。
 
@@ -1499,10 +1516,9 @@ vLineDistance // 在使用 Three.js 的 LineDashedMaterial 时，确保顶点着
 
 在setPath的代码里，求division需要用pos.count来-1，之前是pos直接-1，导致了错误，使得trail的pos都没有正确更新；
 
-## 按钮切换效果不出来
+### 按钮切换效果不出来
 
 如果在 `useEffect` 中的依赖数组（第二个参数）设置为空数组 `[]`，这意味着 `useEffect` 只会在组件首次挂载时运行一次，而不会在组件的状态或属性更新时再次运行。这常用于执行那些只需一次的初始化操作，如 API 调用或设置初始配置。
-
 
 在您的情况中，如果 `animate` 函数在 `useEffect` 内定义，并且依赖数组为空，这会导致 `animate` 函数捕获到初始渲染时的状态值，例如 `renderGlithPass` 的初始值（`false`）。即使后续 `renderGlithPass` 状态更新，`animate` 函数中的值也不会更新，因为 `useEffect` 不会重新执行来更新闭包中的状态值。
 
@@ -1543,7 +1559,7 @@ useEffect(() => {
 
 这两种方法各有优势，选择哪一种取决于您的具体需求和组件的其他逻辑。如果 `animate` 函数对性能要求较高并且状态更新频繁，使用 `useRef` 可能是一个更好的选择。如果状态更新对 `animate` 的影响比较大，并且确保每次都是最新的状态很重要，那么更新 `useEffect` 的依赖数组可能更适合。
 
-## animate里的renderGlithPass总是false，未更新
+### animate里的renderGlithPass总是false，未更新
 
 在你的React代码中，你遇到的问题是由于闭包（closure）引起的。在JavaScript和React中，闭包会捕获它们创建时的环境状态。当你在 `useEffect` 钩子里调用 `animate()` 函数时，这个函数被“固定”在了那一刻的状态，包括 `renderGlithPass` 的值。
 
@@ -1584,3 +1600,716 @@ TODO
 调整canvas的大小位置
 
 ddd
+
+# 把以前的threejs的demo加入到项目里
+
+```
+chunk-DPRAAIJY.js?v=d07e5b2e:17488 Uncaught Error: R3F: Hooks can only be used within the Canvas component!
+    at useStore (chunk-DPRAAIJY.js?v=d07e5b2e:17488:21)
+    at useThree (chunk-DPRAAIJY.js?v=d07e5b2e:17492:10)
+    at @react-three_drei.js?v=d07e5b2e:649:7
+    at renderWithHooks (chunk-A6I3RWFE.js?v=d07e5b2e:12151:26)
+    at updateForwardRef (chunk-A6I3RWFE.js?v=d07e5b2e:14307:28)
+    at beginWork (chunk-A6I3RWFE.js?v=d07e5b2e:15914:22)
+    at HTMLUnknownElement.callCallback2 (chunk-A6I3RWFE.js?v=d07e5b2e:3674:22)
+    at Object.invokeGuardedCallbackDev (chunk-A6I3RWFE.js?v=d07e5b2e:3699:24)
+    at invokeGuardedCallback (chunk-A6I3RWFE.js?v=d07e5b2e:3733:39)
+    at beginWork$1 (chunk-A6I3RWFE.js?v=d07e5b2e:19733:15)
+```
+
+针对上面这个报错，后来发现导入fox的时候需要加上fox.jsx，以前直接是fox，但以前应该也是可以成功的？
+
+参考教程：<https://juejin.cn/post/7145064095178293285>
+
+# 数字地球星空
+
+1. 构建（线框风的地球earth、）环ring、卫星satellite
+2. 构建500个随机分布的星星stars
+3. 初始化场景，设置光照，关联dom
+4. 加载地球的模型和贴图
+5. 添加动画
+
+## **页面中不显示canvas的内容**
+
+1. 检查对应的template里的div元素的大小，如果设置不当，就看不到物体；
+2. 如果没有把下面的代码放到init里，这个时候container的div还没有创建，获取不到对应的宽高
+
+```js
+let container = document.getElementById('container')
+
+let sizes = {
+  width: container.clientWidth,
+  height: container.clientHeight,
+}
+```
+
+## **页面中看不到物体**
+
+1. 确认设置了div的大小: 如果 `container`的大小为0或非常小，那么 `Three.js`渲染的内容可能就无法被看到。确保 `.fullSize`样式被正确应用，并且容器元素确实覆盖了可见区域
+2. 确定场景的材质颜色不和背景一样
+3. 确认材质是否需要加光照
+4. 调整相机.lookAt() : 如果场景中没有添加任何可见物体或者物体和摄像机的位置设置不当，可能导致看不到任何内容。试着添加一个简单的几何体，确保它在摄像机视野内
+5. 调整物体.position.set()
+6. 调整相机的位置.position.set()
+7. 调整物体的大小 size
+8. **渲染调用时机** ：你在 `initThree`函数中只调用了一次 `renderer.render(scene, camera)`，这意味着场景只渲染了一次，且在没有添加环境纹理之前。通常，我们会在添加完所有初次所需的场景内容后再进行渲染，或者使用动画循环（如 `requestAnimationFrame`）不断渲染场景。
+
+此外，从vue迁移到react里的时候，原先是通过下面来实现的
+
+```
+    renderer = new Three.WebGLRenderer({ alpha: true, antialias: true })
+    renderer.setSize(sizes.width, sizes.height)
+    container.current.appendChild(renderer.domElement);
+```
+
+但搬过来就实现不了了，需要使用这样子实现；
+
+```
+    renderer = new Three.WebGLRenderer({ canvas: container.current, alpha: true, antialias: true })
+    renderer.setSize(sizes.width, sizes.height)
+    renderer.render(scene, camera);
+```
+
+但又会报这种错误：
+
+```
+chunk-A6I3RWFE.js?v=776dc4a7:16638 Uncaught TypeError: Cannot read properties of null (reading 'matrixWorldAutoUpdate')
+    at WebGLRenderer.render (chunk-KKQC3OGW.js?v=776dc4a7:17854:17)
+    at initThree (EarthStar.jsx:47:14)
+    at EarthStar.jsx:120:5
+    at commitHookEffectListMount (chunk-A6I3RWFE.js?v=776dc4a7:16883:34)
+    at commitPassiveMountOnFiber (chunk-A6I3RWFE.js?v=776dc4a7:18124:19)
+    at commitPassiveMountEffects_complete (chunk-A6I3RWFE.js?v=776dc4a7:18097:17)
+    at commitPassiveMountEffects_begin (chunk-A6I3RWFE.js?v=776dc4a7:18087:15)
+    at commitPassiveMountEffects (chunk-A6I3RWFE.js?v=776dc4a7:18077:11)
+    at flushPassiveEffectsImpl (chunk-A6I3RWFE.js?v=776dc4a7:19458:11)
+    at flushPassiveEffects (chunk-A6I3RWFE.js?v=776dc4a7:19415:22)
+```
+
+需要把`renderer.render(scene, camera);`放到scene初始化的后面；
+
+此外，需要放在scene添加模型之后，这样子模型才会被渲染到场景里；
+
+## **Uncaught TypeError: Cannot read properties of null (reading 'width')**
+
+```js
+let sizes = {
+  width: container.width,
+  height: container.height,
+}
+```
+
+当你看到错误消息 "Uncaught TypeError: Cannot read properties of null (reading 'width')"，这表明你试图访问的对象（在这个例子中是 `container`）为 `null`。这通常发生在尝试访问一个DOM元素的属性，但该元素在代码执行时还未被成功选中或者根本不存在于DOM中。
+
+改用 `.clientWidth`和 `.clientHeight`是正确的修正方式，但前提是你首先需要确保 `container`不是 `null`。这两个属性是DOM元素的标准属性，分别表示元素的内部宽度（不包括边框）和高度，适用于获取元素的可视尺寸。
+
+你可以通过以下步骤确保 `container`已正确选中并非 `null`：
+
+1. 确保你的代码在DOM元素实际被加载到页面上之后执行。如果你的代码在元素被加载之前执行，那么即使选择器正确，也会返回 `null`。通常，将JavaScript代码放在文档的底部，或者使用 `document.addEventListener('DOMContentLoaded', function() { /* 代码 */ })`来确保在DOM完全加载后再运行代码。
+2. 检查选择器是否正确。确保你用来选中 `container`的选择器（比如ID或类名）是正确的，并且与HTML中的元素匹配。
+
+使用 `container.width` 不适用于 `div` 元素，因为 `div` 没有 `width` 属性。`width` 属性通常用于 `canvas`、`img` 等元素，这些元素具有直接可读写的宽度和高度属性。对于 `div` 和其他没有宽高属性的块级元素，你需要使用 `clientWidth` 和 `clientHeight` 来获取它们的视觉呈现尺寸，这些尺寸包括了元素的内边距（padding）但不包括边框（border）和滚动条。
+
+这就是为什么在Three.js中，当你设置相机参数的时候需要使用 `container.clientWidth` 和 `container.clientHeight` 而不是 `container.width` 和 `container.height`：
+
+- `clientWidth` 和 `clientHeight` 给你提供了元素的实际内容区域的尺寸，这对于Three.js中确保相机的长宽比与渲染容器匹配是非常重要的。
+- 这些属性反映了 `<div>`容器当前的大小，包括任何由于页面布局或样式动态变化导致的尺寸更改。
+- 如果使用 `width` 和 `height`，你可能会得到 `undefined`，因为这不是标准的 `div` 属性，这会导致你的相机设置不正确。
+
+## 动画中位置的设置
+
+在threejs中设置动画里面，satellite模型的位置如下
+
+```js
+satellite.position.set(
+        140 * Math.cos(radian),
+        50 * Math.sin(radian),
+        20 * Math.sin(radian)
+      )
+```
+
+其中
+
+```js
+rot += Math.random() * 0.8
+let radian = (Math.PI * rot) / 180
+```
+
+为什么satellite动画的位置要这么设置
+
+在这段代码中，`satellite.position.set(x, y, z)` 正在设置卫星模型在三维空间中的位置，其中 `x`，`y`，和 `z` 是根据一定规则计算出来的坐标值。这些值是通过正弦（`sin`）和余弦（`cos`）函数的变化来动态计算的，这些函数是从圆和波的几何关系中派生出来的，因此它们非常适合用于创建循环和振荡的动画效果，如卫星绕地球运行的轨迹。
+
+- `140 * Math.cos(radian)` 是在计算卫星在x轴上的位置。使用余弦函数意味着卫星在x轴上的运动会形成一个正弦波，其值在-140到+140之间变化，创建了水平方向上的循环运动。
+- `50 * Math.sin(radian)` 是在计算卫星在y轴上的位置。正弦函数决定了卫星在垂直方向上的运动，创建了一个范围在-50到+50之间的波动。
+- `20 * Math.sin(radian)` 是在计算卫星在z轴上的位置。这同样使用了正弦函数，但是影响卫星在“深度”方向上的运动。这个值的变化范围在-20到+20之间，这个变化范围小于y轴，意味着在这个方向上的振动幅度较小。
+- `rot += Math.random() * 0.8` 这部分代码是为了在每次动画循环时增加 `rot`的值，而且每次增加的值是随机的，最大不超过0.8度。这将为卫星运动添加一个随机性，使其轨迹更加自然，而不是完美的圆形或者规则循环。
+- `let radian = (Math.PI * rot) / 180` 这行将角度 `rot`转换为弧度。
+
+为什么x轴使用 `Math.cos` 而y轴和z轴使用 `Math.sin` 呢？这是因为在2D参数化曲线中，常常使用 `cos(t)` 表示x坐标，`sin(t)` 表示y坐标，这样可以创建一个圆。在三维空间中，我们可以使用相同的正弦函数来控制另外两个维度（在这种情况下是y和z），这样我们可以将2D圆形运动扩展到3D空间。
+
+通过这样设置，你可以让卫星在x和y轴上做圆周运动，而z轴的运动则创建了高度的变化，这可以模拟例如倾斜的轨道或者其它不同于标准圆形轨道的路径。通过改变各轴上正弦和余弦函数前的系数，可以创建出不同的椭圆轨道，这就是为什么在不同轴上的运动使用不同的正弦余弦值，以及它们前面的系数不同。
+
+![](https://s2.loli.net/2024/03/25/Ioq7PRSjt3cJ8mG.png)
+
+## 相机
+
+通过设置相机，可以改变物体呈现的角度，也就是在调整物体位置的方案之外，也可以调整相机的位置。
+
+## 外部资源加载
+
+```
+EarthStar.jsx:69 THREE.OBJLoader: Unexpected line: "<!DOCTYPE html>"
+Promise.then  
+(anonymous) @ EarthStar.jsx:69
+Promise.then  
+EarthStar @ EarthStar.jsx:64
+Show 20 more frames
+```
+
+需要将模型放到public目录里面，同时vite.config.js的配置里加入：`assetsInclude: ['**/*.glb', '**/*.mtl', '**/*.gltf'],`
+
+---
+
+如果你在使用 Vite 和 Vue，并且看到网络请求的状态码为 `304 Not Modified`，这意味着浏览器已经缓存了 `earth.obj` 文件，并且服务器告诉浏览器自从上次请求以来文件没有被修改，所以浏览器可以使用本地缓存的版本。
+
+但是，如果你遇到 `THREE.OBJLoader: Unexpected line: "<!doctype html>"` 的警告，那说明 OBJLoader 实际上解析到的是一个 HTML 文件，而不是 OBJ 文件。这通常说明在请求OBJ文件时发生了错误，服务器返回了一个HTML错误页面而不是文件内容。
+
+由于你看到的是304状态码，而不是200或404，这表明可能存在以下情况：
+
+1. **Vite的静态文件处理** ：Vite在开发模式下可能对静态资源的处理有所不同，确保 `earth.obj`文件放在了 `public`目录下，而不是 `src`目录下。在Vite中，`public`目录下的文件不会被处理，可以直接访问。
+2. **缓存问题** ：可能浏览器缓存了错误的内容。尝试清除浏览器缓存，或者在开发者工具中禁用缓存（在Network标签页，勾选Disable cache），然后再次加载页面。
+3. **错误页面** ：尽管状态码为304，但是如果服务器在之前的请求中返回了错误，浏览器可能缓存了错误页面。检查Vite服务器的配置或控制台输出以确定是否有错误。
+4. **正确的MIME类型** ：Vite应该自动为 `.obj`文件提供正确的MIME类型，但是如果有什么配置不当，可能需要手动检查。
+
+在你的 Vite 项目中，assetsInclude 的配置项用于指定哪些额外的文件类型应被视为静态资源进行处理。默认情况下，Vite 已经内置了对常见的静态资源文件类型的处理，如图片和媒体文件。对于 3D 模型文件如 .glb、.gltf、.obj 和 .mtl，需要特别指定，以便 Vite 能够正确地处理它们。
+
+你提到 .glb 类型的模型可以正常加载，而其他类型的模型需要放到 public 目录下才可以正常加载，这可能与几个因素有关：
+
+- Vite 配置：确保 assetsInclude 的路径匹配是正确的。你的配置已经包括了对这些文件类型的全局匹配。检查是否有任何拼写错误或路径错误。通配符 **/* 表示匹配任意深度的文件夹中的指定文件类型。
+
+- 模块解析：Vite 在开发环境下使用 JavaScript 模块解析来处理资源。如果你的 .obj 或 .mtl 文件没有被正确地识别为模块，它们可能不会通过 Vite 的处理流程。确保这些文件在导入时的路径是正确的，并且相对于项目的根目录。
+
+- 资源引用：检查在项目中引用这些资源的方式。如果你是使用 ES 模块语法（如 import model from './path/to/model.obj'），Vite 将尝试将其视为模块来处理。如果资源没有按预期处理，可能需要调整引用方式或确认文件路径是否正确。
+
+- 缓存问题：有时候，开发服务器的缓存可能导致资源加载行为不一致。尝试清除缓存或重启 Vite 服务器看是否有改进。
+
+- Vite 插件：对于一些特殊类型的文件，可能需要使用特定的 Vite 插件来支持。例如，对于 3D 模型文件，你可能需要使用适合处理这些文件的插件。
+
+最后通过import方式引入，就可以了，不需要放到public目录里了；
+
+但打包的时候，也可能会被忽略（参考你不得以放进去的gltfModels文件夹???
+
+## 球体贴图没贴上
+
+mtl文件里关联了贴图，所以贴图也要一起拷贝过来；
+
+# 案例2-光影人物
+
+1. 两个渲染器、相机，一个场景，添加光照；
+2. 处理窗口缩放
+3. 构建页面结构
+4. css写在外部文件里
+5. 构建加载管理器，实现加载页面的下移、消失、移除
+6. 加载glb模型，并使用draco进行处理
+7. 使用intersection observer进行异步观察
+8. 处理鼠标移动下的span效果
+9. 调整相机
+10. 添加事件监听
+
+注意点：
+- renderer1.outputColorSpace = Three.SRGBColorSpace // API已经改成了ColorSpace
+
+- why lds-roller has 8 divs? ,用于形成loading旋转的时候的八个点
+
+## IntersectionObserver
+
+`IntersectionObserver` 是一个强大的 Web API，用于异步观察一个元素与其祖先元素或顶级文档视窗（viewport）的交叉状态。简单来说，它允许你配置一个回调函数，当被观察的元素以某种方式进入或离开另一个元素的视域时，这个回调函数会被执行。这个功能特别适合于实现像懒加载图片、无限滚动、动画触发等功能，而无需依赖繁重的滚动事件监听，从而提高页面性能和用户体验。
+
+在你的代码示例中，`IntersectionObserver` 被用于监测一个名为 `.second` 的元素何时成为可见的，以及它的可见程度（即交叉比率）：
+
+```javascript
+let secondContainer = false;
+const ob = new IntersectionObserver(payload => {
+  secondContainer = payload[0].intersectionRatio > 0.05;
+}, { threshold: 0.05 });
+ob.observe(document.querySelector('.second'));
+```
+
+- **回调函数**：当观察的元素进入或退出交叉区域时，回调函数会被调用。`payload` 参数（通常命名为 `entries`）是一个数组，包含了被观察元素的交叉状态信息。这个示例中只观察了一个元素，因此通过 `payload[0]` 访问了这个元素的信息。
+- **`intersectionRatio`**：这是一个 0 到 1 之间的值，表示观察的元素当前可见部分的比例。在这个例子中，如果这个比例大于 0.05，`secondContainer` 将被设置为 `true`，表示元素至少有 5% 是可见的。
+- **选项对象**：在这个例子中，选项对象 `{ threshold: 0.05 }` 指定了触发回调的交叉比率阈值。当元素的可见部分超过 5% 时，回调函数将被执行。`threshold` 可以是一个单一的值或一个值的数组，允许你在元素可见性达到多个不同级别时触发回调。
+- **`.observe()` 方法**：这个方法用于开始观察一个元素。在这里，它观察一个类名为 `.second` 的元素。当这个元素的可视状态发生变化，且满足设定的阈值时，将触发上面定义的回调函数。
+
+使用 `IntersectionObserver` 相比传统的滚动事件监听，可以大大减少对性能的影响，因为浏览器可以优化对交叉状态的检测，无需在每次滚动事件发生时执行复杂的计算。
+
+## `window.scroll`
+
+`window.scroll(0, 0)` 是 JavaScript 中的一个方法调用，用于将浏览器窗口或标签页的滚动位置设置到页面的最顶部。这里的两个参数 `(0, 0)` 分别表示水平和垂直方向的滚动位置。
+
+- 第一个参数 `0` 表示在水平方向上的滚动距离。在这个例子中，`0` 意味着页面将滚动到最左边。
+- 第二个参数 `0` 表示在垂直方向上的滚动距离。在这个例子中，`0` 意味着页面将滚动到最顶部。
+
+因此，调用 `window.scroll(0, 0)` 会使得页面滚动到左上角，即页面的起始位置。这个方法经常在需要将用户的视图重置到页面顶部的情况下使用，比如在用户点击“返回顶部”按钮时。
+
+## 动画位移
+
+```
+// 更新点光源的位置
+      fillLight.position.y -=
+        (parallaxY * 9 + fillLight.position.y - 2) * deltaTime
+      fillLight.position.x +=
+        (parallaxX * 8 - fillLight.position.x) * 2 * deltaTime
+      // 更新第一个相机所在相机组的位置
+      cameraGroup.position.z -=
+        (parallaxY / 3 + cameraGroup.position.z) * 2 * deltaTime
+      cameraGroup.position.x +=
+        (parallaxX / 3 - cameraGroup.position.x) * 2 * deltaTime
+```
+
+这段代码通过结合用户输入（例如鼠标移动产生的视差效果，即 `parallaxX` 和 `parallaxY`）和时间变化量（`deltaTime`）来动态更新点光源和相机组的位置。这种方法可以创建平滑和响应式的动画效果，使得场景元素（如光源和相机）能够根据用户的交互或时间的推移进行移动。
+
+这里使用的是一种常见的动画和模拟技术，即在每一帧根据时间差（`deltaTime`）调整位置，以实现平滑的运动效果。`deltaTime` 通常表示自上一帧以来经过的时间，用于确保动画的速度不受帧率变化的影响。
+
+```javascript
+fillLight.position.y -= (parallaxY * 9 + fillLight.position.y - 2) * deltaTime;
+fillLight.position.x += (parallaxX * 8 - fillLight.position.x) * 2 * deltaTime;
+```
+
+- 对于 `y` 轴位置，代码计算了一个目标值，这个目标值由 `parallaxY` 的9倍与光源当前 `y` 值与2的差值共同决定，然后通过 `deltaTime` 调整速度和平滑度。这样做的效果是让光源在垂直方向上根据视差值平滑移动，并且试图维持在一个**相对于原点偏移2**的位置。
+- 对于 `x` 轴位置，类似地，目标位置由 `parallaxX` 的8倍减去当前 `x` 值决定，然后乘以2和 `deltaTime` 来调整。这让光源在水平方向上也根据视差值平滑地移动。
+
+```javascript
+cameraGroup.position.z -= (parallaxY / 3 + cameraGroup.position.z) * 2 * deltaTime;
+cameraGroup.position.x += (parallaxX / 3 - cameraGroup.position.x) * 2 * deltaTime;
+```
+
+- 这里对相机组的 `z` 和 `x` 轴位置进行更新，逻辑类似于光源位置的更新，**但视差值被除以3，意味着相对移动幅度更小**，创建了一种不同的视差效果。这种效果通常用来给用户一种深度感，即背景元素相对于前景元素移动得更慢。
+
+？如何恰当的设置，在鼠标移动下，页面元素的流畅偏移效果
+
+## CSS
+
+```
+.lds-roller div {
+  animation: lds-roller 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+  transform-origin: 40px 40px;
+} 
+```
+
+这段 CSS 代码定义了一个动画效果，通常用于创建加载指示器（如旋转的圆环或球）。让我们逐步解析这段代码的含义：
+
+```css
+.lds-roller div {
+  ...
+}
+```
+
+这里的选择器 `.lds-roller div` 指的是所有类名为 `lds-roller` 的元素内部的 `div` 元素。对这些 `div` 元素应用以下样式和动画。
+
+```css
+animation: lds-roller 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+```
+
+- **动画名称 (`lds-roller`)**：这是动画的关键帧名称，它引用了在某处定义的 `@keyframes lds-roller`，该关键帧定义了动画的开始、结束状态以及可能的中间状态。
+- **持续时间 (`1.2s`)**：动画从开始到结束的时长为 1.2 秒。
+- **缓动函数 (`cubic-bezier(0.5, 0, 0.5, 1)`)**：这是一个贝塞尔曲线，定义了动画的加速度曲线。这个特定的曲线意味着动画开始时加速度较快，结束时减速。这样可以让动画看起来更自然、流畅。
+- **重复次数 (`infinite`)**：动画会无限次重复。
+
+```css
+transform-origin: 40px 40px;
+```
+
+- **变换原点 (`transform-origin`)**：这个属性定义了元素变形的原点。在这个例子中，原点被设置在了元素的 `40px 40px` 的位置，通常意味着元素的变换（如旋转）将围绕这个点进行。这个设置有助于创建环绕中心点旋转的效果，特别是当动画效果是旋转时。
+
+综上所述，这段 CSS 为 `.lds-roller` 内部的每个 `div` 应用了一个持续 1.2 秒、无限重复的平滑动画，该动画的具体行为由 `@keyframes lds-roller` 定义。动画的变换原点设置在每个 `div` 的 `40px 40px` 处，使得旋转动画能围绕该点进行，创建出一个加载动画的视觉效果。
+
+为了完整地实现这个动画效果，你还需要定义相应的 `@keyframes lds-roller` 关键帧动画，指明动画开始、结束时，以及可能的中间步骤的具体样式变化。
+
+```
+loadingCover.style.setProperty(
+              'transform',
+              `translate(0,${yPosition.y}%)`
+            )
+```
+
+在这段代码中，`loadingCover.style.setProperty` 方法被用于动态修改 `loadingCover` 元素的 CSS `transform` 属性。这个方法允许你直接通过 JavaScript 更改元素的样式，其中 `setProperty` 接受两个参数：第一个参数是要修改的 CSS 属性名称，第二个参数是该属性的新值。
+
+- **第一个参数 (`transform`)**: 指定了要修改的 CSS 属性，这里是 `transform`。`transform` 属性允许你对元素进行变形，比如旋转、缩放、移动（平移）或倾斜。
+- **第二个参数 (`translate(0,${yPosition.y}%)`)**: 是 `transform` 属性的新值，这里使用了 `translate` 函数来移动元素。`translate` 函数接受两个参数，分别对应 X 轴和 Y 轴的移动距离。在这个例子中，`translate(0,${yPosition.y}%)` 表示在 X 轴方向上不移动（`0`），在 Y 轴方向上移动 `${yPosition.y}%` 的距离，其中 `${yPosition.y}` 是一个动态计算的值，表示移动距离的百分比。使用百分比单位可以根据元素大小的不同而相对地移动不同的距离。
+
+这段代码的目的是根据 `yPosition.y` 的值（可能是通过某些计算得到的），在 Y 轴方向上动态移动 `loadingCover` 元素。这种技术常用于创建动态的交互效果，比如根据用户的滚动或鼠标移动来移动页面上的元素，从而增加页面的动态性和互动性。
+
+假设 `yPosition.y` 的值为 `50`，则 `translate(0,${yPosition.y}%)` 将解析为 `translate(0,50%)`，意味着 `loadingCover` 元素将沿 Y 轴方向下移其高度的 50%。这样的移动效果可以用于各种动画和过渡效果，使得页面元素的移动看起来更平滑和自然。
+
+## innerHeight, clientHeight
+
+当想获取一个DOM元素的宽度和高度时，通常会使用 `clientHeight`和 `clientWidth`。这两个属性提供了元素的内部高度和宽度（包括填充，但不包括边框、滚动条或外边距）。
+
+对于你的具体例子，如果你需要在组件挂载后获取这个 `div`元素的宽度和高度，
+
+```html
+<script setup>
+import { ref, onMounted } from 'vue';
+
+const container = ref(null);
+
+onMounted(() => {
+  if (container.value) {
+    console.log('Width:', container.value.clientWidth);
+    console.log('Height:', container.value.clientHeight);
+  }
+});
+</script>
+
+<template>
+  <div ref="container" class="fullSize"></div>
+</template>
+```
+
+- **clientHeight**：元素的内部高度（包括padding，但不包括水平滚动条、border和margin）。
+- **clientWidth**：元素的内部宽度（同样，包括padding但不包括垂直滚动条、border和margin）。
+- **offsetHeight**：元素的外部高度（包括padding、border和水平滚动条，但不包括margin）。
+- **offsetWidth**：元素的外部宽度（包括padding、border和垂直滚动条，但不包括margin）。
+- **scrollHeight**和**scrollWidth**：包括了因为滚动而不可见内容的整体尺寸。
+
+通常来说，`clientHeight`和 `clientWidth`是获取元素可见部分尺寸的最常用属性。如果你的 `div`具有滚动条，或者你关心内容溢出的情况，`scrollHeight`和 `scrollWidth`也可能是有用的。如果需要考虑元素的边框，在某些情况下可能会选择使用 `offsetHeight`和 `offsetWidth`。
+
+在Web开发中，`innerHeight` 并不是一个用来获取DOM元素尺寸的属性；而是一个属于 `window`对象的属性，它表示浏览器窗口的视图区域（视口）的高度，包括水平滚动条（如果存在的话）。
+
+`window.innerHeight` 通常用于处理与视口大小相关的逻辑，如下几种典型用途：
+
+1. **响应式设计**：JavaScript中可以使用 `window.innerHeight`来帮助确定浏览器窗口的当前高度，进而调整网页布局或功能以适应不同的显示设备。
+2. **触发特定的行为**：当用户缩放浏览器窗口至某个特定的尺寸时，你可能希望根据窗口的大小改变来触发某些行为或动画。
+3. **无限滚动**：在实现无限滚动的网页中，`window.innerHeight` 可以用来计算用户何时接近底部，从而在用户滚动到页面底部之前加载更多内容。
+4. **全屏元素显示**：如果你想要某个元素（如视频、图片展示等）全屏显示，`window.innerHeight` 可以帮助你设置元素的高度，使之完全填充用户的视口。
+
+下面是一个示例代码，展示如何使用 `window.innerHeight`来调整一个元素的高度使其总是占满整个视口：
+
+```html
+<style>
+  .full-height {
+    width: 100%;
+    background-color: lightblue; /* 易于视觉识别的颜色 */
+  }
+</style>
+
+<div class="full-height" id="fullHeightDiv">
+  这个div高度将填满视口
+</div>
+
+<script>
+  function adjustHeight() {
+    const div = document.getElementById('fullHeightDiv');
+    div.style.height = window.innerHeight + 'px';
+  }
+
+  window.onload = adjustHeight;
+  window.onresize = adjustHeight; // 确保在窗口尺寸变化时更新高度
+</script>
+```
+
+## tween的销毁
+
+```
+new TWEEN.Tween(yPosition)
+          .to({ y: 100 }, 900)
+          .easing(TWEEN.Easing.Quadratic.InOut)
+          .start()
+          .onUpdate(() => {
+            loadingCover.style.setProperty(
+              'transform',
+              `translate(0,${yPosition.y}%)`
+            )
+          })
+          .onComplete(() => {
+            loadingCover.parentNode.removeChild(
+              document.getElementById('loading-text-intro')
+            ) // 写loadingCover会报空
+            TWEEN.remove(this)
+          })
+```
+
+### `tween.getId is not a function` 错误
+
+这个错误提示表明，尝试调用的 `getId` 方法不存在于 `tween` 对象上。在你的代码中，错误来源于 `TWEEN.remove(this)` 这行代码。这里的问题是 `this` 在 `onComplete` 回调函数中不指向你期望的 tween 对象。在 ES6 的箭头函数中，`this` 关键字并不会绑定到外围的上下文，而是继承自它所在的上一层作用域。这意味着这里的 `this` 不是指向 Tween 实例，而可能是指向了全局对象或者 `undefined`（严格模式下）。
+
+#### 解决方案
+
+为了正确地移除 tween，你可以直接引用 tween 实例本身而不是使用 `this`。不过，从你的代码来看，并没有直接的引用。通常，如果你需要在回调中引用 tween，可以事先将其存储在一个变量中。但 `TWEEN.js` 库通常自我管理所有 tween 的生命周期，包括它们的添加和移除，所以手动调用 `remove` 方法可能并不是必须的。如果你确实需要移除 tween，考虑调整你的代码逻辑，避免在这种上下文中使用 `this`。
+
+```
+const tween1 = new TWEEN.Tween(yPosition)
+          .to({ y: 100 }, 900)
+          .easing(TWEEN.Easing.Quadratic.InOut)
+          .start()
+          .onUpdate(() => {
+            loadingCover.style.setProperty(
+              'transform',
+              `translate(0,${yPosition.y}%)`
+            )
+          })
+          .onComplete(() => {
+            loadingCover.parentNode.removeChild(
+              document.getElementById('loading-text-intro')
+            ) // 写loadingCover会报空
+            TWEEN.remove(tween1)
+          })
+
+        const tween2 = new TWEEN.Tween(camera1.position.set(0, 4, 2))
+          .to({ x: 0, y: 2.4, z: 5.8 }, 3500)
+          .easing(TWEEN.Easing.Quadratic.InOut)
+          .start()
+          .onComplete(() => {
+            TWEEN.remove(tween2)
+            document.querySelector('.header').classList.add('ended')
+            document.querySelector('.description').classList.add('ended')
+          })
+```
+
+## 查询元素
+
+```
+const loadingCover = document.getElementById('loading-text-intro')
+
+        const tween1 = new TWEEN.Tween(yPosition)
+          .to({ y: 100 }, 900)
+          .easing(TWEEN.Easing.Quadratic.InOut)
+          .start()
+          .onUpdate(() => {
+            loadingCover.style.setProperty(
+              'transform',
+              `translate(0,${yPosition.y}%)`
+            )
+          })
+          .onComplete(() => {
+            loadingCover.parentNode.removeChild(
+              document.getElementById('loading-text-intro')
+            ) // 写loadingCover会报空
+            TWEEN.remove(tween1)
+          })
+```
+
+`Cannot read properties of null (reading 'removeChild')` 错误
+
+> 这个错误表明你尝试从一个 `null` 对象中调用 `removeChild` 方法。这通常发生在尝试访问或修改已经被移除或未被正确初始化的 DOM 元素时。在你的代码中，这个问题出现在尝试移除 `loadingCover` 元素的代码块中。
+
+#### 解决方案
+
+在尝试移除 `loadingCover` 之前，确保它存在。这个问题可能出现是因为 `loadingCover` 为 `null`，意味着 `document.querySelector('#loading-text-intro')` 没有找到匹配的元素。这可能是因为元素的 ID 错误，或者这段代码执行的时候，对应的 DOM 元素还没有加载到页面上。
+
+你可以通过在尝试访问或修改元素之前检查它是否存在来解决这个问题：
+
+```
+if (loadingCover && loadingCover.parentNode) {
+    loadingCover.parentNode.removeChild(loadingCover);
+}
+```
+
+综合以上，你的问题可能是由于对 `this` 的误用和对 DOM 元素存在性的假设未经验证造成的。正确地引用变量和确保 DOM 元素存在，可以解决这些问题。
+
+`document.querySelector` 和 `document.getElementById` 都是用来从 DOM 中获取元素的方法，但它们之间有一些关键的区别：
+
+`document.querySelector`
+
+- `querySelector` 方法可以接受任何 CSS 选择器作为参数，这意味着它非常灵活。你可以用它来获取类、ID、属性选择器等指定的元素。
+- 如果有多个元素匹配给定的选择器，`querySelector` 只会返回第一个匹配的元素。
+- 由于它接受任何 CSS 选择器，所以相对来说，执行速度会比 `getElementById` 慢一些。
+
+```javascript
+const element = document.querySelector('#a'); // 使用 # 来指定它是一个 ID
+```
+
+`document.getElementById`
+
+- `getElementById` 方法仅接受一个 ID 作为参数，并返回具有该 ID 的元素。
+- 它是直接根据 ID 来获取元素，不需要指定任何前缀，因为 ID 在 HTML 文档中应该是唯一的。
+- `getElementById` 通常比 `querySelector` 更快，因为它专门用于通过 ID 查找元素，而 ID 在 DOM 中是唯一的。
+
+```javascript
+const element = document.getElementById('a');
+```
+
+如果你需要通过 ID 获取元素，并且对性能有一定要求，`getElementById` 是一个更好的选择。如果你需要更多的选择器灵活性（例如，通过类名、属性等获取元素），则应使用 `querySelector`。
+
+- **性能**：对于通过 ID 获取单个元素的情况，`getElementById` 的性能通常更优。
+- **灵活性**：`querySelector` 提供了更高的灵活性，可以使用任何有效的 CSS 选择器语法。
+
+在大多数现代浏览器中，对于简单的 DOM 操作，这两种方法的性能差异几乎可以忽略不计。因此，你可以根据具体需求和个人偏好来选择使用哪种方法。
+
+## 加载压缩过的glb
+
+THREE .DRACOLoader: Unexpected geometrytype 错误解决
+
+> <https://blog.csdn.net/iefreer/article/details/131113390>
+>
+> npm i draco3d
+>
+> npm i draco3dgltf
+>
+> <https://segmentfault.com/q/1010000043706931>
+>
+> 原因：`是draco版本与项目安装的three版本不对`
+> 解决方法：以vite脚手架为例 `node_modules\three\examples\jsm\libs\` 下的darco文件夹拷贝到 `public\<span> </span>`下，之后报错就解决了。
+
+### DRACO验证
+
+检查一个模型是否包含了 Draco 压缩的几何数据，
+
+- **使用 glTF Validator**：你可以使用 [glTF Validator](https://github.khronos.org/glTF-Validator/) 来检查你的 `.glb` 文件。这是一个由 Khronos Group 提供的工具，专门用于验证 glTF 文件的正确性。如果你的文件使用了 Draco 压缩，验证结果会显示相关信息。
+- **查看文件内容**：高级用户可以直接查看 GLB 文件的内容（例如，使用十六进制编辑器），寻找 Draco 压缩的标记或结构。这种方法需要对 GLB 文件格式和 Draco 压缩有较深的了解。
+
+```
+{
+    "uri": "statue.glb",
+    "mimeType": "model/gltf-binary",
+    "validatorVersion": "2.0.0-dev.3.8",
+    "validatedAt": "2024-04-05T13:03:15.754Z",
+    "issues": {
+        "numErrors": 0,
+        "numWarnings": 0,
+        "numInfos": 3,
+        "numHints": 0,
+        "messages": [
+            {
+                "code": "UNSUPPORTED_EXTENSION",
+                "message": "Cannot validate an extension as it is not supported by the validator: 'KHR_draco_mesh_compression'.",
+                "severity": 2,
+                "pointer": "/extensionsUsed/0"
+            },
+            {
+                "code": "UNUSED_OBJECT",
+                "message": "This object may be unused.",
+                "severity": 2,
+                "pointer": "/meshes/0/primitives/0/attributes/TEXCOORD_0"
+            },
+            {
+                "code": "UNUSED_OBJECT",
+                "message": "This object may be unused.",
+                "severity": 2,
+                "pointer": "/bufferViews/0"
+            }
+        ],
+        "truncated": false
+    },
+    "info": {
+        "version": "2.0",
+        "generator": "Khronos glTF Blender I/O v1.8.19",
+        "extensionsUsed": [
+            "KHR_draco_mesh_compression"
+        ],
+        "extensionsRequired": [
+            "KHR_draco_mesh_compression"
+        ],
+        "resources": [
+            {
+                "pointer": "/buffers/0",
+                "mimeType": "application/gltf-buffer",
+                "storage": "glb",
+                "byteLength": 697820
+            }
+        ],
+        "animationCount": 0,
+        "materialCount": 1,
+        "hasMorphTargets": false,
+        "hasSkins": false,
+        "hasTextures": false,
+        "hasDefaultScene": true,
+        "drawCallCount": 1,
+        "totalVertexCount": 141741,
+        "totalTriangleCount": 264708,
+        "maxUVs": 1,
+        "maxInfluences": 0,
+        "maxAttributes": 3
+    }
+}
+```
+
+从你通过 glTF Validator 获取的信息中，我们可以了解到以下几点关于你的模型 `statue.glb`：
+
+1. 基本信息
+
+- **文件类型**：模型是一个二进制的 glTF 文件（GLB）。
+- **验证器版本**：使用的 glTF Validator 版本为 2.0.0-dev.3.8。
+- **验证时间**：文件在 2024-04-05T13:03:15.754Z 被验证。
+
+2. 问题报告
+
+- **错误数量**：0，表示文件没有违反 glTF 2.0 规范的错误。
+- **警告数量**：0，没有发现可能影响性能或兼容性的问题。
+- **信息数量**：3，提供了一些关于模型的额外信息但不影响模型的使用。
+- **提示数量**：0，没有给出优化建议。
+
+3. 具体消息
+
+- **UNSUPPORTED_EXTENSION**：模型使用了 `KHR_draco_mesh_compression` 扩展进行 Draco 压缩，但 glTF Validator 不支持验证这个扩展的具体内容。这说明你的模型确实使用了 Draco 压缩。
+- **UNUSED_OBJECT**：有两个未使用的对象，一个是纹理坐标 `TEXCOORD_0`，另一个是 `bufferViews[0]`。这可能意味着模型中包含了一些未被引用的数据，这通常不影响模型的使用，但可能稍微增加了文件的大小。
+
+4. 模型信息
+
+- **glTF 版本**：2.0。
+- **创建工具**：使用了 Khronos glTF Blender I/O v1.8.19 创建。
+- **扩展使用和要求**：模型使用并要求 `KHR_draco_mesh_compression` 扩展，证实了模型经过了 Draco 压缩。
+- **资源信息**：包含一个 buffer，大小为 697820 字节。
+- **动画、材质、顶点和三角形数量**：模型没有动画，有 1 个材质，共有 141741 个顶点和 264708 个三角形。
+
+你的模型 `statue.glb` 成功使用了 Draco 压缩（通过 `KHR_draco_mesh_compression` 扩展），且没有发现任何违反 glTF 规范的错误。未使用的对象（如某些纹理坐标和 bufferViews）可能是导出过程中产生的，通常不会影响模型的渲染或使用。如果你关心文件大小，可以考虑优化这些未使用的数据。
+
+这个报告也确认了你遇到的问题不是由文件损坏或不符合 glTF 规范造成的，可能需要在加载或渲染过程中进一步调查问题的原因。
+
+为什么部署之后，dracoloader失效了？也就是模型加载不成功
+
+# canvas绘图
+
+参考教程：[跟着月影学可视化](https://time.geekbang.org/column/intro/100053801)
+
+相关教程：[csdn](https://blog.csdn.net/kaimo313/category_9555093.html)
+
+# mapbox仓库学习
+
+## 资源
+
+仓库地址：https://github.com/mapbox/mapbox-gl-js
+
+- [Getting started with Mapbox GL JS](https://docs.mapbox.com/mapbox-gl-js/overview/)
+- [Tutorials](https://docs.mapbox.com/help/tutorials/#web-apps)
+- [API documentation](https://docs.mapbox.com/mapbox-gl-js/api/)
+- [Examples](https://docs.mapbox.com/mapbox-gl-js/examples/)
+- [Style documentation](https://docs.mapbox.com/mapbox-gl-js/style-spec/)
+- [Mapbox Vector Tile Specification](https://github.com/mapbox/vector-tile-spec)
+
+一些工具
+
+- [location helper](https://labs.mapbox.com/location-helper/#3/56.56/-85.76): 自动选择合适的位置，获取到对应的mapbox参数
+- [cartogram](https://apps.mapbox.com/cartogram/): 根据图片符号化地图
+
+## React中用mapbox-简单入门
+
+实现教程：https://docs.mapbox.com/help/tutorials/use-mapbox-gl-js-with-react/
+
+tailwindcss官网：https://www.tailwindcss.cn/docs/border-radius#basic-usage
+
+`npm install mapbox-gl`
+
+## slide story
+
+官网模板：git@github.com:mapbox/storytelling.git
+
+把本科做的乳业叙事迁移成一个demo；
+
+1. 基本结构
+2. config和points的常量配置
+3. 添加滚动逻辑
+4. 添加地图上的点交互
+5. 添加echarts图表
+
+
+
+
+
+官网看到了“get started”；
+与style有关的：
+https://docs.mapbox.com/mapbox-gl-js/style-spec/
+https://docs.mapbox.com/help/glossary/style-url/
+https://docs.mapbox.com/help/glossary/tileset/
+https://www.mapbox.com/blog/standard-core-style
+https://www.mapbox.com/maps/streets

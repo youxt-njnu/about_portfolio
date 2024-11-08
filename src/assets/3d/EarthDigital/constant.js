@@ -25,6 +25,19 @@ export const tips = [
   '地球生存，hard模式',
 ]
 
+export const footRadar = [
+  {
+    value: 5024.33,
+    desc: 'Distance',
+  }, {
+    value: "0.22245%",
+    desc: 'oxygen level',
+  }, {
+    value: 205.24,
+    desc: 'Temperature',
+  }
+]
+
 export const chart_1_option = {
   backgroundColor: 'transparent',
   color: ['#03c03c', '#00e6f6', '#8ae66e', '#ff013c', '#f9f002'],

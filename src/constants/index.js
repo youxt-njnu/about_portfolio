@@ -26,9 +26,18 @@ import {
 } from '../assets/icons'
 import { shopify, starbucks, tesla } from '../assets/images'
 
-import { Earth as earthImg, postprocessLut } from '../assets/arts'
-import { Earth, EarthDigital, FoxDemo, PostProcessingExp } from '../models'
+import {
+  Earth,
+  EarthDigital,
+  EarthStar,
+  FoxDemo,
+  PostProcessingExp,
+  ShadowModel,
+} from '../models'
 
+import { MapboxSimple, MilkStory } from '../MapboxDemos'
+
+import { HolyGrailLayout, HangingLayout, FloatLayout, SplitLine } from '../CssScene'
 // Languages: Javascript, HTML+CSS, C#, Python, SQL
 // Libraries : React, Vue, ThreeJS, Cesium, Vuforia, Mapbox, Matplotlib
 // Software: QGIS, Unity, Adobe Illustrator, PostgreSQL&PostGIS, drawio
@@ -119,7 +128,6 @@ export const skills = [
   },
 ]
 
-
 export const experiences = [
   {
     title: '测绘内业工程师-实习生',
@@ -129,7 +137,7 @@ export const experiences = [
     date: '2021.07-2021.08',
     points: [
       '工作：参与了“江宁一张图”的本地数据库更新工作和部分省市三调工作底图整理，完成数据整理、汇编、入库、交付沟通等工作。此外，协助经理进行日常工作维护，如数据维护、报销管理、图纸整理。',
-      '收获：接触了传统测绘方向的基础数据处理和加工工作，认识到数据和数据安全的重要性。'
+      '收获：接触了传统测绘方向的基础数据处理和加工工作，认识到数据和数据安全的重要性。',
     ],
   },
   {
@@ -164,14 +172,8 @@ export const experiences = [
     icon: tesla,
     iconBg: '#fbc3bc',
     date: '2023.09至今',
-    points: [
-      '地图学助教',
-      '实验室财务管理',
-      '会议参与',
-      '科研项目',
-    ],
+    points: ['地图学助教', '实验室财务管理', '会议参与', '科研项目'],
   },
-  
 ]
 
 export const socialLinks = [
@@ -241,41 +243,110 @@ export const projects = [
       '漫漫长夜中的人性之光：南京安全区AR故事地图(2023.12-2024.06)\n 通过文献数字化、GIS及AR、游戏引擎等技术，从“时空数据库构建及信息梳理—数字制图与地图设计——AR故事地图交互”三个层面进行南京安全区历史记忆的时空构建，研制AR故事地图，导引社会公众重启约翰·拉贝等国际友人的救助历程，重温这段黑暗历史中闪耀的人性之光',
     link: 'https://mp.weixin.qq.com/s?__biz=MzU4MTc2MDAyNg==&mid=2247484289&idx=1&sn=ca9ab0ac73791c6a453b5d0364130248&chksm=fc6d6a49da4532c55ff74676bd34092d37bd742f1ee040c1740ca72043ab6e9050428ac70ce1&scene=126&sessionid=1724225266#rd',
   },
-  
 ]
 
 const prefix = '/about_portfolio/arts/'
 export const arts = [
   {
     name: 'postprocessLut',
-    img: postprocessLut,
+    img: 'https://s2.loli.net/2024/10/17/HrfLEsU4zydXaAt.png',
     path: prefix + 'bird',
     component: PostProcessingExp, // 自己写的react-three-fiber组件
-    type: '后处理',
-    info: '3dlut-头盔',
+    type: '测试1',
+    info: '自己写的react-three-fiber组件',
   },
   {
     name: '地球',
-    img: earthImg,
+    img: 'https://s2.loli.net/2024/10/17/yexj6A8cqVvMKDN.png',
     path: prefix + 'sky',
     component: Earth, // js很多文字的react组件
     type: '贴图',
-    info: '3dlut-地球',
+    info: '地球自转和月球公转',
   },
   {
     name: '狐狸',
-    img: "https://s2.loli.net/2024/08/05/hBc1om3X5euCRkt.png",
+    img: 'https://s2.loli.net/2024/08/05/hBc1om3X5euCRkt.png',
     path: prefix + 'fox', //导入用react-three-fiber创建的模型组件,加工后的组件
     component: FoxDemo,
     type: '动画',
-    info: '包含动画的狐狸模型',
+    info: '含动画的狐狸模型',
   },
   {
     name: '大屏',
-    img: "https://dragonir.github.io/3d/static/media/earthDigital.8c221282f247bb724b85.png",
-    path: prefix + 'earth-digital', //导入用react-three-fiber创建的模型组件,加工后的组件
+    img: 'https://dragonir.github.io/3d/static/media/earthDigital.8c221282f247bb724b85.png',
+    path: prefix + 'earth-digital', //导入用threejs写的组件
     component: EarthDigital,
     type: '综合',
-    info: '大屏3D地球',
+    info: '3D地球，shader、飞线、动画...',
   },
+  {
+    name: '数字地球星空',
+    img: 'https://s2.loli.net/2024/10/05/Ypj16zckvyd78Do.png',
+    path: prefix + 'earth-moving',
+    component: EarthStar,
+    type: '几何模型',
+    info: 'geometry，贴图，构建场景及动画',
+  },
+  {
+    name: '光影人物',
+    img: 'https://s2.loli.net/2024/10/05/WiUuGJ3CbnagLc6.png',
+    path: prefix + 'light-model',
+    component: ShadowModel,
+    type: '模型和光影',
+    info: '光影、人物、页面切换和鼠标特效',
+  },
+]
+
+export const mapboxDemos = [
+  {
+    name: '简单入门',
+    img: 'https://s2.loli.net/2024/10/17/OsrIyLWMmZ6Ezpk.png',
+    path: prefix + 'mapbox-simple',
+    component: MapboxSimple,
+    type: '简单入门',
+    info: '地图呈现、拖动等交互',
+  },
+  {
+    name: '乳业发展叙事',
+    img: 'https://s2.loli.net/2024/11/08/tDnLboVM1TEu47K.png',
+    path: prefix + 'milk-story',
+    component: MilkStory,
+    type: '地图叙事',
+    info: '对中国乳业发展进行时空叙事',
+  },
+]
+
+export const cssLayouts = [
+  {
+    name: '圣杯布局',
+    img: "https://s2.loli.net/2024/11/06/ozbCSmLM4FHTfXn.png",
+    path: prefix + 'holy-grail',
+    component: HolyGrailLayout,
+    type: 'flex布局',
+    info: '圣杯布局'
+  },
+  {
+    name: '悬挂布局',
+    img: "https://s2.loli.net/2024/11/06/PnIGVfoybwmxq1e.png",
+    path: prefix + 'hanging',
+    component: HangingLayout,
+    type: 'flex布局',
+    info: '图片和文字的悬挂布局'
+  },
+  {
+    name: '流式布局',
+    img: "https://s2.loli.net/2024/11/06/ZWJEAH8I9XdKyzl.png",
+    path: prefix + 'float',
+    component: FloatLayout,
+    type: 'flex布局',
+    info: 'flex wrap和flex content使用'
+  },
+  {
+    name: '分割线',
+    img: "https://s2.loli.net/2024/11/08/KTBDMSPIRjyZtxr.png",
+    path: prefix + 'split-line',
+    component: SplitLine,
+    type: '伪元素',
+    info: '利用::before, ::after'
+  }
 ]

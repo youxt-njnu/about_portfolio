@@ -1,6 +1,6 @@
 import { Canvas } from '@react-three/fiber';
 import React from 'react';
-import Fox from './Fox';
+import Fox from './Fox.jsx';
 
 const FoxDemo = () => {
   return (
@@ -16,10 +16,10 @@ const FoxDemo = () => {
         <directionalLight intensity={2.5} position={[0, 0, 1]} />
         {/* 组件使用，直接传入idle */}
         <Fox
-              currentAnimation={"idle"}
-              position={[0.5, 0, 0]}
-              rotation={[12.6, -0.5, 0]}
-              scale={[.6, .6, .6]}
+          currentAnimation={"idle"}
+          position={[0.5, 0, 0]}
+          rotation={[12.6, -0.5, 0]}
+          scale={[.6, .6, .6]}
         />
       </Canvas>
     </section>

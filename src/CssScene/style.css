@@ -1,0 +1,7 @@
+.split-line::before, .split-line::after {
+    content: '';
+    display: inline-block;
+    width: 40px;
+    border-top: black 2px solid;
+    margin: 5px;
+}
