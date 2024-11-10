@@ -2314,3 +2314,19 @@ https://docs.mapbox.com/help/glossary/style-url/
 https://docs.mapbox.com/help/glossary/tileset/
 https://www.mapbox.com/blog/standard-core-style
 https://www.mapbox.com/maps/streets
+
+
+
+
+部署发布
+
+```
+npm run deploy
+// 右键open with live browser，打开验证下效果
+git add .
+git commit -m "0500"
+git push origin master
+git push origin --delete gh-pages
+// git branch -D gh-pages
+git subtree push --prefix=dist origin gh-pages
+```
