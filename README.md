@@ -2299,6 +2299,7 @@ tailwindcss官网：https://www.tailwindcss.cn/docs/border-radius#basic-usage
 1. 基本结构
 2. config和points的常量配置
 3. 添加滚动逻辑
+  1. `npm install scrollama intersection-observer --save`
 4. 添加地图上的点交互
 5. 添加echarts图表
 

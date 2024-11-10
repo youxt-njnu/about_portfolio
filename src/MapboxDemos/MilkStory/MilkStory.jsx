@@ -95,6 +95,43 @@ const MilkStory = () => {
       });
 
     }
+
+    if (scrollInfos.showMarkers) {
+      let marker = new mapboxgl.Marker({
+        color: scrollInfos.markerColor
+      });
+      marker.setLngLat(scrollInfos.chapters[0].location.center).addTo(mapRef.current);
+    }
+
+    mapRef.current.on('load', () => {
+      if (scrollInfos.use3dTerrain) {
+        mapRef.current.addSource('mapbox-dem', {
+          type: 'raster-dem',
+          url: 'mapbox://mapbox.mapbox-terrain-dem-v1',
+          tileSize: 512,
+          maxzoom: 14
+        });
+
+        mapRef.current.setTerrain({ 'source': 'mapbox-dem', 'exaggeration': 1.5 });
+
+        mapRef.current.addLayer({
+          id: 'sky',
+          type: 'sky',
+          paint: {
+            'sky-type': 'atmosphere',
+            'sky-atomosphere-sum': [0.0, 0.0],
+            'sky-atmosphere-sun-intensity': 15
+          }
+        });
+
+        if (scrollInfos.inset) {
+          mapRef.current.on('move', getInsetBounds);
+        }
+
+        mapRef.current.dragPan.enable();
+        mapRef.current.keyboard.enable();
+      }
+    })
   }, []);
 
 
