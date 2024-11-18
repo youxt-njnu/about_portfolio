@@ -167,7 +167,7 @@ var geojson1 = {
         title: '质量标准制订',
         description:
           '&nbsp;&nbsp;&nbsp;&nbsp;1958年8月，轻工业部食品工业局颁布《乳、乳制品质量标准及检验方法》。<br/>&nbsp;&nbsp;&nbsp;&nbsp;该标准是最早的国家级部颁标准。',
-        image: bz,
+        image: gz,
         imageHeight: 100,
         imageWidth: 220,
       },
@@ -341,4 +341,6 @@ var geojson4 = {
   features: [],
 }
 
-var geojsonsource = [null, geojson1, geojson2, geojson3, geojson4]
+const geojsonSource = [null, geojson1, geojson2, geojson3, geojson4]
+
+export default geojsonSource

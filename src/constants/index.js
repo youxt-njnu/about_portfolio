@@ -27,6 +27,7 @@ import {
 import { shopify, starbucks, tesla } from '../assets/images'
 
 import {
+  Descent3D,
   Earth,
   EarthDigital,
   EarthStar,
@@ -37,7 +38,20 @@ import {
 
 import { MapboxSimple, MilkStory } from '../MapboxDemos'
 
-import { HolyGrailLayout, HangingLayout, FloatLayout, SplitLine } from '../CssScene'
+import { BarGraph } from '../visualizedDemos'
+
+import {
+  CssDrawPoly,
+  FloatLayout,
+  HangingLayout,
+  HolyGrailLayout,
+  ImgLazyLoad,
+  MultiLine,
+  SearchBtn,
+  SplitLine,
+  VerticalCenter,
+  px10,
+} from '../CssScene'
 // Languages: Javascript, HTML+CSS, C#, Python, SQL
 // Libraries : React, Vue, ThreeJS, Cesium, Vuforia, Mapbox, Matplotlib
 // Software: QGIS, Unity, Adobe Illustrator, PostgreSQL&PostGIS, drawio
@@ -295,6 +309,14 @@ export const arts = [
     type: '模型和光影',
     info: '光影、人物、页面切换和鼠标特效',
   },
+  {
+    name: '降落城市',
+    img: 'https://s2.loli.net/2024/11/18/16FgOsBTyM8NntV.png',
+    path: prefix + 'descent-3d',
+    component: Descent3D,
+    type: 'ShaderToy',
+    info: '基于ShaderToy实现的3D降落城市',
+  },
 ]
 
 export const mapboxDemos = [
@@ -316,37 +338,96 @@ export const mapboxDemos = [
   },
 ]
 
+export const visualizeDemos = [
+  {
+    name: 'html+css 柱状图饼图',
+    img: 'https://s2.loli.net/2024/11/16/KmZYDPr6bvtiW5V.png',
+    path: prefix + 'bar-pie',
+    component: BarGraph,
+    type: 'html+css',
+    info: '柱状图和饼图',
+  },
+]
+
 export const cssLayouts = [
   {
     name: '圣杯布局',
-    img: "https://s2.loli.net/2024/11/06/ozbCSmLM4FHTfXn.png",
+    img: 'https://s2.loli.net/2024/11/06/ozbCSmLM4FHTfXn.png',
     path: prefix + 'holy-grail',
     component: HolyGrailLayout,
     type: 'flex布局',
-    info: '圣杯布局'
+    info: '圣杯布局',
   },
   {
     name: '悬挂布局',
-    img: "https://s2.loli.net/2024/11/06/PnIGVfoybwmxq1e.png",
+    img: 'https://s2.loli.net/2024/11/06/PnIGVfoybwmxq1e.png',
     path: prefix + 'hanging',
     component: HangingLayout,
     type: 'flex布局',
-    info: '图片和文字的悬挂布局'
+    info: '图片和文字的悬挂布局',
   },
   {
     name: '流式布局',
-    img: "https://s2.loli.net/2024/11/06/ZWJEAH8I9XdKyzl.png",
+    img: 'https://s2.loli.net/2024/11/06/ZWJEAH8I9XdKyzl.png',
     path: prefix + 'float',
     component: FloatLayout,
     type: 'flex布局',
-    info: 'flex wrap和flex content使用'
+    info: 'flex wrap和flex content使用',
   },
   {
     name: '分割线',
-    img: "https://s2.loli.net/2024/11/08/KTBDMSPIRjyZtxr.png",
+    img: 'https://s2.loli.net/2024/11/08/KTBDMSPIRjyZtxr.png',
     path: prefix + 'split-line',
     component: SplitLine,
     type: '伪元素',
-    info: '利用::before, ::after'
-  }
+    info: '利用::before, ::after',
+  },
+  {
+    name: '图片加载优化',
+    img: 'https://s2.loli.net/2024/11/16/kpwcFnbIV64gJlo.png',
+    path: prefix + 'img-load',
+    component: ImgLazyLoad,
+    type: '场景',
+    info: '多图片加载性能优化方案',
+  },
+  {
+    name: '水平垂直居中',
+    img: 'https://s2.loli.net/2024/11/16/chJoFXtiAQOIZ24.png',
+    path: prefix + 'vertical-center',
+    component: VerticalCenter,
+    type: 'css',
+    info: '多种方式实现水平垂直居中',
+  },
+  {
+    name: '10px字体',
+    img: 'https://s2.loli.net/2024/11/16/6UAxNLktFWEp19D.png',
+    path: prefix + 'px10',
+    component: px10,
+    type: 'css',
+    info: '10px大小的字体',
+  },
+  {
+    name: '多行文本溢出',
+    img: 'https://s2.loli.net/2024/11/16/STwlbGxRraoVyvt.png',
+    path: prefix + 'multi-line',
+    component: MultiLine,
+    type: 'css',
+    info: '多行文本溢出',
+  },
+  {
+    name: '自适应搜索框',
+    img: 'https://s2.loli.net/2024/11/16/TGhwNUIS4juCtAP.png',
+    path: prefix + 'search-btn',
+    component: SearchBtn,
+    type: 'css',
+    info: '自适应搜索框',
+  },
+  {
+    name: '多边形绘制',
+    img: 'https://s2.loli.net/2024/11/16/m8LDxkrKYtHVG94.png',
+    path: prefix + 'draw-poly',
+    component: CssDrawPoly,
+    type: 'css',
+    info: 'CSS画三角形和平行四边形',
+  },
 ]

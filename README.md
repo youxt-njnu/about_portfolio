@@ -2264,6 +2264,8 @@ THREE .DRACOLoader: Unexpected geometrytype 错误解决
 
 相关教程：[csdn](https://blog.csdn.net/kaimo313/category_9555093.html)
 
+
+
 # mapbox仓库学习
 
 ## 资源
@@ -2319,6 +2321,8 @@ https://www.mapbox.com/maps/streets
 
 
 部署发布
+
+需要打开remote的github仓库，确保自己登陆进去了，然后再push新的进去；
 
 ```
 npm run deploy

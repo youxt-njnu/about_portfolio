@@ -1,0 +1,40 @@
+.barGraph {
+  display: grid;
+  width: 100ww;
+  height: 20rem;
+  padding: 3rem;
+  grid-template-columns: repeat(5, 20%);
+
+  div {
+    margin: 0 1rem;
+  }
+
+  div:nth-child(1) {
+    background: linear-gradient(to bottom, transparent 70%, #37c 0, #37c 80%, #4d2 0);
+  }
+
+  div:nth-child(2) {
+    background: linear-gradient(to bottom, transparent 50%, #37c 0, #37c 60%, #4d2 0);
+  }
+
+  div:nth-child(3) {
+    background: linear-gradient(to bottom, transparent 30%, #37c 0, #37c 80%, #4d2 0);
+  }
+
+  div:nth-child(4) {
+    background: linear-gradient(to bottom, transparent 80%, #37c 0, #37c 92%, #4d2 0);
+  }
+
+  div:nth-child(5) {
+    background: linear-gradient(to bottom, transparent 10%, #37c 0, #37c 30%, #4d2 0);
+  }
+}
+
+.pieGraph {
+  display: block;
+  width: 20rem;
+  height: 20rem;
+  margin: auto;
+  border-radius: 50%;
+  background: conic-gradient(#37c 0, #37c 30%, #4d2 0, #4d2 40%, #aa5 0, #aa5 60%, #f00 0, #f00 100%);
+}

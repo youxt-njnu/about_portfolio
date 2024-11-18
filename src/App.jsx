@@ -2,7 +2,7 @@ import { Suspense } from 'react';
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import Loader from './components/Loader';
 import Navbar from "./components/Navbar";
-import { arts, mapboxDemos, cssLayouts } from './constants';
+import { arts, cssLayouts, mapboxDemos, visualizeDemos } from './constants';
 import { About, Arts, Contact, Home, Projects } from "./pages";
 
 
@@ -22,6 +22,9 @@ const App = () => {
               <Route key={index} path={route.path} element={<route.component />} />
             ))}
             {mapboxDemos.map((route, index) => (
+              <Route key={index} path={route.path} element={<route.component />} />
+            ))}
+            {visualizeDemos.map((route, index) => (
               <Route key={index} path={route.path} element={<route.component />} />
             ))}
             {cssLayouts.map((route, index) => (

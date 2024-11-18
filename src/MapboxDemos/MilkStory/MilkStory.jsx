@@ -1,9 +1,11 @@
 import mapboxgl from 'mapbox-gl';
 import { useEffect, useRef } from 'react';
+import scrollama from 'scrollama';
 
 import 'mapbox-gl/dist/mapbox-gl.css';
 import { accessToken, mapStyles, scrollInfos } from './config.js';
 import './index.scss';
+import geojsonSource from './points.js';
 
 const MilkStory = () => {
   const mapRef = useRef(null);
@@ -80,7 +82,7 @@ const MilkStory = () => {
       //是否显示缩放按钮，默认为true
       showZoom: true,
     })
-    mapRef.current.addControl(nav, 'top-right');
+    mapRef.current.addControl(nav, 'top-left');
 
     if (scrollInfos.inset) {
       const mapInset = new mapboxgl.Map({
@@ -103,6 +105,8 @@ const MilkStory = () => {
       marker.setLngLat(scrollInfos.chapters[0].location.center).addTo(mapRef.current);
     }
 
+    const scroller = new scrollama();
+
     mapRef.current.on('load', () => {
       if (scrollInfos.use3dTerrain) {
         mapRef.current.addSource('mapbox-dem', {
@@ -119,18 +123,50 @@ const MilkStory = () => {
           type: 'sky',
           paint: {
             'sky-type': 'atmosphere',
-            'sky-atomosphere-sum': [0.0, 0.0],
+            'sky-atmosphere-sum': [0.0, 0.0],
             'sky-atmosphere-sun-intensity': 15
           }
         });
-
-        if (scrollInfos.inset) {
-          mapRef.current.on('move', getInsetBounds);
-        }
-
-        mapRef.current.dragPan.enable();
-        mapRef.current.keyboard.enable();
       }
+
+      if (scrollInfos.inset) {
+        mapRef.current.on('move', getInsetBounds);
+      }
+
+      mapRef.current.dragPan.enable();
+      mapRef.current.keyboard.enable();
+
+      scroller
+        .setup({
+          step: '.step',
+          offset: 0.5,
+          progress: true,
+        })
+        .onStepEnter((response) => {
+          const chapter = scrollInfos.chapters.find(chap => chap.id === response.element.id);
+          response.element.classList.add('active');
+          mapRef.current[chapter.mapAnimation || 'flyTo'](chapter.location);
+
+          if (chapter.mapType !== mapType) {
+            mapType = chapter.mapType;
+
+            // mapType === 4
+
+            if (mapType !== 0) {
+              mapRef.current.setStyle(mapStyles[mapType]);
+              if (geojsonMarker !== null) {
+                for (let i = geojsonMarker.length - 1; i >= 0; i--) {
+                  geojsonMarker[i].remove();
+                }
+              }
+
+              for (let feature of geojsonSource[mapType].features) {
+                let el = document.createElement('div');
+
+              }
+            }
+          }
+        })
     })
   }, []);
 

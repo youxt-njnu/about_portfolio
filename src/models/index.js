@@ -5,8 +5,9 @@ import FoxDemo from './FoxDemo.jsx'
 import Map2D from './Map2D.jsx'
 import Map3D from './Map3D.jsx'
 import PostProcessingExp from './PostProcessingExp.jsx'
-import EarthStar from '../assets/3d/EarthStar/EarthStar.jsx'
+import EarthStar from './EarthStar/EarthStar.jsx'
 import ShadowModel from '../assets/3d/ShadowModel'
+import Descent3D from './Desent3D/index.jsx'
 
 export {
   Bird,
@@ -18,4 +19,5 @@ export {
   Map3D,
   EarthStar,
   ShadowModel,
+  Descent3D,
 }
