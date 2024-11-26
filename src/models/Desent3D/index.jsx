@@ -68,6 +68,7 @@ const index = () => {
       new Three.PlaneGeometry(5, 5),
       shader
     );
+    // 省去了在animate里写
     plane.onBeforeRender = () => {
       shader.uniforms.iTime.value += 0.01;
     }

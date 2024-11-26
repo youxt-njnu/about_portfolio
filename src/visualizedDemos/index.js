@@ -1,3 +1,4 @@
 import BarGraph from './BarGraph'
+import CanvasDemo from './CanvasDemo'
 
-export { BarGraph }
+export { BarGraph, CanvasDemo }

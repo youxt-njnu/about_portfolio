@@ -38,7 +38,7 @@ import {
 
 import { MapboxSimple, MilkStory } from '../MapboxDemos'
 
-import { BarGraph } from '../visualizedDemos'
+import { BarGraph, CanvasDemo } from '../visualizedDemos'
 
 import {
   CssDrawPoly,
@@ -347,6 +347,14 @@ export const visualizeDemos = [
     type: 'html+css',
     info: '柱状图和饼图',
   },
+  {
+    name: 'CanvasDemo',
+    img: 'https://s2.loli.net/2024/11/26/A7GhwiavVftz2P3.png',
+    path: prefix + 'canvas-demo',
+    component: CanvasDemo,
+    type: 'canvas',
+    info: '使用canvas进行绘图',
+  },
 ]
 
 export const cssLayouts = [
@@ -422,6 +430,9 @@ export const cssLayouts = [
     type: 'css',
     info: '自适应搜索框',
   },
+  // {
+  //   name: '滑动穿透',
+  // },
   {
     name: '多边形绘制',
     img: 'https://s2.loli.net/2024/11/16/m8LDxkrKYtHVG94.png',

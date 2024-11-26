@@ -71,6 +71,7 @@ const vec3 signColorB = vec3(3.0, 3.0, 3.0);
 
 const float tau = 6.283185;
 
+//  to create noise or randomness in shader programs
 float hash1(float p) {
   vec3 p3 = fract(p * vec3(5.3983, 5.4427, 6.9371));
   p3 += dot(p3, p3.yzx + 19.19);
@@ -303,6 +304,8 @@ void main() {
   vec3 up = cross(right, forward);
   // vec2 xy = 2.0 * gl_FragCoord.xy - iResolution.xy;
   vec2 xy = vUv - 0.5;
+  // vec3 ray = normalize(xy.x * right + xy.y * up + zoom * forward *
+  // iResolution.y);
   vec3 ray = normalize(xy.x * right + xy.y * up + zoom * forward * 0.4);
 
   vec4 res = castRay(eye, ray, center);
@@ -333,3 +336,29 @@ void main() {
 
   gl_FragColor = vec4(color, 1.0);
 }
+
+// gl_FragCoord.xy
+// 数值范围: gl_FragCoord.xy 的数值范围是从 (0, 0) 到 (viewportWidth,
+// viewportHeight)，其中 (0, 0) 表示窗口的左下角，(viewportWidth,
+// viewportHeight) 表示窗口的右上角。 gl_FragCoord.x 的范围是 0 到
+// viewportWidth。 gl_FragCoord.y 的范围是 0 到 viewportHeight。 iResolution
+// 数值范围: iResolution 是一个 uniform
+// 变量，通常在着色器外部设置，用于表示视口的分辨率（以像素为单位）。
+// iResolution.x 表示视口的宽度（像素）。
+// iResolution.y 表示视口的高度（像素）。
+// iResolution.z 通常未使用，但有时用于表示其他相关信息。
+
+// 假设视口的分辨率为 1920x1080 像素，那么：
+// gl_FragCoord.xy 的范围是 (0, 0) 到 (1920, 1080)。
+// iResolution 的值将是 vec3(1920.0, 1080.0, 0.0)。
+
+// void main() {
+//   // 归一化片段坐标到 [0, 1] 范围
+//   vec2 uv = gl_FragCoord.xy / iResolution.xy;
+
+//   // 根据归一化坐标创建渐变颜色
+//   vec3 color = vec3(uv, 0);
+
+//   // 设置片段颜色
+//   gl_FragColor = vec4(color, 1.0);
+// }

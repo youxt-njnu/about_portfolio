@@ -21,6 +21,7 @@
     "@react-three/postprocessing": "^2.16.2",
     "@types/dat.gui": "^0.7.13",
     "compressorjs": "^1.2.1",
+    "d3": "^7.9.0",
     "dat.gui": "^0.7.9",
     "echarts": "^5.5.1",
     "intersection-observer": "^0.12.2",
