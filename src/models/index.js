@@ -8,6 +8,14 @@ import PostProcessingExp from './PostProcessingExp.jsx'
 import EarthStar from './EarthStar/EarthStar.jsx'
 import ShadowModel from '../assets/3d/ShadowModel'
 import Descent3D from './Desent3D/index.jsx'
+import BoxRotate from './BoxRotate.jsx'
+import MultiMedia from './MultiMedia.jsx'
+import MultiMedia2 from './MultiMedia2.jsx'
+import Particles from './Particles.jsx'
+import ParticlesAstronaut from './ParticlesAstronaut.jsx'
+import PostprocessExp from './PostprocessExp.jsx'
+import RickMorty from './RickMorty/RickMorty.jsx'
+import ShaderPattern from './ShaderPattern/ShaderPattern.jsx'
 
 export {
   Bird,
@@ -20,4 +28,12 @@ export {
   EarthStar,
   ShadowModel,
   Descent3D,
+  BoxRotate,
+  MultiMedia,
+  MultiMedia2,
+  Particles,
+  ParticlesAstronaut,
+  PostprocessExp,
+  RickMorty,
+  ShaderPattern,
 }

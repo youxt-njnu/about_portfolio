@@ -8,6 +8,8 @@ import SearchBtn from './SearchBtn'
 import SplitLine from './SplitLine'
 import VerticalCenter from './VerticalCenter'
 import px10 from './px10'
+import TwoBand from './TwoBand'
+import Line05 from './Line05'
 
 export {
   CssDrawPoly,
@@ -20,4 +22,6 @@ export {
   SplitLine,
   VerticalCenter,
   px10,
+  TwoBand,
+  Line05,
 }

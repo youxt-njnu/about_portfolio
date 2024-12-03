@@ -27,18 +27,26 @@ import {
 import { shopify, starbucks, tesla } from '../assets/images'
 
 import {
+  BoxRotate,
   Descent3D,
   Earth,
   EarthDigital,
   EarthStar,
   FoxDemo,
+  MultiMedia,
+  MultiMedia2,
+  Particles,
+  ParticlesAstronaut,
+  PostprocessExp,
   PostProcessingExp,
+  RickMorty,
+  ShaderPattern,
   ShadowModel,
 } from '../models'
 
 import { MapboxSimple, MilkStory } from '../MapboxDemos'
 
-import { BarGraph, CanvasDemo } from '../visualizedDemos'
+import { BarGraph, CanvasDemo, WebglUseage } from '../visualizedDemos'
 
 import {
   CssDrawPoly,
@@ -46,11 +54,13 @@ import {
   HangingLayout,
   HolyGrailLayout,
   ImgLazyLoad,
+  Line05,
   MultiLine,
+  px10,
   SearchBtn,
   SplitLine,
+  TwoBand,
   VerticalCenter,
-  px10,
 } from '../CssScene'
 // Languages: Javascript, HTML+CSS, C#, Python, SQL
 // Libraries : React, Vue, ThreeJS, Cesium, Vuforia, Mapbox, Matplotlib
@@ -317,6 +327,70 @@ export const arts = [
     type: 'ShaderToy',
     info: '基于ShaderToy实现的3D降落城市',
   },
+  {
+    name: '旋转盒子',
+    img: 'https://s2.loli.net/2024/11/29/53zmKr7wkDXvEOV.png',
+    path: prefix + 'box-rotate',
+    component: BoxRotate,
+    type: 'rotate',
+    info: '几何体的旋转和动画',
+  },
+  {
+    name: '多媒体探索',
+    img: 'https://s2.loli.net/2024/11/29/xOVH39vBsNUohSE.png',
+    path: prefix + 'multimedia',
+    component: MultiMedia,
+    type: 'multimedia',
+    info: '第一人称视角，添加文字、图片、语音',
+  },
+  {
+    name: '多媒体交互',
+    img: 'https://s2.loli.net/2024/11/29/oHnINiSMd9mua7z.png',
+    path: prefix + 'multimedia2',
+    component: MultiMedia2,
+    type: 'multimedia',
+    info: 'gltf加载draco压缩模型，视频贴图和用户交互',
+  },
+  {
+    name: '粒子球',
+    img: 'https://s2.loli.net/2024/11/29/D48EJRLzi5kofpw.png',
+    path: prefix + 'particle',
+    component: Particles,
+    type: 'particle',
+    info: '不同粒子效果展示',
+  },
+  {
+    name: '宇航员迷失',
+    img: 'https://s2.loli.net/2024/11/29/36QACaqtnJ5FHyX.png',
+    path: prefix + 'astronaut-particle',
+    component: ParticlesAstronaut,
+    type: 'particle',
+    info: '模型、粒子、动画',
+  },
+  {
+    name: '后处理方块',
+    img: 'https://s2.loli.net/2024/11/29/MUL51g9qBvkbtiO.png',
+    path: prefix + 'postprocess-box',
+    component: PostprocessExp,
+    type: '',
+    info: '',
+  },
+  {
+    name: 'RickMorty',
+    img: 'https://s2.loli.net/2024/11/29/Sfsr5BiyhOXI7mc.png',
+    path: prefix + 'rick-morty',
+    component: RickMorty,
+    type: '',
+    info: '',
+  },
+  {
+    name: 'ShaderPattern',
+    img: 'https://s2.loli.net/2024/11/29/19j8O2X3ofJuT7F.png',
+    path: prefix + 'shader-pattern',
+    component: ShaderPattern,
+    type: '',
+    info: '',
+  },
 ]
 
 export const mapboxDemos = [
@@ -354,6 +428,14 @@ export const visualizeDemos = [
     component: CanvasDemo,
     type: 'canvas',
     info: '使用canvas进行绘图',
+  },
+  {
+    name: 'WebglUseage',
+    img: '',
+    path: prefix + 'webgl-useage',
+    component: WebglUseage,
+    type: 'webgl',
+    info: '使用webgl进行绘图的代码流',
   },
 ]
 
@@ -430,9 +512,22 @@ export const cssLayouts = [
     type: 'css',
     info: '自适应搜索框',
   },
-  // {
-  //   name: '滑动穿透',
-  // },
+  {
+    name: '两栏布局',
+    img: 'https://s2.loli.net/2024/11/27/jt7IVgvzb5Scuk8.png',
+    path: prefix + 'two-band',
+    component: TwoBand,
+    type: 'css',
+    info: '两栏布局',
+  },
+  {
+    name: '0.5px线',
+    img: 'https://s2.loli.net/2024/11/27/m5CWc6qbVNaH9GJ.png',
+    path: prefix + 'line05',
+    component: Line05,
+    type: 'css',
+    info: '0.5px线+禁止右键菜单等',
+  },
   {
     name: '多边形绘制',
     img: 'https://s2.loli.net/2024/11/16/m8LDxkrKYtHVG94.png',

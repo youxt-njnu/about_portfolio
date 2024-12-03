@@ -71,7 +71,7 @@ const EarthStar = () => {
       star.position.set(
         (Math.random() - 0.5) * 800,
         (Math.random() - 0.5) * 800,
-        (Math.random() - 0.5) * 800 // 800的半径范围
+        (Math.random() - 0.5) * 800 // -400~400
       )
       star.rotation.set(
         Math.random() * 2 * Math.PI,
