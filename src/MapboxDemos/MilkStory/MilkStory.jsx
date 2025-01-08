@@ -143,7 +143,7 @@ const MilkStory = () => {
       zoom: scrollInfos.chapters[0].location.zoom,
       bearing: scrollInfos.chapters[0].location.bearing,
       pitch: scrollInfos.chapters[0].location.pitch,
-      interactive: false,
+      interactive: true,
       transformRequest: transformRequest,
       projection: scrollInfos.projection
     });
@@ -196,10 +196,11 @@ const MilkStory = () => {
           type: 'sky',
           paint: {
             'sky-type': 'atmosphere',
-            'sky-atmosphere-sum': [0.0, 0.0],
+            'sky-atmosphere-sun': [0.0, 0.0],
             'sky-atmosphere-sun-intensity': 15
           }
         });
+        
       }
 
       if (scrollInfos.inset) {
@@ -218,7 +219,6 @@ const MilkStory = () => {
           const chapter = scrollInfos.chapters.find(chap => chap.id === response.element.id);
           response.element.classList.add('active');
           mapRef.current[chapter.mapAnimation || 'flyTo'](chapter.location);
-
           if (chapter.mapType !== mapType) {
             mapType = chapter.mapType;
 
@@ -282,6 +282,7 @@ const MilkStory = () => {
           }
         })
         .onStepExit((response) => {
+          console.log(mapRef.current.getStyle().layers); // 拿到mapRef对应的地图里面的所有的layers
           let chapter = scrollInfos.chapters.find(
             (chap) => chap.id === response.element.id
           )

@@ -25,21 +25,21 @@ const renderContent = {
   2: (
     <InfoBox
       text="有很多的求学求职经历，也在不断修炼自己..."
-      link="/about_portfolio/about"
+      link="/about"
       btnText="Learn more"
     />
   ),
   3: (
     <InfoBox
       text="自己写过有意思的项目，也曾与多个团队携手共进..."
-      link="/about_portfolio/projects"
+      link="/projects"
       btnText="Visit projects"
     />
   ),
   4: (
     <InfoBox
       text="想要交流、合作或者寻求一个开发者?"
-      link="/about_portfolio/contact"
+      link="/contact"
       btnText="Let's talk"
     />
   ),

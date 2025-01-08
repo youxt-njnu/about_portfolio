@@ -31,7 +31,7 @@ const scrollInfos = {
   //https://docs.mapbox.com/mapbox-gl-js/example/projections/
   inset: true,
   theme: 'dark',
-  use3dTerrain: false, //set true for enabling 3D maps.
+  use3dTerrain: true, //set true for enabling 3D maps.
   title: '中 国 乳 业 百 年 路',
   byline:
     '自有文字以来，中国古籍中屡有关于乳的记载。至唐朝时，食用乳制品已比较普遍。虽然我国饲养奶畜、食用乳和乳制品的历史很悠久，但作为商品的奶业也不过一百多年的历史。\n\n在这短短一百年里，中国乳业实现了从无到有，从有到强的伟大跨越。看得见的是乳业的腾飞，看不见的是国家政府、一代代民族企业家和广大人民的努力与坚持。\n\n接下来，让我们将一起回到上世纪初的中国，跟随着时间的步伐，回顾这段中国乳业发展的奋斗史。',

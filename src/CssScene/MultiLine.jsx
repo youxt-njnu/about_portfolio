@@ -8,7 +8,7 @@ const MultiLine = () => {
       </div>
       <br />
       <div className="w-80 h-20 border-2 border-solid border-yellow-500">
-        <p className='whitespace-normal overflow-hidden break-all'>mmliugeojdgasedrfdghhohjorehorgjm;ldhl;d;goiprnb'dfgdegeeeeeeeeeeeeeeeeeeeeeeeeeeeeeddddddgggaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</p>
+        <p className='whitespace-normal overflow-hidden break-all'>mmliugeojdgas      edrfdghhohjorehorgjm;ldhl;d;goiprnb'dfgdegeee              eeeeeeeeeeeeeeeeeeeeeeeeeeddddddgggaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</p>
       </div>
       <br />
       <div className="w-80 h-20 border-2 border-solid border-yellow-500">

@@ -6,7 +6,7 @@ import path from 'path';
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react(),glsl()],
-  base: './',
+  base: '/3d_portfolio_primary/',
   assetsInclude: ['**/*.glb','**/*.gltf', '**/*.obj','**/*.mtl'],
   build: {
     chunkSizeWarningLimit: 1500

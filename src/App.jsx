@@ -10,14 +10,14 @@ const App = () => {
 
   return (
     <main className="bg-slate-300/20 h-full">
-      <Router>
+      <Router basename="/3d_portfolio_primary/">
         <Navbar />
         <Suspense fallback={<Loader />}>
           <Routes>
-            <Route path="/about_portfolio/" element={<Home />} />
-            <Route path="/about_portfolio/about" element={<About />} />
-            <Route path="/about_portfolio/projects" element={<Projects />} />
-            <Route path="/about_portfolio/arts" element={<Arts />} />
+            <Route path="/" element={<Home />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/projects" element={<Projects />} />
+            <Route path="/arts" element={<Arts />} />
             {arts.map((route, index) => (
               <Route key={index} path={route.path} element={<route.component />} />
             ))}
@@ -30,7 +30,7 @@ const App = () => {
             {cssLayouts.map((route, index) => (
               <Route key={index} path={route.path} element={<route.component />} />
             ))}
-            <Route path="/about_portfolio/contact" element={<Contact />} />
+            <Route path="/contact" element={<Contact />} />
           </Routes>
         </Suspense>
 

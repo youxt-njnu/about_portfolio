@@ -46,7 +46,14 @@ import {
 
 import { MapboxSimple, MilkStory } from '../MapboxDemos'
 
-import { BarGraph, CanvasDemo, WebglUseage } from '../visualizedDemos'
+import {
+  BarGraph,
+  CanvasDemo,
+  ParametricEquation,
+  randomTree,
+  roughUsage,
+  WebglUseage,
+} from '../visualizedDemos'
 
 import {
   CssDrawPoly,
@@ -204,7 +211,7 @@ export const socialLinks = [
   {
     name: 'Contact',
     iconUrl: contact,
-    link: '/about_portfolio/contact',
+    link: '/contact',
   },
   {
     name: 'GitHub',
@@ -269,7 +276,7 @@ export const projects = [
   },
 ]
 
-const prefix = '/about_portfolio/arts/'
+const prefix = ''
 export const arts = [
   {
     name: 'postprocessLut',
@@ -436,6 +443,30 @@ export const visualizeDemos = [
     component: WebglUseage,
     type: 'webgl',
     info: '使用webgl进行绘图的代码流',
+  },
+  {
+    name: 'roughUsage',
+    img: 'https://s2.loli.net/2024/12/14/HNgQxS9EdbOqKnF.png',
+    path: prefix + 'rough-usage',
+    component: roughUsage,
+    type: 'rough库',
+    info: '手绘风格绘制，坐标系变换',
+  },
+  {
+    name: 'randomTree',
+    img: 'https://s2.loli.net/2024/12/14/EipXTY8VClbhZ2R.png',
+    path: prefix + 'random-tree',
+    component: randomTree,
+    type: 'vector2d',
+    info: '构造vector2d类进行绘制',
+  },
+  {
+    name: 'ParametricEquation',
+    img: '',
+    path: prefix + 'parametric-equation',
+    component: ParametricEquation,
+    type: 'parametric',
+    info: '参数方程绘制不同曲线',
   },
 ]
 
