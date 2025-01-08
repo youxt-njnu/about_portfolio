@@ -10,7 +10,7 @@ const App = () => {
 
   return (
     <main className="bg-slate-300/20 h-full">
-      <Router basename="/3d_portfolio_primary/">
+      <Router basename="/about_portfolio/">
         <Navbar />
         <Suspense fallback={<Loader />}>
           <Routes>
