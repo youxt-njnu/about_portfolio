@@ -1,24 +1,24 @@
-import { useRef, useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 // 存在的一个问题：就是shader的背景不透明：
 // https://github.com/mrdoob/three.js/issues/14104
-import * as Three from 'three'
 import * as dat from 'dat.gui'
+import * as Three from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
-import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
 import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader.js'
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
 import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js'
 import { UnrealBloomPass } from 'three/examples/jsm/postprocessing/UnrealBloomPass.js'
 // import { BloomPass } from 'three/examples/jsm/postprocessing/BloomPass.js'
-import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer.js'
-import vertexShader from './portal.vert.glsl'
-import fragmentShader from './portal.frag.glsl'
 import modelPath from '@/assets/3d/rickAndMorty.glb'
 import perlinPath from '@/assets/images/perlinnoise.png'
+import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer.js'
+import fragmentShader from './portal.frag.glsl'
+import vertexShader from './portal.vert.glsl'
 
 import sparkPath from '@/assets/images/sparknoise.png'
 
-import waterPath from '@/assets/images/waterturbulence.png'
 import noisePath from '@/assets/images/noise.png'
+import waterPath from '@/assets/images/waterturbulence.png'
 
 const RickMorty = () => {
   const ref = useRef(null)
@@ -185,8 +185,9 @@ const RickMorty = () => {
     const loadingManager = new Three.LoadingManager()
     loadingManager.onLoad = () => { } // 设置loadingManager
 
+    const base = import.meta.env.BASE_URL
     const loader = new DRACOLoader()
-    loader.setDecoderPath('/draco/')
+    loader.setDecoderPath(`${base}/draco/`)
     loader.setDecoderConfig({ type: 'js' })
     const gltfLoader = new GLTFLoader(loadingManager)
     gltfLoader.setDRACOLoader(loader)

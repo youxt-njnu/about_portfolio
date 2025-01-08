@@ -1,0 +1,23 @@
+{
+  "greeting": "Hello, I am",
+  "name": "Shealin",
+  "basicInfo": "a graduate student from Nanjing, China (currently...)",
+  "aboutMe": {
+    "title": "About",
+    "info": "I have a lot of experiences in studying and job hunting, and I am constantly improving myself...",
+    "btnText": "Learn more"
+  },
+  "projects": {
+    "title": "Projects",
+    "info": "I have written interesting projects by myself, and have worked with multiple teams...",
+    "btnText": "View projects"
+  },
+  "contact": {
+    "title": "Contact",
+    "info": "If you are interested in me, please feel free to contact me...",
+    "btnText": "Let's talk"
+  },
+  "gallery": {
+    "title": "Gallery"
+  }
+}

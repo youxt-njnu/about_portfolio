@@ -87,8 +87,9 @@ const MultiMedia2 = () => {
 
     screen.videoMaterial = videoMaterial
 
+    const base = import.meta.env.BASE_URL
     const loader = new DRACOLoader()
-    loader.setDecoderPath('/draco/')
+    loader.setDecoderPath(`${base}/draco/`)
     loader.setDecoderConfig({ type: 'js' })
 
     const gltfLoader = new GLTFLoader()
@@ -180,7 +181,7 @@ const MultiMedia2 = () => {
     <div className="w-screen h-screen">
       <canvas ref={ref}></canvas>
       <video className="invisible fixed t-0 l-0" ref={videoRef}
-        src="/src/assets/video/demo.mp4"
+        src={demoVideo}
         muted
         autoPlay={true}
         type="mp4"

@@ -4,13 +4,12 @@ import Loader from './components/Loader';
 import Navbar from "./components/Navbar";
 import { arts, cssLayouts, mapboxDemos, visualizeDemos } from './constants';
 import { About, Arts, Contact, Home, Projects } from "./pages";
-
-
+import LanguageSwitcher from './components/LanguageSwitcher';
 const App = () => {
 
   return (
     <main className="bg-slate-300/20 h-full">
-      <Router basename="/about_portfolio/">
+      <Router basename="/about_portfolio">
         <Navbar />
         <Suspense fallback={<Loader />}>
           <Routes>
@@ -34,8 +33,8 @@ const App = () => {
           </Routes>
         </Suspense>
 
-
       </Router>
+      <LanguageSwitcher />
     </main>
   )
 }

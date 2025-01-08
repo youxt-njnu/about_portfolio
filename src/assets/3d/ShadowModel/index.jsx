@@ -123,8 +123,9 @@ const index = () => {
 
 
     // loading model
+    const base = import.meta.env.BASE_URL; // 自动获取 Vite 的 base 配置
     const dracoLoader = new DRACOLoader()
-    dracoLoader.setDecoderPath('/draco/')
+    dracoLoader.setDecoderPath(`${base}/draco/`)
     dracoLoader.setDecoderConfig({ type: 'js' })
     const gltfLoader = new GLTFLoader(loadingManager)
     // gltfLoader.dracoLoader = dracoLoader

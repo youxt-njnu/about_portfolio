@@ -45,7 +45,7 @@ export default {
 
 # 笔记
 
-[link](): 外层的README.md
+link: 外层的README.md
 
 ### 配置scss
 
@@ -101,27 +101,27 @@ npm run dev
 
 # 报错
 
-```
+````
 [plugin:vite:css] Preprocessor dependency "stylus" not found. Did you install it? Try `npm install -D stylus`.
-```
+````
 
-```
+````
 E:/PersonalCV/about_portfolio/src/components/modelThreeExp/Earth/index.styl
-```
+````
 
 解决：
 
-```
+````
 npm install -D stylus
-```
+````
 
----
+***
 
-我npm run dev之后，报错为 src/components/modelThreeExp/Earth/index.js:131:6:
-      131 │       `<div className="earth_page">`
-          ╵       ^
+我npm run dev之后，报错为 src/components/modelThreeExp/Earth/index.js:131:6:  
+131 │       `<div className="earth_page">`  
+╵       ^
 
-  The esbuild loader for this file is currently set to "js" but it must be set to "jsx" to be able to parse JSX syntax. You can use "loader: { '.js': 'jsx' }" to do that.
+The esbuild loader for this file is currently set to "js" but it must be set to "jsx" to be able to parse JSX syntax. You can use "loader: { '.js': 'jsx' }" to do that.
 
 解决：
 
@@ -176,7 +176,7 @@ index.css里
 
 ## 前言
 
-参考案例：<https://dragonir.github.io/3d/#/earthDigital>
+参考案例：[https://dragonir.github.io/3d/#/earthDigital](https://dragonir.github.io/3d/#/earthDigital)
 
 将类组件转为函数式组件，将stylus预处理器形式css改为scss形式；
 
@@ -341,31 +341,31 @@ export default index
 为啥设置经度增量为上式子？
 
 > 经度增量设置为 `Math.PI * (3 - Math.sqrt(5))` 实际上是基于黄金角，这种方法常用于在球面上分布点以达到尽可能均匀的覆盖。这个值与黄金分割有关，具体如下：
->
+> 
 > - **黄金分割数** (φ) 约为 1.618033988749895。
-> - 但在这里使用的是 `3 - Math.sqrt(5)`，计算结果大约为 0.7639320225002102，它是黄金分割数的一种数学转换，更具体地说，这个值实际上等于 \( 2 - \phi \)。
-> - 当你将这个值乘以 \(\pi\) （圆周率），得到的角度是通过黄金分割原理计算得来的。这个角度有助于在球面上均匀地分布点，因为它避免了经纬线的对齐，从而在视觉上看起来更为均匀。
->
+> - 但在这里使用的是 `3 - Math.sqrt(5)`，计算结果大约为 0.7639320225002102，它是黄金分割数的一种数学转换，更具体地说，这个值实际上等于 ( 2 - \phi )。
+> - 当你将这个值乘以 (\pi) （圆周率），得到的角度是通过黄金分割原理计算得来的。这个角度有助于在球面上均匀地分布点，因为它避免了经纬线的对齐，从而在视觉上看起来更为均匀。
+> 
 > 黄金角是黄金分割数在圆上的应用。在自然界中，例如向日葵的种子排列、松果的鳞片布局等，都可以见到黄金角的应用。它能够优化空间利用率并减少重叠，因此在算法生成均匀分布的点时也经常使用这一角度。
->
+> 
 > 在球面分布点时使用黄金角可以避免聚类并尽可能覆盖整个球面。这样的排列减少了任何给定区域内点过多聚集的情况，从而使点的分布更加均匀，这对于很多涉及到空间分布优化的领域，如计算机图形学、地理信息系统等是非常有用的。
 
 为什么z的初始值设置为这个let z = 1 - dz / 2;，而不是从0开始
 
 > 在构建球面分布时，将 `z` 的初始值设置为 `1 - dz / 2` 而不是从 0 开始的原因是为了确保点均匀覆盖整个球体，包括顶部和底部。具体原因包括：
->
+> 
 > 避免极点的聚集
->
+> 
 > - 球体的顶部和底部（即极点）是特殊的位置，如果从 z = 0 或 z = 1 开始，可能会在这些极点处导致点过度聚集或分布不均。
 > - 通过将 `z` 的初始值设置为 `1 - dz / 2`，相当于在 z 轴上对点的位置进行了微小的偏移，使得第一个点和最后一个点都不会精确地位于球体的极点上，而是稍微偏离中心。这有助于改善球面上点的分布均匀性。
->
+> 
 > 确保覆盖全球
->
+> 
 > - 由于 `dz = 2 / counter`，这意味着 z 值将从 1 开始，逐渐递减至 -1，覆盖整个球体。
 > - 初始值 `1 - dz / 2` 实际上将第一个点的 z 值设置为接近 1，但略低于 1，确保点从球体的顶部开始，同时不会与球顶重合。
->
+> 
 > 均匀分布
->
+> 
 > - 此方法确保了点在垂直方向上也是均匀分布的。通过从 `1 - dz / 2` 开始，每个点的 z 值都是均匀地在 z 轴上偏移的，从而避免了在接近极点区域的不均匀密度。
 
 ➡️ 后话1 ☕️
@@ -459,15 +459,15 @@ export default index
 
 基本量
 
-- **`struct impact`**: 定义了一个包含冲击点数据的结构，包括冲击的位置(`impactPosition`)、冲击的最大半径(`impactMaxRadius`)和冲击比例(`impactRatio`)。
-- **`uniform impact impacts[]`**: 一个包含多个冲击点的数组。
-- **`uniform sampler2D tex`**: 一个二维纹理，通常用于存储和检索数据（比如图像或者根据纹理生成的数据）。
-- **`uniform float maxSize, minSize`**: 最大和最小尺寸。
-- **`uniform float waveHeight`**: 波高。
-- **`uniform float scaling`**: 缩放系数。
-- **`attribute vec3 center`**: 顶点的中心位置。
-- **`attribute vec2 baseUv`**: 顶点的基本UV坐标。
-- **`varying float vFinalStep`** 和 **`varying float vMap`**: 这些是从顶点着色器传递到片段着色器的变量，用于进一步的渲染计算。
+- **`struct impact`** **struct impact**: 定义了一个包含冲击点数据的结构，包括冲击的位置(`impactPosition`)、冲击的最大半径(`impactMaxRadius`)和冲击比例(`impactRatio`)。
+- **`uniform impact impacts[]`** **uniform impact impacts[]**: 一个包含多个冲击点的数组。
+- **`uniform sampler2D tex`** **uniform sampler2D tex**: 一个二维纹理，通常用于存储和检索数据（比如图像或者根据纹理生成的数据）。
+- **`uniform float maxSize, minSize`** **uniform float maxSize, minSize**: 最大和最小尺寸。
+- **`uniform float waveHeight`** **uniform float waveHeight**: 波高。
+- **`uniform float scaling`** **uniform float scaling**: 缩放系数。
+- **`attribute vec3 center`** **attribute vec3 center**: 顶点的中心位置。
+- **`attribute vec2 baseUv`** **attribute vec2 baseUv**: 顶点的基本UV坐标。
+- **`varying float vFinalStep`** **varying float vFinalStep** 和 **`varying float vMap`** **varying float vMap**: 这些是从顶点着色器传递到片段着色器的变量，用于进一步的渲染计算。
 
 ```jsx
  shader.uniforms.impacts = uniforms.impacts;
@@ -483,9 +483,9 @@ export default index
 顶点着色器逻辑
 
 - **循环遍历每个冲击点**：计算每个顶点与每个冲击点的距离，根据距离和冲击点的影响范围计算一个平滑的步进(`sstep`)。这个步进是基于 `smoothstep` 函数，用于创建冲击波的边界更加平滑的过渡效果。
-- **`finalStep`的计算**：累加所有冲击点对当前顶点的影响，使用 `clamp` 函数确保值在0到1之间。
-- **`map`变量的计算**：从纹理中获取当前顶点的green值，用于决定顶点的尺寸是 `maxSize` 还是 `minSize`，区分了陆地和海洋。
-- **顶点位置(`transformed`)的更新**：根据 `map` 的结果和计算出的 `finalStep` 调整顶点位置，以实现位置的缩放和波纹效果。使用 `mix` 函数根据冲击波影响程度在原始尺寸和放大后的尺寸之间进行插值。波高(`waveHeight`)和 `finalStep` 的乘积决定了顶点沿法线方向的位移量。
+- **`finalStep`** **finalStep****的计算**：累加所有冲击点对当前顶点的影响，使用 `clamp` 函数确保值在0到1之间。
+- **`map`** **map****变量的计算**：从纹理中获取当前顶点的green值，用于决定顶点的尺寸是 `maxSize` 还是 `minSize`，区分了陆地和海洋。
+- **顶点位置(****`transformed`** **transformed****)的更新**：根据 `map` 的结果和计算出的 `finalStep` 调整顶点位置，以实现位置的缩放和波纹效果。使用 `mix` 函数根据冲击波影响程度在原始尺寸和放大后的尺寸之间进行插值。波高(`waveHeight`)和 `finalStep` 的乘积决定了顶点沿法线方向的位移量。
 - 这段代码通过计算每个顶点与一组冲击波的相对位置和影响，动态调整顶点位置和大小，从而在渲染过程中创建出动态的波纹效果。这种类型的着色器编程允许开发者创建复杂和动态的视觉效果，用于游戏开发、视觉艺术和模拟等领域。
 - 补充：`baseUv` 在 Three.js 中是作为每个顶点的二维纹理坐标（`vec2`）被处理的。这些坐标是作为顶点属性上传到 GPU 的，后续在 GLSL 着色器中可以直接访问。
 
@@ -584,7 +584,7 @@ shader.fragmentShader = `
 
 上述vertex shader代码replace前：
 
-```
+````
 shader.vertexShader:  #include <common>
 #include <batching_pars_vertex>
 #include <uv_pars_vertex>
@@ -618,7 +618,7 @@ void main() {
  #include <envmap_vertex>
  #include <fog_vertex>
 }
-```
+````
 
 上述fragment shader代码replace前：
 
@@ -727,8 +727,8 @@ void main() {
 #include <uv_vertex>
 ```
 
-- **`<uv_pars_vertex>`**: 这个代码片段通常包含了与 UV 相关的参数定义，包括对 `vUv` 的声明。这个片段的作用是准备所有必要的 UV 相关数据，以便在顶点着色器中使用。
-- **`<uv_vertex>`**: 这个代码片段负责将 UV 数据从顶点属性传递到 `vUv` 变量中。这通常包括从顶点数据中读取 UV 坐标，并将其赋值给 `vUv`。
+- **`<uv_pars_vertex>`** **<uv_pars_vertex>**: 这个代码片段通常包含了与 UV 相关的参数定义，包括对 `vUv` 的声明。这个片段的作用是准备所有必要的 UV 相关数据，以便在顶点着色器中使用。
+- **`<uv_vertex>`** **<uv_vertex>**: 这个代码片段负责将 UV 数据从顶点属性传递到 `vUv` 变量中。这通常包括从顶点数据中读取 UV 坐标，并将其赋值给 `vUv`。
 
 在片元着色器中，相关的代码片段包括：
 
@@ -737,7 +737,7 @@ void main() {
 ...
 ```
 
-- **`<uv_pars_fragment>`**: 这个代码片段包括对 `vUv` 的使用，它从顶点着色器传递的数据中接收 UV 坐标。这在处理纹理映射和其他基于 UV 的操作时非常关键。
+- **`<uv_pars_fragment>`** **<uv_pars_fragment>**: 这个代码片段包括对 `vUv` 的使用，它从顶点着色器传递的数据中接收 UV 坐标。这在处理纹理映射和其他基于 UV 的操作时非常关键。
 
 在你的代码中，`vUv` 的处理是通过标准的 Three.js 着色器代码片段间接实现的。这种方法的优点是你无需直接在你的着色器代码中声明和定义 `vUv`，Three.js 已经在其着色器库中处理了所有这些操作。
 
@@ -763,7 +763,7 @@ gui设置隐藏，通过键盘H键唤起；
 
 - 取消注释
 
-![image-20240913170816909.png](https://s2.loli.net/2024/10/12/tsKlSnbCucMwm2O.png)
+![](https://s2.loli.net/2024/10/12/tsKlSnbCucMwm2O.png)
 
 #### 制作飞线
 
@@ -840,7 +840,7 @@ gui设置隐藏，通过键盘H键唤起；
   }
 ```
 
-![202408281104602.png](https://s2.loli.net/2024/08/28/GWszxuwCZIaV1EB.png)
+![](https://s2.loli.net/2024/08/28/GWszxuwCZIaV1EB.png)
 
 ##### 飞线shader
 
@@ -848,13 +848,13 @@ gui设置隐藏，通过键盘H键唤起；
 
 1. 安装 `vite-plugin-glsl`：
 
-   ```
+   ````
    npm install vite-plugin-glsl
-   ```
+   ````
 
 2. 在你的 Vite 配置文件中（通常是 `vite.config.js` 或 `vite.config.ts`）添加插件：
 
-   ```
+   ````
    import { defineConfig } from 'vite'
    import vue from '@vitejs/plugin-vue'
    import glsl from 'vite-plugin-glsl'
@@ -865,24 +865,25 @@ gui设置隐藏，通过键盘H键唤起；
        glsl()
      ]
    })
-   ```
+   ````
+
 
 这样配置后，当你导入 `.glsl` 文件时，`vite-plugin-glsl` 将自动处理它们，确保 GLSL 代码被作为字符串正确导入，避免 JavaScript 解析错误。
 
 确保在你的 Vue 组件或 JavaScript 文件中按照下面的方式导入 `.glsl` 文件：
 
-```
+````
 import textFragmentShader from './Shader/text.frag.glsl'
 import textVertexShader from './Shader/text.vert.glsl'
-```
+````
 
 这些文件现在应该会被正确地作为字符串导入，可以直接使用在 Three.js 的 `ShaderMaterial` 中。这应该解决你遇到的关于 GLSL 代码导入的问题。
 
 页面中导入：
 
-```
+````
 import lineFragmentShader from './line.frag.glsl';
-```
+````
 
 shader内容：
 
@@ -897,6 +898,7 @@ lineLength 到起点的累积距离
 这段代码是一个在 Three.js 中使用的 GLSL shader，具体是用来处理具有虚线效果的线条材料（`LineDashedMaterial`）。这个 shader 控制着如何根据距离和虚线模式显示线条的片段。
 
 - **uniforms** 是从 Three.js 的 JavaScript 代码传递到 shader 的变量。
+
   - `mediump float`: 精度指示符，表明浮点运算使用中等精度。
   - `actionRatio`: 控制线条的动画或进度的参数。
   - `lineLength`: 线条的总长度。
@@ -904,8 +906,11 @@ lineLength 到起点的累积距离
   - `opacity`: 线条的不透明度。
   - `dashSize`: 单个虚线的长度。
   - `totalSize`: 虚线和间隔的总和长度。
+
 - **varying**
+
   - `vLineDistance`: 表示当前片段在整个线条中的位置。
+
 
 **虚线计算**:
 
@@ -923,12 +928,12 @@ lineLength 到起点的累积距离
 
 3. 在片段着色器中，vLineDistance 用来确定每个片段是否应该被渲染为虚线的一部分：
 
-> float currPos = (lineLength + dashSize) * actionRatio;
-这里 currPos 表示虚线开始的位置，是通过线条总长度、虚线大小和动画比例 (actionRatio) 计算的。actionRatio 可能用于动态调整虚线的显示，比如滚动效果。
+> float currPos = (lineLength + dashSize) * actionRatio;  
+这里 currPos 表示虚线开始的位置，是通过线条总长度、虚线大小和动画比例 (actionRatio) 计算的。actionRatio 可能用于动态调整虚线的显示，比如滚动效果。  
 确定片段位置:
 
-> float d = (vLineDistance + halfDash) - currPos;
-这个计算检查当前片段的位置（vLineDistance + halfDash）相对于当前虚线开始位置的偏移量。halfDash 用于调整计算到虚线中心的距离。
+> float d = (vLineDistance + halfDash) - currPos;  
+这个计算检查当前片段的位置（vLineDistance + halfDash）相对于当前虚线开始位置的偏移量。halfDash 用于调整计算到虚线中心的距离。  
 判断是否在虚线内部:
 
 > if (abs(d) > halfDash ) discard;如果偏移量大于 halfDash，则表示当前片段不在虚线内部，应该被丢弃（不渲染）。这样，只有在虚线范围内的片段会被渲染，形成断续的线条效果。
@@ -937,7 +942,7 @@ lineLength 到起点的累积距离
 
 float grad = ((vLineDistance + halfDash) - (currPos - halfDash)) / halfDash; 这里 grad 用于计算当前片段在虚线边缘的位置，用于实现边缘的渐变效果。这可以让虚线的开始和结束更加平滑，不会突然截断。
 
-![ac03418e3341f086f3b780056121b39.jpg](https://s2.loli.net/2024/09/11/yfOMo2NWJZVekbq.jpg)
+![](https://s2.loli.net/2024/09/11/yfOMo2NWJZVekbq.jpg)
 
 ##### 补充 | `negate`
 
@@ -1037,20 +1042,26 @@ material.needsUpdate = true;
 
 在Three.js的shader编程中，`#include` 语句用于插入共用的代码块，这些代码块通常封装了一些常用的函数和变量定义，使得shader的编写更加模块化和可复用。下面是你提到的几个常见的include文件的用途：
 
-1. **`<common>`**:
+1. **`<common>`** **<common>**:
+
    - 这个文件包括了一些常用的数学函数和宏定义，比如计算线性插值、饱和度计算等，还有一些常用的常量定义，例如PI的值等。
 
-2. **`<color_pars_fragment>`**:
+2. **`<color_pars_fragment>`** **<color_pars_fragment>**:
+
    - 这个文件定义了与颜色处理相关的参数和函数，比如处理顶点颜色、漫反射等。
 
-3. **`<fog_pars_fragment>`**:
+3. **`<fog_pars_fragment>`** **<fog_pars_fragment>**:
+
    - 用于定义和计算雾效果(fog)的参数，使得物体在雾中逐渐消失的效果可以在shader中实现。
 
-4. **`<logdepthbuf_pars_fragment>`**:
+4. **`<logdepthbuf_pars_fragment>`** **<logdepthbuf_pars_fragment>**:
+
    - 如果启用了logarithmic depth buffer，这个文件包含了相关的实现，用来改善远距离渲染时的深度精度问题。
 
-5. **`<clipping_planes_pars_fragment>`**:
+5. **`<clipping_planes_pars_fragment>`** **<clipping_planes_pars_fragment>**:
+
    - 这个文件提供了剪裁平面的支持，使得可以在shader中处理剪裁逻辑，仅渲染剪裁平面允许的部分。
+
 
 要查找Three.js中可用的所有shader chunks，最好的方法是直接查看Three.js的源代码。在GitHub上的Three.js库中，这些shader chunk文件位于`src/renderers/shaders/ShaderChunk/`目录下。
 
@@ -1058,7 +1069,7 @@ material.needsUpdate = true;
 
 内容结构：
 
-``` jsx
+```jsx
 const setTrailAnimation = () => {
     let tweens = [];
     for(let i =0;i<maxImpactAmount;i++) {
@@ -1075,7 +1086,7 @@ for循环里的设置
 
 更新了impacts，同时也影响到了球体的效果；
 
-``` jsx
+```jsx
     for (let i = 0; i < maxImpactAmount; i++) {
       tweens.push({
         runTween: () => {
@@ -1112,15 +1123,15 @@ for循环里的设置
 
 新建constant.js，存放一些固定的内容文本数组；
 
-``` js
+```js
 export const weekMap ={...};
 export const tips = [...];
 ```
 
-设置state存放显示的内容；
+设置state存放显示的内容；  
 在 React 中，组件可以是类组件或函数式组件。在函数式组件中，传统的类组件中的 state 和生命周期方法被 React Hooks 提供的功能所替代。最常用的 Hook 是 useState，它用于在函数式组件中添加状态管理功能。
 
-``` jsx
+```jsx
 const [week, setWeek] = useState(weekMap[new Date().getDay()]);
 const [time, setTime] = useState(new Date().toLocaleTimeString());
 const [showModal, setShowModal] = useState(false);
@@ -1130,7 +1141,7 @@ const [renderGlithPass, setRenderGlithPass] = useState(false);
 
 header结构
 
-``` html
+```html
 <header className="hud-header">
   <div className="left"></div>
   <div className="middle"></div>
@@ -1146,7 +1157,7 @@ header结构
 
 scss里写clip-path
 
-``` scss
+```scss
   $yellow-color: #f9f002;
   $border-color: #8ae66e;
   $blue-color: #00e6f6;
@@ -1175,11 +1186,11 @@ scss里写clip-path
 
 ```
 
-![27e2baa8c3a79d08953b367291a0195.jpg](https://s2.loli.net/2024/09/11/ZL9FgtrxEBW2ame.jpg)
+![](https://s2.loli.net/2024/09/11/ZL9FgtrxEBW2ame.jpg)
 
 logo和aside部分的结构
 
-```
+````
 <div className="logo-pic" title='Cyberpunk 2077'></div>
 <aside className="hud aside left">
   <div className="box inverse">
@@ -1197,32 +1208,32 @@ logo和aside部分的结构
   <div className="box"></div>
   <div className="box inverse dotted"></div>
 </aside>
-```
+````
 
 ## button点击后出现故障风
 
 点击触发函数：
 
-```
+````
 const handleStartButtonClick = () => {
     setRenderGlithPass(!renderGlithPass);
   }
-```
+````
 
 动画中更新：
 
-```
+````
   const animate = () => {
    ......
     renderGlithPass && composer.render();
   }
-```
+````
 
 ### 后处理效果
 
 导入composer和pass
 
-``` jsx
+```jsx
 import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer.js';
 import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js';
 import { GlitchPass } from 'three/examples/jsm/postprocessing/GlitchPass.js';
@@ -1230,7 +1241,7 @@ import { GlitchPass } from 'three/examples/jsm/postprocessing/GlitchPass.js';
 
 initThree里初始化
 
-``` jsx
+```jsx
 composer = new EffectComposer(renderer);
 composer.addPass(new RenderPass(scene, camera));
 composer.addPass(new GlitchPass());
@@ -1240,7 +1251,7 @@ composer.addPass(new GlitchPass());
 
 利用linear-gradient，实现了45度方向上，从透明到红色的按钮的突变（5%，5%），这个和《CSS揭秘》里的内容呼应了。
 
-``` css
+```css
 .startBtn,
 .startBtn::after {
   cursor: pointer;
@@ -1259,11 +1270,11 @@ composer.addPass(new GlitchPass());
 
 ## echarts
 
-<https://echarts.apache.org/handbook/zh/basics/import/>
+[https://echarts.apache.org/handbook/zh/basics/import/](https://echarts.apache.org/handbook/zh/basics/import/)
 
 按需引入：
 
-``` jsx
+```jsx
 // 引入 echarts 核心模块，核心模块提供了 echarts 使用必须要的接口。
 import * as echarts from 'echarts/core';
 // 引入柱状图图表，图表后缀都为 Chart
@@ -1297,19 +1308,19 @@ echarts.use([
 
 构建数据 constant.js
 
-导入：
+导入：  
 `import { chart_1_option, chart_2_option, chart_3_option, chart_4_option, chart_5_option, weekMap, tips } from '@/containers/EarthDigital/scripts/config';`
 
 初始化chart
 
-```
+````
  const chart_1 = echarts.init(document.getElementsByClassName('chart_1')[0], 'dark');
     chart_1 && chart_1.setOption(chart_1_option);
-```
+````
 
 使用useRef进行简化
 
-```
+````
   let chartsRef = Array.from({ length: 5 }).map(() => useRef(null));
   const initChart = () => {
     const chartsOption = [chart_1_option, chart_2_option, chart_3_option, chart_4_option, chart_5_option];
@@ -1318,11 +1329,11 @@ echarts.use([
       chart && chart.setOption(chartsOption[idx]);
     });
   }
-```
+````
 
 最后的aside
 
-```
+````
 <aside className="hud aside left">
   <div className="box box_0 inverse">
     <div className="cover"></div>
@@ -1339,17 +1350,17 @@ echarts.use([
   <div className="box"><div className="chart" ref={chartsRef[3]}></div></div>
   <div className="box inverse dotted"><div className="chart" ref={chartsRef[4]}></div></div>
 </aside>
-```
+````
 
 echarts里的option配置
 
-![7d30adb4f9c8155b133b9b7b6a939fa.jpg](https://s2.loli.net/2024/09/26/29DpPhmGLj16kyb.jpg)
+![](https://s2.loli.net/2024/09/26/29DpPhmGLj16kyb.jpg)
 
 注意：每一种图表形式的使用，都要按需导入；
 
 针对areaStyle里的颜色，可以不导入echarts，直接colorStops来实现；
 
-``` js
+```js
 // 原来：
 areaStyle: {
   opacity: 0.8,
@@ -1388,18 +1399,16 @@ areaStyle: {
 CSS 中的 `clip-path` 属性允许你定义一个元素的可见区域。通过这个属性，你可以指定一个路径，在这个路径内的内容会被显示，而路径外的内容则会被隐藏。这是一个非常强大的工具，因为它可以用来创建各种复杂的形状和动态效果。
 
 1. **创建复杂形状**：使用 `clip-path`，你可以轻松创建圆形、椭圆、多边形或者自定义路径（使用 SVG 路径语法）等形状。这对于设计先进的用户界面和特殊的图形效果非常有用。
-
 2. **交互效果**：你可以结合动画和过渡效果使用 `clip-path`，以实现视觉上吸引人的交互动画。例如，当用户悬停或点击元素时改变 `clip-path` 的形状。
-
 3. **掩盖和显示内容**：它可以被用来掩盖元素的某部分或只显示某部分，这在创建仪表板、卡片或其他包含隐藏详细信息的界面元素时尤其有用。
 
 **基本语法**：
 
-  ```css
-  clip-path: shape | none;
-  ```
+```css
+clip-path: shape | none;
+```
 
-  其中 `shape` 可以是以下几种类型：
+其中 `shape` 可以是以下几种类型：
 
 - **圆形**（`circle()`）：
 
@@ -1433,14 +1442,15 @@ CSS 中的 `clip-path` 属性允许你定义一个元素的可见区域。通过
 
   这里 `#clip-shape` 是 SVG 内的 `<clipPath>` 元素的 ID，允许你使用 SVG 的复杂路径定义剪裁形状。
 
+
 通过使用 `clip-path`，开发者可以在不需要额外图像或 SVG 文件的情况下，直接在 CSS 中创建视觉上吸引人的形状和效果。这使得页面加载更快，也使得动态效果的实现更为简便。
 
 ## 底部仪表盘
 
 1. 三个square构成，每个包括了radar和文字部分；
 2. 写css
-  1. radial-gradient
-  2. animation相关
+3. radial-gradient
+4. animation相关
 
 ### 点击事件
 
@@ -1450,9 +1460,8 @@ CSS 中的 `clip-path` 属性允许你定义一个元素的可见区域。通过
 4. 相交，则显示模态框和文本
 5. 构建界面，写css
 
-`<i className='close' onClick={() => setShowModal(false)}>CLOSE</i>`, 而不是写成 `<i className='close' onClick={setShowModal(false)>CLOSE</i>`;
+`<i className='close' onClick={() => setShowModal(false)}>CLOSE</i>`, 而不是写成 `<i className='close' onClick={setShowModal(false)>CLOSE</i>`;  
 因为第一种是函数引用，点击i的时候才会触发；第二种在渲染的时候直接触发了。
-
 
 ## 问题
 
@@ -1460,13 +1469,13 @@ CSS 中的 `clip-path` 属性允许你定义一个元素的可见区域。通过
 
 尝试1：看看texture是否正确加载
 
-``` jsx
+```jsx
 let earthTexture = new Three.TextureLoader().load(earthImg, function (texture) {
       console.log('texture loaded successfully');
     }, undefined, function (err) { console.log('texture load failed', err); });
 ```
 
-问题是对UV的计算错了：
+问题是对UV的计算错了：  
 错处1：`let uv = [(sph + Math.PI) / (2 * Math.PI), 1 - (sph.theta / Math.PI)];`
 
 需要使用new Three.Vector2(),而不是直接构建数组；如果是直接构建数组，那下面就访问不到.x和.y，需要使用[0]和[1]来访问对应的内容。
@@ -1476,37 +1485,40 @@ let earthTexture = new Three.TextureLoader().load(earthImg, function (texture) {
 这里对UV的映射计算错了
 
 > 在 Three.js 中，`Spherical` 类表示的球坐标系统是基于三维右手笛卡尔坐标系，其中 `phi`（仰角）和 `theta`（方位角）的定义具体如下：
->
-> 1. **`phi`（仰角）** - 这是从正Y轴向下至点P的线段与Y轴之间的角度。在 Three.js 中，`phi` 的范围通常是从0到π（即从0到180度），其中0对应于正Y轴（向上）的方向，而π对应于负Y轴（向下）的方向。
-> 2. **`theta`（方位角）** - 这是在XZ平面上，从正Z轴向正X轴的角度。`theta` 的范围是从0到2π（即从0到360度），其中0开始于正Z轴，增加方向是逆时针（从屏幕向里到屏幕向外看为正Z方向）。
-因此，`Spherical` 的 `phi` 和 `theta` 的直观理解如下：
->
+> 
+> 1. **`phi`** **phi****（仰角）** - 这是从正Y轴向下至点P的线段与Y轴之间的角度。在 Three.js 中，`phi` 的范围通常是从0到π（即从0到180度），其中0对应于正Y轴（向上）的方向，而π对应于负Y轴（向下）的方向。
+> 2. **`theta`** **theta****（方位角）** - 这是在XZ平面上，从正Z轴向正X轴的角度。`theta` 的范围是从0到2π（即从0到360度），其中0开始于正Z轴，增加方向是逆时针（从屏幕向里到屏幕向外看为正Z方向）。  
+>    因此，`Spherical` 的 `phi` 和 `theta` 的直观理解如下：
+> 
 > - `phi = 0`：点位于Y轴的正方向（向上）。
 > - `phi = π/2`：点位于XZ平面。
 > - `phi = π`：点位于Y轴的负方向（向下）。
 > - `theta = 0`：点位于Z轴的正方向（向屏幕外）。
 > - `theta = π/2`：点位于X轴的正方向（向右）。
 > - `theta = π`：点位于Z轴的负方向（向屏幕里）。
-> - `theta = 3π/2`：点位于X轴的负方向（向左）。
-> 这种球坐标系统非常有用于处理与球面或者环绕运动相关的场景，如天体模拟、相机环绕目标物体的动作等。
+> - `theta = 3π/2`：点位于X轴的负方向（向左）。  
+>   这种球坐标系统非常有用于处理与球面或者环绕运动相关的场景，如天体模拟、相机环绕目标物体的动作等。
 
 正确写法：`let uv = new Three.Vector2((sph.theta + Math.PI) / (2 * Math.PI), 1 - (sph.phi / Math.PI));`
 
 为了正确理解这段代码 `let uv = [(sph.theta + Math.PI) / (2 * Math.PI), 1 - (sph.phi / Math.PI)];` 并将二维贴图UV映射到球面上，让我们逐一分析每个部分：
 
-1. **`(sph.theta + Math.PI) / (2 * Math.PI)`**:
+1. **`(sph.theta + Math.PI) / (2 * Math.PI)`** **(sph.theta + Math.PI) / (2 * Math.PI)**:
+
    - `sph.theta` 表示球坐标中的方位角，通常的取值范围是从 0 到 2π，表示从正Z轴顺时针到X轴再回到Z轴的全周角度。
    - `+ Math.PI` 的作用是将θ的起始点从正Z轴（前面）调整到负Z轴（后面）。通常，这种调整是为了使UV映射的起点对应于模型的后方，从而使得当模型前向朝向观察者时，贴图的“前面”能够正对观察者。
    - 除以 `(2 * Math.PI)` 将调整后的θ值归一化到 [0, 1] 的范围内，这样可以映射到贴图的水平坐标U。
 
-2. **`1 - (sph.phi / Math.PI)`**:
+2. **`1 - (sph.phi / Math.PI)`** **1 - (sph.phi / Math.PI)**:
+
    - `sph.phi` 是从正Y轴向球面的点的仰角，取值范围是从 0 到 π。
    - `(sph.phi / Math.PI)` 将φ值归一化到 [0, 1] 范围内，其中0代表北极，1代表南极。
    - `1 -` 的作用是反转V坐标，使得在UV贴图中，V = 0 对应于球体的北极，V = 1 对应于球体的南极。这样的反转是必要的，因为在大多数图形处理系统中，贴图的V坐标从下到上增加，而球坐标系统中的φ是从上到下增加的。
 
+
 [Three.js地理坐标和三维空间坐标的转换](https://blog.csdn.net/qihoo_tech/article/details/101443066)
 
-![image-20240908162225403.png](https://s2.loli.net/2024/09/09/pbtr2HfNW7xTSkC.png)
+![](https://s2.loli.net/2024/09/09/pbtr2HfNW7xTSkC.png)
 
 ### trail没显示出来
 
@@ -1526,7 +1538,7 @@ vLineDistance // 在使用 Three.js 的 LineDashedMaterial 时，确保顶点着
 
 要让 `animate` 函数能够访问最新的 `renderGlithPass` 状态，您有两个选择：
 
-1. **更新 `useEffect` 的依赖数组**：在依赖数组中包含 `renderGlithPass`，这样每次 `renderGlithPass` 改变时，`useEffect` 都会重新执行，`animate` 函数也将重新定义，从而捕获到最新的状态值。
+1. **更新** **`useEffect`** **useEffect** **的依赖数组**：在依赖数组中包含 `renderGlithPass`，这样每次 `renderGlithPass` 改变时，`useEffect` 都会重新执行，`animate` 函数也将重新定义，从而捕获到最新的状态值。
 
 ```javascript
 useEffect(() => {
@@ -1540,7 +1552,7 @@ useEffect(() => {
 }, [renderGlithPass]); // 现在包含 renderGlithPass 作为依赖
 ```
 
-2. **使用 `useRef` 追踪最新的状态**：如之前所述，您可以使用 `useRef` 来追踪 `renderGlithPass` 的最新值，这样 `animate` 函数可以通过 ref 访问当前的状态，而无需重新定义 `animate` 函数。
+2. **使用** **`useRef`** **useRef** **追踪最新的状态**：如之前所述，您可以使用 `useRef` 来追踪 `renderGlithPass` 的最新值，这样 `animate` 函数可以通过 ref 访问当前的状态，而无需重新定义 `animate` 函数。
 
 ```javascript
 const renderGlithPassRef = useRef(renderGlithPass);
@@ -1603,7 +1615,7 @@ ddd
 
 # 把以前的threejs的demo加入到项目里
 
-```
+````
 chunk-DPRAAIJY.js?v=d07e5b2e:17488 Uncaught Error: R3F: Hooks can only be used within the Canvas component!
     at useStore (chunk-DPRAAIJY.js?v=d07e5b2e:17488:21)
     at useThree (chunk-DPRAAIJY.js?v=d07e5b2e:17492:10)
@@ -1615,11 +1627,11 @@ chunk-DPRAAIJY.js?v=d07e5b2e:17488 Uncaught Error: R3F: Hooks can only be used w
     at Object.invokeGuardedCallbackDev (chunk-A6I3RWFE.js?v=d07e5b2e:3699:24)
     at invokeGuardedCallback (chunk-A6I3RWFE.js?v=d07e5b2e:3733:39)
     at beginWork$1 (chunk-A6I3RWFE.js?v=d07e5b2e:19733:15)
-```
+````
 
 针对上面这个报错，后来发现导入fox的时候需要加上fox.jsx，以前直接是fox，但以前应该也是可以成功的？
 
-参考教程：<https://juejin.cn/post/7145064095178293285>
+参考教程：[https://juejin.cn/post/7145064095178293285](https://juejin.cn/post/7145064095178293285)
 
 # 数字地球星空
 
@@ -1656,23 +1668,23 @@ let sizes = {
 
 此外，从vue迁移到react里的时候，原先是通过下面来实现的
 
-```
+````
     renderer = new Three.WebGLRenderer({ alpha: true, antialias: true })
     renderer.setSize(sizes.width, sizes.height)
     container.current.appendChild(renderer.domElement);
-```
+````
 
 但搬过来就实现不了了，需要使用这样子实现；
 
-```
+````
     renderer = new Three.WebGLRenderer({ canvas: container.current, alpha: true, antialias: true })
     renderer.setSize(sizes.width, sizes.height)
     renderer.render(scene, camera);
-```
+````
 
 但又会报这种错误：
 
-```
+````
 chunk-A6I3RWFE.js?v=776dc4a7:16638 Uncaught TypeError: Cannot read properties of null (reading 'matrixWorldAutoUpdate')
     at WebGLRenderer.render (chunk-KKQC3OGW.js?v=776dc4a7:17854:17)
     at initThree (EarthStar.jsx:47:14)
@@ -1684,7 +1696,7 @@ chunk-A6I3RWFE.js?v=776dc4a7:16638 Uncaught TypeError: Cannot read properties of
     at commitPassiveMountEffects (chunk-A6I3RWFE.js?v=776dc4a7:18077:11)
     at flushPassiveEffectsImpl (chunk-A6I3RWFE.js?v=776dc4a7:19458:11)
     at flushPassiveEffects (chunk-A6I3RWFE.js?v=776dc4a7:19415:22)
-```
+````
 
 需要把`renderer.render(scene, camera);`放到scene初始化的后面；
 
@@ -1757,18 +1769,18 @@ let radian = (Math.PI * rot) / 180
 
 ## 外部资源加载
 
-```
+````
 EarthStar.jsx:69 THREE.OBJLoader: Unexpected line: "<!DOCTYPE html>"
 Promise.then  
 (anonymous) @ EarthStar.jsx:69
 Promise.then  
 EarthStar @ EarthStar.jsx:64
 Show 20 more frames
-```
+````
 
 需要将模型放到public目录里面，同时vite.config.js的配置里加入：`assetsInclude: ['**/*.glb', '**/*.mtl', '**/*.gltf'],`
 
----
+***
 
 如果你在使用 Vite 和 Vue，并且看到网络请求的状态码为 `304 Not Modified`，这意味着浏览器已经缓存了 `earth.obj` 文件，并且服务器告诉浏览器自从上次请求以来文件没有被修改，所以浏览器可以使用本地缓存的版本。
 
@@ -1786,13 +1798,9 @@ Show 20 more frames
 你提到 .glb 类型的模型可以正常加载，而其他类型的模型需要放到 public 目录下才可以正常加载，这可能与几个因素有关：
 
 - Vite 配置：确保 assetsInclude 的路径匹配是正确的。你的配置已经包括了对这些文件类型的全局匹配。检查是否有任何拼写错误或路径错误。通配符 **/* 表示匹配任意深度的文件夹中的指定文件类型。
-
 - 模块解析：Vite 在开发环境下使用 JavaScript 模块解析来处理资源。如果你的 .obj 或 .mtl 文件没有被正确地识别为模块，它们可能不会通过 Vite 的处理流程。确保这些文件在导入时的路径是正确的，并且相对于项目的根目录。
-
 - 资源引用：检查在项目中引用这些资源的方式。如果你是使用 ES 模块语法（如 import model from './path/to/model.obj'），Vite 将尝试将其视为模块来处理。如果资源没有按预期处理，可能需要调整引用方式或确认文件路径是否正确。
-
 - 缓存问题：有时候，开发服务器的缓存可能导致资源加载行为不一致。尝试清除缓存或重启 Vite 服务器看是否有改进。
-
 - Vite 插件：对于一些特殊类型的文件，可能需要使用特定的 Vite 插件来支持。例如，对于 3D 模型文件，你可能需要使用适合处理这些文件的插件。
 
 最后通过import方式引入，就可以了，不需要放到public目录里了；
@@ -1817,8 +1825,8 @@ mtl文件里关联了贴图，所以贴图也要一起拷贝过来；
 10. 添加事件监听
 
 注意点：
-- renderer1.outputColorSpace = Three.SRGBColorSpace // API已经改成了ColorSpace
 
+- renderer1.outputColorSpace = Three.SRGBColorSpace // API已经改成了ColorSpace
 - why lds-roller has 8 divs? ,用于形成loading旋转的时候的八个点
 
 ## IntersectionObserver
@@ -1836,9 +1844,9 @@ ob.observe(document.querySelector('.second'));
 ```
 
 - **回调函数**：当观察的元素进入或退出交叉区域时，回调函数会被调用。`payload` 参数（通常命名为 `entries`）是一个数组，包含了被观察元素的交叉状态信息。这个示例中只观察了一个元素，因此通过 `payload[0]` 访问了这个元素的信息。
-- **`intersectionRatio`**：这是一个 0 到 1 之间的值，表示观察的元素当前可见部分的比例。在这个例子中，如果这个比例大于 0.05，`secondContainer` 将被设置为 `true`，表示元素至少有 5% 是可见的。
+- **`intersectionRatio`** **intersectionRatio**：这是一个 0 到 1 之间的值，表示观察的元素当前可见部分的比例。在这个例子中，如果这个比例大于 0.05，`secondContainer` 将被设置为 `true`，表示元素至少有 5% 是可见的。
 - **选项对象**：在这个例子中，选项对象 `{ threshold: 0.05 }` 指定了触发回调的交叉比率阈值。当元素的可见部分超过 5% 时，回调函数将被执行。`threshold` 可以是一个单一的值或一个值的数组，允许你在元素可见性达到多个不同级别时触发回调。
-- **`.observe()` 方法**：这个方法用于开始观察一个元素。在这里，它观察一个类名为 `.second` 的元素。当这个元素的可视状态发生变化，且满足设定的阈值时，将触发上面定义的回调函数。
+- **`.observe()`** **.observe()** **方法**：这个方法用于开始观察一个元素。在这里，它观察一个类名为 `.second` 的元素。当这个元素的可视状态发生变化，且满足设定的阈值时，将触发上面定义的回调函数。
 
 使用 `IntersectionObserver` 相比传统的滚动事件监听，可以大大减少对性能的影响，因为浏览器可以优化对交叉状态的检测，无需在每次滚动事件发生时执行复杂的计算。
 
@@ -1853,7 +1861,7 @@ ob.observe(document.querySelector('.second'));
 
 ## 动画位移
 
-```
+````
 // 更新点光源的位置
       fillLight.position.y -=
         (parallaxY * 9 + fillLight.position.y - 2) * deltaTime
@@ -1864,7 +1872,7 @@ ob.observe(document.querySelector('.second'));
         (parallaxY / 3 + cameraGroup.position.z) * 2 * deltaTime
       cameraGroup.position.x +=
         (parallaxX / 3 - cameraGroup.position.x) * 2 * deltaTime
-```
+````
 
 这段代码通过结合用户输入（例如鼠标移动产生的视差效果，即 `parallaxX` 和 `parallaxY`）和时间变化量（`deltaTime`）来动态更新点光源和相机组的位置。这种方法可以创建平滑和响应式的动画效果，使得场景元素（如光源和相机）能够根据用户的交互或时间的推移进行移动。
 
@@ -1889,12 +1897,12 @@ cameraGroup.position.x += (parallaxX / 3 - cameraGroup.position.x) * 2 * deltaTi
 
 ## CSS
 
-```
+````
 .lds-roller div {
   animation: lds-roller 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
   transform-origin: 40px 40px;
 } 
-```
+````
 
 这段 CSS 代码定义了一个动画效果，通常用于创建加载指示器（如旋转的圆环或球）。让我们逐步解析这段代码的含义：
 
@@ -1910,32 +1918,32 @@ cameraGroup.position.x += (parallaxX / 3 - cameraGroup.position.x) * 2 * deltaTi
 animation: lds-roller 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
 ```
 
-- **动画名称 (`lds-roller`)**：这是动画的关键帧名称，它引用了在某处定义的 `@keyframes lds-roller`，该关键帧定义了动画的开始、结束状态以及可能的中间状态。
-- **持续时间 (`1.2s`)**：动画从开始到结束的时长为 1.2 秒。
-- **缓动函数 (`cubic-bezier(0.5, 0, 0.5, 1)`)**：这是一个贝塞尔曲线，定义了动画的加速度曲线。这个特定的曲线意味着动画开始时加速度较快，结束时减速。这样可以让动画看起来更自然、流畅。
-- **重复次数 (`infinite`)**：动画会无限次重复。
+- **动画名称 (****`lds-roller`** **lds-roller****)**：这是动画的关键帧名称，它引用了在某处定义的 `@keyframes lds-roller`，该关键帧定义了动画的开始、结束状态以及可能的中间状态。
+- **持续时间 (****`1.2s`** **1.2s****)**：动画从开始到结束的时长为 1.2 秒。
+- **缓动函数 (****`cubic-bezier(0.5, 0, 0.5, 1)`** **cubic-bezier(0.5, 0, 0.5, 1)****)**：这是一个贝塞尔曲线，定义了动画的加速度曲线。这个特定的曲线意味着动画开始时加速度较快，结束时减速。这样可以让动画看起来更自然、流畅。
+- **重复次数 (****`infinite`** **infinite****)**：动画会无限次重复。
 
 ```css
 transform-origin: 40px 40px;
 ```
 
-- **变换原点 (`transform-origin`)**：这个属性定义了元素变形的原点。在这个例子中，原点被设置在了元素的 `40px 40px` 的位置，通常意味着元素的变换（如旋转）将围绕这个点进行。这个设置有助于创建环绕中心点旋转的效果，特别是当动画效果是旋转时。
+- **变换原点 (****`transform-origin`** **transform-origin****)**：这个属性定义了元素变形的原点。在这个例子中，原点被设置在了元素的 `40px 40px` 的位置，通常意味着元素的变换（如旋转）将围绕这个点进行。这个设置有助于创建环绕中心点旋转的效果，特别是当动画效果是旋转时。
 
 综上所述，这段 CSS 为 `.lds-roller` 内部的每个 `div` 应用了一个持续 1.2 秒、无限重复的平滑动画，该动画的具体行为由 `@keyframes lds-roller` 定义。动画的变换原点设置在每个 `div` 的 `40px 40px` 处，使得旋转动画能围绕该点进行，创建出一个加载动画的视觉效果。
 
 为了完整地实现这个动画效果，你还需要定义相应的 `@keyframes lds-roller` 关键帧动画，指明动画开始、结束时，以及可能的中间步骤的具体样式变化。
 
-```
+````
 loadingCover.style.setProperty(
               'transform',
               `translate(0,${yPosition.y}%)`
             )
-```
+````
 
 在这段代码中，`loadingCover.style.setProperty` 方法被用于动态修改 `loadingCover` 元素的 CSS `transform` 属性。这个方法允许你直接通过 JavaScript 更改元素的样式，其中 `setProperty` 接受两个参数：第一个参数是要修改的 CSS 属性名称，第二个参数是该属性的新值。
 
-- **第一个参数 (`transform`)**: 指定了要修改的 CSS 属性，这里是 `transform`。`transform` 属性允许你对元素进行变形，比如旋转、缩放、移动（平移）或倾斜。
-- **第二个参数 (`translate(0,${yPosition.y}%)`)**: 是 `transform` 属性的新值，这里使用了 `translate` 函数来移动元素。`translate` 函数接受两个参数，分别对应 X 轴和 Y 轴的移动距离。在这个例子中，`translate(0,${yPosition.y}%)` 表示在 X 轴方向上不移动（`0`），在 Y 轴方向上移动 `${yPosition.y}%` 的距离，其中 `${yPosition.y}` 是一个动态计算的值，表示移动距离的百分比。使用百分比单位可以根据元素大小的不同而相对地移动不同的距离。
+- **第一个参数 (****`transform`** **transform****)**: 指定了要修改的 CSS 属性，这里是 `transform`。`transform` 属性允许你对元素进行变形，比如旋转、缩放、移动（平移）或倾斜。
+- **第二个参数 (****`translate(0,${yPosition.y}%)`** **translate(0,${yPosition.y}%)****)**: 是 `transform` 属性的新值，这里使用了 `translate` 函数来移动元素。`translate` 函数接受两个参数，分别对应 X 轴和 Y 轴的移动距离。在这个例子中，`translate(0,${yPosition.y}%)` 表示在 X 轴方向上不移动（`0`），在 Y 轴方向上移动 `${yPosition.y}%` 的距离，其中 `${yPosition.y}` 是一个动态计算的值，表示移动距离的百分比。使用百分比单位可以根据元素大小的不同而相对地移动不同的距离。
 
 这段代码的目的是根据 `yPosition.y` 的值（可能是通过某些计算得到的），在 Y 轴方向上动态移动 `loadingCover` 元素。这种技术常用于创建动态的交互效果，比如根据用户的滚动或鼠标移动来移动页面上的元素，从而增加页面的动态性和互动性。
 
@@ -2010,7 +2018,7 @@ onMounted(() => {
 
 ## tween的销毁
 
-```
+````
 new TWEEN.Tween(yPosition)
           .to({ y: 100 }, 900)
           .easing(TWEEN.Easing.Quadratic.InOut)
@@ -2027,7 +2035,7 @@ new TWEEN.Tween(yPosition)
             ) // 写loadingCover会报空
             TWEEN.remove(this)
           })
-```
+````
 
 ### `tween.getId is not a function` 错误
 
@@ -2037,7 +2045,7 @@ new TWEEN.Tween(yPosition)
 
 为了正确地移除 tween，你可以直接引用 tween 实例本身而不是使用 `this`。不过，从你的代码来看，并没有直接的引用。通常，如果你需要在回调中引用 tween，可以事先将其存储在一个变量中。但 `TWEEN.js` 库通常自我管理所有 tween 的生命周期，包括它们的添加和移除，所以手动调用 `remove` 方法可能并不是必须的。如果你确实需要移除 tween，考虑调整你的代码逻辑，避免在这种上下文中使用 `this`。
 
-```
+````
 const tween1 = new TWEEN.Tween(yPosition)
           .to({ y: 100 }, 900)
           .easing(TWEEN.Easing.Quadratic.InOut)
@@ -2064,11 +2072,11 @@ const tween1 = new TWEEN.Tween(yPosition)
             document.querySelector('.header').classList.add('ended')
             document.querySelector('.description').classList.add('ended')
           })
-```
+````
 
 ## 查询元素
 
-```
+````
 const loadingCover = document.getElementById('loading-text-intro')
 
         const tween1 = new TWEEN.Tween(yPosition)
@@ -2087,7 +2095,7 @@ const loadingCover = document.getElementById('loading-text-intro')
             ) // 写loadingCover会报空
             TWEEN.remove(tween1)
           })
-```
+````
 
 `Cannot read properties of null (reading 'removeChild')` 错误
 
@@ -2099,11 +2107,11 @@ const loadingCover = document.getElementById('loading-text-intro')
 
 你可以通过在尝试访问或修改元素之前检查它是否存在来解决这个问题：
 
-```
+````
 if (loadingCover && loadingCover.parentNode) {
     loadingCover.parentNode.removeChild(loadingCover);
 }
-```
+````
 
 综合以上，你的问题可能是由于对 `this` 的误用和对 DOM 元素存在性的假设未经验证造成的。正确地引用变量和确保 DOM 元素存在，可以解决这些问题。
 
@@ -2140,16 +2148,16 @@ const element = document.getElementById('a');
 
 THREE .DRACOLoader: Unexpected geometrytype 错误解决
 
-> <https://blog.csdn.net/iefreer/article/details/131113390>
->
+> [https://blog.csdn.net/iefreer/article/details/131113390](https://blog.csdn.net/iefreer/article/details/131113390)
+> 
 > npm i draco3d
->
+> 
 > npm i draco3dgltf
->
-> <https://segmentfault.com/q/1010000043706931>
->
-> 原因：`是draco版本与项目安装的three版本不对`
-> 解决方法：以vite脚手架为例 `node_modules\three\examples\jsm\libs\` 下的darco文件夹拷贝到 `public\<span> </span>`下，之后报错就解决了。
+> 
+> [https://segmentfault.com/q/1010000043706931](https://segmentfault.com/q/1010000043706931)
+> 
+> 原因：`是draco版本与项目安装的three版本不对`  
+解决方法：以vite脚手架为例 `node_modules\three\examples\jsm\libs\` 下的darco文件夹拷贝到 `public\<span> </span>`下，之后报错就解决了。
 
 ### DRACO验证
 
@@ -2158,7 +2166,7 @@ THREE .DRACOLoader: Unexpected geometrytype 错误解决
 - **使用 glTF Validator**：你可以使用 [glTF Validator](https://github.khronos.org/glTF-Validator/) 来检查你的 `.glb` 文件。这是一个由 Khronos Group 提供的工具，专门用于验证 glTF 文件的正确性。如果你的文件使用了 Draco 压缩，验证结果会显示相关信息。
 - **查看文件内容**：高级用户可以直接查看 GLB 文件的内容（例如，使用十六进制编辑器），寻找 Draco 压缩的标记或结构。这种方法需要对 GLB 文件格式和 Draco 压缩有较深的了解。
 
-```
+````
 {
     "uri": "statue.glb",
     "mimeType": "model/gltf-binary",
@@ -2222,7 +2230,7 @@ THREE .DRACOLoader: Unexpected geometrytype 错误解决
         "maxAttributes": 3
     }
 }
-```
+````
 
 从你通过 glTF Validator 获取的信息中，我们可以了解到以下几点关于你的模型 `statue.glb`：
 
@@ -2270,7 +2278,7 @@ THREE .DRACOLoader: Unexpected geometrytype 错误解决
 
 ## 资源
 
-仓库地址：https://github.com/mapbox/mapbox-gl-js
+仓库地址：[https://github.com/mapbox/mapbox-gl-js](https://github.com/mapbox/mapbox-gl-js)
 
 - [Getting started with Mapbox GL JS](https://docs.mapbox.com/mapbox-gl-js/overview/)
 - [Tutorials](https://docs.mapbox.com/help/tutorials/#web-apps)
@@ -2286,37 +2294,36 @@ THREE .DRACOLoader: Unexpected geometrytype 错误解决
 
 ## React中用mapbox-简单入门
 
-实现教程：https://docs.mapbox.com/help/tutorials/use-mapbox-gl-js-with-react/
+实现教程：[https://docs.mapbox.com/help/tutorials/use-mapbox-gl-js-with-react/](https://docs.mapbox.com/help/tutorials/use-mapbox-gl-js-with-react/)
 
-tailwindcss官网：https://www.tailwindcss.cn/docs/border-radius#basic-usage
+tailwindcss官网：[https://www.tailwindcss.cn/docs/border-radius#basic-usage](https://www.tailwindcss.cn/docs/border-radius#basic-usage)
 
 `npm install mapbox-gl`
 
 ## slide story
 
-官网模板：git@github.com:mapbox/storytelling.git
+官网模板：[git@github.com](mailto:git@github.com):mapbox/storytelling.git
 
 把本科做的乳业叙事迁移成一个demo；
 
 1. 基本结构
 2. config和points的常量配置
 3. 添加滚动逻辑
-  1. `npm install scrollama intersection-observer --save`
-4. 添加地图上的点交互
-5. 添加echarts图表
+4. `npm install scrollama intersection-observer --save`
+5. 添加地图上的点交互
+6. 添加echarts图表
 
 
 
 
 
-官网看到了“get started”；
-与style有关的：
-https://docs.mapbox.com/mapbox-gl-js/style-spec/
-https://docs.mapbox.com/help/glossary/style-url/
-https://docs.mapbox.com/help/glossary/tileset/
-https://www.mapbox.com/blog/standard-core-style
-https://www.mapbox.com/maps/streets
-
+官网看到了“get started”；  
+与style有关的：  
+[https://docs.mapbox.com/mapbox-gl-js/style-spec/](https://docs.mapbox.com/mapbox-gl-js/style-spec/)  
+[https://docs.mapbox.com/help/glossary/style-url/](https://docs.mapbox.com/help/glossary/style-url/)  
+[https://docs.mapbox.com/help/glossary/tileset/](https://docs.mapbox.com/help/glossary/tileset/)  
+[https://www.mapbox.com/blog/standard-core-style](https://www.mapbox.com/blog/standard-core-style)  
+[https://www.mapbox.com/maps/streets](https://www.mapbox.com/maps/streets)
 
 
 
@@ -2324,7 +2331,8 @@ https://www.mapbox.com/maps/streets
 
 需要打开remote的github仓库，确保自己登陆进去了，然后再push新的进去；
 
-```
+````
+npm run build
 npm run deploy
 // 右键open with live browser，打开验证下效果
 git add .
@@ -2333,4 +2341,4 @@ git push origin master
 git push origin --delete gh-pages
 // git branch -D gh-pages
 git subtree push --prefix=dist origin gh-pages
-```
+````

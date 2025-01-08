@@ -276,7 +276,7 @@ export const projects = [
   },
 ]
 
-const prefix = ''
+const prefix = '/arts/'
 export const arts = [
   {
     name: 'postprocessLut',
