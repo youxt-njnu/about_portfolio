@@ -32,13 +32,11 @@ import {
   Earth,
   EarthDigital,
   EarthStar,
-  FoxDemo,
   MultiMedia,
   MultiMedia2,
   Particles,
   ParticlesAstronaut,
   PostprocessExp,
-  PostProcessingExp,
   RickMorty,
   ShaderPattern,
   ShadowModel,
@@ -278,14 +276,14 @@ export const projects = [
 
 const prefix = '/arts/'
 export const arts = [
-  {
-    name: 'postprocessLut',
-    img: 'https://s2.loli.net/2024/10/17/HrfLEsU4zydXaAt.png',
-    path: prefix + 'bird',
-    component: PostProcessingExp, // 自己写的react-three-fiber组件
-    type: '测试1',
-    info: '自己写的react-three-fiber组件',
-  },
+  // {
+  //   name: 'postprocessLut',
+  //   img: 'https://s2.loli.net/2024/10/17/HrfLEsU4zydXaAt.png',
+  //   path: prefix + 'bird',
+  //   component: PostProcessingExp, // 自己写的react-three-fiber组件
+  //   type: '测试1',
+  //   info: '自己写的react-three-fiber组件',
+  // },
   {
     name: '地球',
     img: 'https://s2.loli.net/2024/10/17/yexj6A8cqVvMKDN.png',
@@ -294,14 +292,14 @@ export const arts = [
     type: '贴图',
     info: '地球自转和月球公转',
   },
-  {
-    name: '狐狸',
-    img: 'https://s2.loli.net/2024/08/05/hBc1om3X5euCRkt.png',
-    path: prefix + 'fox', //导入用react-three-fiber创建的模型组件,加工后的组件
-    component: FoxDemo,
-    type: '动画',
-    info: '含动画的狐狸模型',
-  },
+  // {
+  //   name: '狐狸',
+  //   img: 'https://s2.loli.net/2024/08/05/hBc1om3X5euCRkt.png',
+  //   path: prefix + 'fox', //导入用react-three-fiber创建的模型组件,加工后的组件
+  //   component: FoxDemo,
+  //   type: '动画',
+  //   info: '含动画的狐狸模型',
+  // },
   {
     name: '大屏',
     img: 'https://dragonir.github.io/3d/static/media/earthDigital.8c221282f247bb724b85.png',
