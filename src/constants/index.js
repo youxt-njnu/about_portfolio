@@ -24,7 +24,7 @@ import {
   threads,
   typescript,
 } from '../assets/icons'
-import { shopify, starbucks, tesla } from '../assets/images'
+import { lllw, swm, jssh, ar } from '../assets/images'
 
 import {
   BoxRotate,
@@ -161,8 +161,9 @@ export const experiences = [
   {
     title: '测绘内业工程师-实习生',
     company_name: '江苏苏海信息科技有限公司',
-    icon: tesla,
-    iconBg: '#fbc3bc',
+    icon: jssh,
+    iconBg: '#FFFFFF',
+    mainColor: '#008CCB',
     date: '2021.07-2021.08',
     points: [
       '工作：参与了“江宁一张图”的本地数据库更新工作和部分省市三调工作底图整理，完成数据整理、汇编、入库、交付沟通等工作。此外，协助经理进行日常工作维护，如数据维护、报销管理、图纸整理。',
@@ -172,8 +173,9 @@ export const experiences = [
   {
     title: '研发工程师-实习生',
     company_name: '视网么AR',
-    icon: starbucks,
-    iconBg: '#accbe1',
+    icon: swm,
+    iconBg: '#FFFFFF',
+    mainColor: '#C366A1',
     date: '2023.07 -2023.08',
     points: [
       '背景：该公司主要业务在元宇宙、AR 方面，涵盖科教、文旅、零售等方面，并自研了AR 内容编辑器。',
@@ -185,8 +187,9 @@ export const experiences = [
   {
     title: 'Web Developer',
     company_name: '邻里邻外',
-    icon: shopify,
-    iconBg: '#b7e4c7',
+    icon: lllw,
+    iconBg: '#FFFFFF',
+    mainColor: '#2BA6DF',
     date: '2024.06-2024.08',
     points: [
       'Developing and maintaining web applications using React.js and other related technologies.',
@@ -198,12 +201,218 @@ export const experiences = [
   {
     title: '实验室科研人员',
     company_name: '数字人文与超媒体GIS实验室',
-    icon: tesla,
-    iconBg: '#fbc3bc',
+    icon: ar,
+    iconBg: '#FFFFFF',
+    mainColor: '#AF2020',
     date: '2023.09至今',
     points: ['地图学助教', '实验室财务管理', '会议参与', '科研项目'],
   },
 ]
+
+const awardsOri = [
+  {
+    name: '大学英语四级（首考619分）',
+    date: '2019.12',
+    color: '#0076FF',
+  },
+  {
+    name: '南京师范大学 “优秀共青团员”',
+    date: '2020.05',
+    color: '#2B9D4A',
+  },
+  {
+    name: '南京师范大学 “优秀学生奖学金” 一等奖',
+    date: '2020.05',
+    color: '#2B9D4A',
+  },
+  {
+    name: '镇江市图书馆 志愿者 结任',
+    date: '2020.08',
+    color: '#0076FF',
+  },
+  {
+    name: '大学英语六级（首考567分）',
+    date: '2020.09',
+    color: '#0076FF',
+  },
+  {
+    name: '国家励志奖学金',
+    date: '2020.11',
+    color: '#FAC11B',
+  },
+  {
+    name: '南京师范大学 暑期社会实践活动优秀个人',
+    date: '2020.11',
+    color: '#2B9D4A',
+  },
+  {
+    name: '南京师范大学 “三好学生”',
+    date: '2020.12',
+    color: '#2B9D4A',
+  },
+  {
+    name: '南京师范大学 “优秀学生奖学金” 一等奖',
+    date: '2020.12',
+    color: '#2B9D4A',
+  },
+  {
+    name: '计算机二级C语言 首考 优秀',
+    date: '2020.12',
+    color: '#0076FF',
+  },
+  {
+    name: '南京师范大学 英才计划 A类',
+    date: '2020.12',
+    color: '#0076FF',
+  },
+  {
+    name: '地理科学学院 亚东涵田奖学金',
+    date: '2021.03',
+    color: '#2B9D4A',
+  },
+  {
+    name: '南京师范大学 “优秀共青团员”',
+    date: '2021.05',
+    color: '#2B9D4A',
+  },
+  {
+    name: '南京师范大学 “优秀学生奖学金” 一等奖',
+    date: '2021.05',
+    color: '#2B9D4A',
+  },
+  {
+    name: '地理科学学院 “易智瑞”杯 软件应用大赛一等奖',
+    date: '2021.05',
+    color: '#2B9D4A',
+  },
+  {
+    name: '地理科学学院 大学生科学技术协会 学业促进部 副部长 结任',
+    date: '2021.06',
+    color: '#0076FF',
+  },
+  {
+    name: '江苏省研究生 “地理大数据与空间智能” 暑期学校结业',
+    date: '2021.08',
+    color: '#0076FF',
+  },
+  {
+    name: '国家励志奖学金',
+    date: '2021.11',
+    color: '#FAC11B',
+  },
+  {
+    name: '南京师范大学 “优秀学生奖学金” 二等奖',
+    date: '2021.11',
+    color: '#2B9D4A',
+  },
+  {
+    name: 'GIS软件操作能力水平证书（初级）',
+    date: '2021.11',
+    color: '#0076FF',
+  },
+  {
+    name: '南京师范大学 “三好学生”',
+    date: '2021.12',
+    color: '#2B9D4A',
+  },
+  {
+    name: '第三届“SuperMap 杯”大学生GIS技能校园大赛 一等奖',
+    date: '2022.01',
+    color: '#2B9D4A',
+  },
+  {
+    name: '地理科学学院大学生创新实践项目 结项 A类',
+    date: '2022.03',
+    color: '#0076FF',
+  },
+  {
+    name: '南京师范大学 “优秀学生奖学金” 二等奖',
+    date: '2022.05',
+    color: '#2B9D4A',
+  },
+  {
+    name: 'Interdisciplinary Contest In Modeling',
+    date: '2022.05',
+    color: '#2B9D4A',
+  },
+  {
+    name: '第十三届蓝桥杯江苏赛区 C/C++程序设计大赛 三等奖',
+    date: '2022.05',
+    color: '#2B9D4A',
+  },
+  {
+    name: '南京师范大学大学生创新实践项目 结项 通过',
+    date: '2022.06',
+    color: '#0076FF',
+  },
+  {
+    name: '国家励志奖学金',
+    date: '2022.11',
+    color: '#FAC11B',
+  },
+  {
+    name: '南京师范大学 “三好学生”',
+    date: '2022.12',
+    color: '#2B9D4A',
+  },
+  {
+    name: '南京师范大学 “优秀学生奖学金” 三等奖',
+    date: '2022.12',
+    color: '#2B9D4A',
+  },
+  {
+    name: '南京师范大学 “优秀学生奖学金” 二等奖',
+    date: '2023.05',
+    color: '#2B9D4A',
+  },
+  {
+    name: '南京师范大学 “优秀毕业生” ',
+    date: '2023.05',
+    color: '#2B9D4A',
+  },
+  {
+    name: '南京大学 硕士一年级学业奖学金 一等奖',
+    date: '2023.11',
+    color: '#2B9D4A',
+  },
+  {
+    name: '全国地图设计大赛 “星湖杯” 一等奖',
+    date: '2024.06',
+    color: '#2B9D4A',
+  },
+  {
+    name: '第12届未来设计师·全国高校数字艺术设计大赛 江苏赛区 一等奖',
+    date: '2024.08',
+    color: '#2B9D4A',
+  },
+  {
+    name: '中国地理学会大会暨中国地理学会成立115周年纪念会 志愿者',
+    date: '2024.09',
+    color: '#0076FF',
+  },
+  {
+    name: '南京大学 硕士二年级学业奖学金 一等奖',
+    date: '2024.11',
+    color: '#2B9D4A',
+  },
+  {
+    name: '南京大学 英才奖学金',
+    date: '2024.11',
+    color: '#2B9D4A',
+  },
+  {
+    name: '南京大学优秀研究生',
+    date: '2024.12',
+    color: '#2B9D4A',
+  },
+  {
+    name: 'International Cartographic Association Scholarship',
+    date: '2024.12',
+    color: '#2B9D4A',
+  },
+]
+
+export const awards = awardsOri.reverse()
 
 export const socialLinks = [
   {
@@ -436,7 +645,7 @@ export const visualizeDemos = [
   },
   {
     name: 'WebglUseage',
-    img: '',
+    img: 'https://s2.loli.net/2025/02/11/DrYwPM5lGSAb2jf.png',
     path: prefix + 'webgl-useage',
     component: WebglUseage,
     type: 'webgl',
@@ -460,7 +669,7 @@ export const visualizeDemos = [
   },
   {
     name: 'ParametricEquation',
-    img: '',
+    img: 'https://s2.loli.net/2025/02/11/6Bv1UXZqFPRaCu5.png',
     path: prefix + 'parametric-equation',
     component: ParametricEquation,
     type: 'parametric',

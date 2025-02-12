@@ -10,13 +10,15 @@
   margin-bottom: 1.5rem;
 }
 
-@media (min-width: 640px) { /* 对应 sm: */
+@media (min-width: 640px) {
+  /* 对应 sm: */
   .masonry-grid {
     columns: 2;
   }
 }
 
-@media (min-width: 1024px) { /* 对应 lg: */
+@media (min-width: 1024px) {
+  /* 对应 lg: */
   .masonry-grid {
     columns: 3;
   }

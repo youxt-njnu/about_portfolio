@@ -1,28 +1,33 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { VerticalTimeline, VerticalTimelineElement } from 'react-vertical-timeline-component';
 import 'react-vertical-timeline-component/style.min.css';
+import { award as star } from '../assets//icons';
 import CTA from '../components/CTA';
-import { experiences, skills } from '../constants'; //需要写{}才能导入文件内部的变量如skills, projects, 不写{}的话是export default 命令下的
+import { awards } from '../constants';
 
 const About = () => {
+  const { t } = useTranslation();
+
   return (
     <section className="max-container">
       <h1 className="head-text">
-        Hello, I'm <span className='blue-gradient_text font-semibold drop-shadow'> Shealin</span>
+        {t("greeting")} <span className='blue-gradient_text font-semibold drop-shadow'> {t("name")} </span>
       </h1>
 
       <div className="mt-2 flex flex-col gap-3 text-slate-500">
-        <p>电话/微信：+86-15651736857</p>
-        <p>邮箱：you_yxt@163.com</p>
-        <p>政治面貌：共产党员</p>
-        <p>资格证书：计算机二级（首考优秀）；GIS软件操作能力水平证书（初级）</p>
-        <p>英语水平：大学英语四级（首考619分）；大学英语六级（首考567分）</p>
-        <p>研究方向：城市地理、交通规划和分析、故事地图、AR地图、地理可视化</p>
-        <p>个人关键词</p>
-        <p>GIS开发：ArcGIS/QGIS，Geoserver，PostgreSQL&PostGIS</p>
-        <p>前端3D：html&css&js, nodejs, react; BootStrap, ECharts; ThreeJS, Cesium, WebGL</p>
-        <p>AR：Vuforia、U3D、Mapbox SDK for Unity、Lua</p>
-        <p>希望未来能说出：I have a background in GIS, Augmented Reality and front end, so … is like the perfect place for me.</p>
+        <p>{t("concat")} </p>
+        <p>{t("email")}</p>
+        <p>{t("policy")}</p>
+        <p>{t("research.main")}</p>
+        <p>
+          <ul class="list-disc">
+            <li>{t("research.gis")}</li>
+            <li>{t("research.fe")}</li>
+            <li>{t("research.ar")}</li>
+            <li>{t("research.future")}</li>
+          </ul>
+        </p>
       </div>
       <div className="py-8 flex flex-col">
         <h3 className="subhead-text">
@@ -47,7 +52,7 @@ const About = () => {
 
       <div className="mt-2 flex flex-col gap-3 text-slate-500">
         <h4 className='text-slate-800'>论文</h4>
-        <p>You, X., Chen, G.*, & Duan, J. (Forthcoming). Exploring Traffic Planning Networks across Multiple Scales
+        <p>You, X., Chen, G.*, & Duan, J. Exploring Traffic Planning Networks across Multiple Scales
           Based on Urban Morphology: A Case Study of Nanjing, China. Journal of Urban Planning and Development.
           https://doi.org/10.1061/JUPDDM/UPENG-5086.</p>
         <p>Duan, J., Zhao, Z., Xu, Y., You, X., Yang, F., & Chen, G.* (2024). Spatial distribution characteristics and driving
@@ -57,8 +62,9 @@ const About = () => {
           based on the spatial specificity of online car-hailing traffic cycle. ISPRS International Journal of Geo-Information,
           11(8), 435. https://doi.org/10.3390/ijgi11080435.</p>
         <h4 className='text-slate-800'>专利软著</h4>
-        <p>Chen, G., Xu, Y., Duan, J., You, X., Zhao, Z., & Yang, F. (2024). A method for constructing knowledge graphs
-          in the biopharmaceutical industry. China Patent No. 202410712065.2. Authorized, pending issuance.</p>
+        <p>专利：一种生物医药产业的知识图谱的构建方法. 陈刚*,徐有恒,段鉴书,尤香婷,赵正旭,杨非凡</p>
+        <p>专利：一种遥感图像目标检测模型的改进方法. 陈刚*,杨非凡,段鉴书,尤香婷,赵正旭,徐有恒,易俊帆</p>
+        <p>专利：一种基于多源数据的工业一体化空间化方法.陈刚*,段鉴书,赵正旭,尤香婷,徐有恒,杨非凡</p>
         <p>软件著作权：《徐霞客的旅行世界网页开发》，共同开发，负责信息查询、路线规划及内容整合</p>
       </div>
 
@@ -82,61 +88,38 @@ const About = () => {
         <p>学院大学生创新创业项目：2019-2020年，研究内容为“基于AHP-熵值法的镇江市生态宜居城市评价及发展建议”，参与，主要负责方法体系的构建和求解部分</p>
       </div>
 
-      <div className="py-8 flex flex-col">
-        <h3 className="subhead-text">
-          专业技能
-        </h3>
-        <div className="mt-16 flex flex-wrap gap-12">
-          {skills.map((skill) => (
-            <div className='block-container w-20 h-20'>
-              <div className="btn-back rounded-xl"></div>
-              <div className='btn-front rounded-xl flex justify-center items-center'>
-                <img src={skill.imageUrl} alt={skill.name} className='w-1/2 h-1/2 object-contain' />
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-
       <div className="py-16">
-        <h3 className="subhead-text">实习工作经历</h3>
+        <h3 className="subhead-text">奖励证书</h3>
         <div className="mt-2 flex flex-col gap-3 text-slate-500 ">
           {/* <p>I've worked with all sorts of comanies, leveling up my skills and teaming up with smart people. Here's the rundown: </p> */}
         </div>
 
         <div className="mt-12 flex">
-          <VerticalTimeline>
-            {/* icon not iconStyle  */}
-            {experiences.map((experiences) => (
+          <VerticalTimeline layout='1-column-left'>
+            {awards.map((award) => (
               <VerticalTimelineElement
-                key={experiences.company_name}
-                date={experiences.date}
+                key={award.name}
+                date={award.date}
                 icon={<div className='flex justify-center items-center w-full h-full'>
-                  <img src={experiences.icon} alt={experiences.company_name} className="w-[60%] h-[60%] object-contain" />
+                  <img src={star} alt={award.name} className="w-[60%] h-[60%] object-contain" />
                 </div>}
-                iconStyle={{ background: experiences.iconBg }}
+                iconStyle={{ background: 'white' }}
                 contentStyle={{
                   borderBottom: '8px',
                   borderStyle: 'solid',
-                  borderBottomColor: experiences.iconBg,
+                  borderBottomColor: award.color,
                   boxShadow: 'none',
                 }}
               >
                 <div>
                   <h3 className="text-black text-xl font-poppins font-semibold">
-                    {experiences.title}
+                    {award.name}
                   </h3>
-                  <p className="text-black-500 font-medium font-base" style={{ margin: 0 }}>
-                    {experiences.company_name}
-                  </p>
+                  {/* <p className="text-black-500 font-medium font-base" style={{ margin: 0 }}>
+                    {award.date}
+                  </p> */}
                 </div>
-                <ul className="my-5 list-disc ml-5 space-y-2">
-                  {experiences.points.map((point, index) => (
-                    <li key={`experience-point-${index}`} className='text-black-500/50 font-normal pl-1 text-sm'>
-                      {point}
-                    </li>
-                  ))}
-                </ul>
+
               </VerticalTimelineElement>
             ))}
           </VerticalTimeline>

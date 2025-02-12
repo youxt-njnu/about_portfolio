@@ -28,7 +28,7 @@ const Island = ({ isRotating, setIsRotating, setCurrentStage, ...props }) => {
     e.preventDefault();
     setIsRotating(true);
 
-    const clientX = e.touches ? e.touches[0].clientX : e.clientX; //只需要考虑X方向的
+    const clientX = e.touches ? e.touches[0].clientX : e.clientX; //只需要考虑X方向的，判断是否多指触发
     lastX.current = clientX;
 
   }

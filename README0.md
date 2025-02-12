@@ -239,11 +239,11 @@ Email Template → Save → Settings, Template ID
 
 `@react-spring`项目包含了几个子项目，分别针对不同的平台或提供特定的功能：
 
-1. **`@react-spring/web`** **@react-spring/web** **@react-spring/web**：专为Web平台设计，用于在Web应用中创建动画。它提供了与DOM元素交互的能力，是构建Web界面动画的理想选择。
-2. **`@react-spring/native`** **@react-spring/native** **@react-spring/native**：专为React Native设计，允许在React Native应用中创建流畅的原生动画效果。它利用React Native的动画库来实现高性能的动画。
-3. **`@react-spring/core`** **@react-spring/core** **@react-spring/core**：是 `@react-spring`库的核心，提供了动画功能的基本实现。其他子项目如 `@react-spring/web`和 `@react-spring/native`都是在这个核心基础上扩展而来，以支持特定平台的动画效果。
-4. **`@react-spring/three`** **@react-spring/three** **@react-spring/three**：为three.js提供动画支持，允许在使用React Three Fiber开发的3D场景中创建和管理动画。这使得开发者可以在3D应用中实现复杂的动画效果。
-5. **`@react-spring/konva`** **@react-spring/konva** **@react-spring/konva**：用于在React Konva（一个用于在React中绘制2D canvas图形的库）项目中创建动画。这使得开发者可以为2D图形和图像添加动画效果。
+1. **`@react-spring/web`** **@react-spring/web** **@react-spring/web** **@react-spring/web**：专为Web平台设计，用于在Web应用中创建动画。它提供了与DOM元素交互的能力，是构建Web界面动画的理想选择。
+2. **`@react-spring/native`** **@react-spring/native** **@react-spring/native** **@react-spring/native**：专为React Native设计，允许在React Native应用中创建流畅的原生动画效果。它利用React Native的动画库来实现高性能的动画。
+3. **`@react-spring/core`** **@react-spring/core** **@react-spring/core** **@react-spring/core**：是 `@react-spring`库的核心，提供了动画功能的基本实现。其他子项目如 `@react-spring/web`和 `@react-spring/native`都是在这个核心基础上扩展而来，以支持特定平台的动画效果。
+4. **`@react-spring/three`** **@react-spring/three** **@react-spring/three** **@react-spring/three**：为three.js提供动画支持，允许在使用React Three Fiber开发的3D场景中创建和管理动画。这使得开发者可以在3D应用中实现复杂的动画效果。
+5. **`@react-spring/konva`** **@react-spring/konva** **@react-spring/konva** **@react-spring/konva**：用于在React Konva（一个用于在React中绘制2D canvas图形的库）项目中创建动画。这使得开发者可以为2D图形和图像添加动画效果。
 
 ### 区别
 
@@ -437,9 +437,9 @@ VITE_APP_EMAILJS_PUBLIC_KEY=JpbkxBEdlS8faxCrq
 
 在使用Vite作为构建工具的项目中，环境变量的命名遵循特定的前缀规则，这是为了确保这些变量在构建时被正确地加载和注入到项目中。
 
-1. **`VITE_`** **VITE_** **VITE_****前缀**：Vite要求所有应该暴露给项目前端代码的环境变量都必须以 `VITE_`为前缀。这是一个约定，用于保护你的环境变量，确保只有带有这个前缀的变量才会被包含在最终的前端构建中。这样可以防止无意间将敏感的服务器端环境变量暴露给客户端。
-2. **`APP`** **APP** **APP**：这个部分不是必需的，但它是一个常见的做法，用于指示这些环境变量是应用级别的。加上 `APP`（或者其他类似的标识符）有助于在环境变量中创建一个逻辑上的分组，使得它们更易于管理和识别。
-3. **`EMAILJS_SERVICE_ID`** **EMAILJS_SERVICE_ID** **EMAILJS_SERVICE_ID****、**`EMAILJS_TEMPLATE_ID`** **EMAILJS_TEMPLATE_ID******** **EMAILJS_TEMPLATE_ID******、**`EMAILJS_PUBLIC_KEY`** **EMAILJS_PUBLIC_KEY**：这些部分具体指明了变量的用途。在这个例子中，它们分别用于标识EmailJS服务的ID、模板的ID和公共密钥。这样的命名方法有助于清晰地表达每个环境变量的作用和关联的服务。
+1. **`VITE_`** **VITE_** **VITE_** **VITE_****前缀**：Vite要求所有应该暴露给项目前端代码的环境变量都必须以 `VITE_`为前缀。这是一个约定，用于保护你的环境变量，确保只有带有这个前缀的变量才会被包含在最终的前端构建中。这样可以防止无意间将敏感的服务器端环境变量暴露给客户端。
+2. **`APP`** **APP** **APP** **APP**：这个部分不是必需的，但它是一个常见的做法，用于指示这些环境变量是应用级别的。加上 `APP`（或者其他类似的标识符）有助于在环境变量中创建一个逻辑上的分组，使得它们更易于管理和识别。
+3. **`EMAILJS_SERVICE_ID`** **EMAILJS_SERVICE_ID** **EMAILJS_SERVICE_ID** **EMAILJS_SERVICE_ID****、**`EMAILJS_TEMPLATE_ID`** **EMAILJS_TEMPLATE_ID** **EMAILJS_TEMPLATE_ID******** **EMAILJS_TEMPLATE_ID******、**`EMAILJS_PUBLIC_KEY`** **EMAILJS_PUBLIC_KEY** **EMAILJS_PUBLIC_KEY**：这些部分具体指明了变量的用途。在这个例子中，它们分别用于标识EmailJS服务的ID、模板的ID和公共密钥。这样的命名方法有助于清晰地表达每个环境变量的作用和关联的服务。
 
 你可以修改环境变量的名称，但需要保持 `VITE_`前缀不变，以确保Vite能够正确地处理这些变量。如果你决定更改变量名称（比如，将 `VITE_APP_EMAILJS_PUBLIC_KEY`更改为 `VITE_APP_EMAILJS_KEY`），你需要在项目中引用这些环境变量的地方也做相应的更改，以确保一致性和正确的变量访问。
 
@@ -507,9 +507,9 @@ const sendEmail = () => {
 
 这条命令使用npm（Node.js包管理器）来安装三个开发依赖：
 
-- **`tailwindcss`** **tailwindcss** **tailwindcss**：Tailwind CSS库本身，它是一个功能类优先的CSS框架，允许你通过在HTML中添加类来直接应用样式，从而加快开发速度。
-- **`postcss`** **postcss** **postcss**：PostCSS是一个用JavaScript工具和插件转换CSS代码的工具。Tailwind CSS依赖于PostCSS，因为它实际上是一组PostCSS插件，用于生成和处理Tailwind的工具类。
-- **`autoprefixer`** **autoprefixer** **autoprefixer**：Autoprefixer是一个PostCSS插件，用于自动添加浏览器厂商前缀到CSS规则中，确保CSS属性在不同的浏览器中能够正常工作。这对于兼容性是非常有用的。
+- **`tailwindcss`** **tailwindcss** **tailwindcss** **tailwindcss**：Tailwind CSS库本身，它是一个功能类优先的CSS框架，允许你通过在HTML中添加类来直接应用样式，从而加快开发速度。
+- **`postcss`** **postcss** **postcss** **postcss**：PostCSS是一个用JavaScript工具和插件转换CSS代码的工具。Tailwind CSS依赖于PostCSS，因为它实际上是一组PostCSS插件，用于生成和处理Tailwind的工具类。
+- **`autoprefixer`** **autoprefixer** **autoprefixer** **autoprefixer**：Autoprefixer是一个PostCSS插件，用于自动添加浏览器厂商前缀到CSS规则中，确保CSS属性在不同的浏览器中能够正常工作。这对于兼容性是非常有用的。
 
 `-D`标志表示这些包被安装为开发依赖项，这意味着它们只在开发过程中需要，在生产环境的构建过程中不会被使用。
 
@@ -578,7 +578,7 @@ colors: {
 },
 ```
 
-**`black`** **black** **black**：
+**`black`** **black** **black** **black**：
 
 - `DEFAULT`：这里指定了 `black`颜色的默认值为 `#000`。在Tailwind CSS中，如果你直接使用 `text-black`或 `bg-black`这样的类，将会应用这个默认颜色值。
 - `500`：除了默认值之外，还定义了一个 `500`阶级的黑色 `black-500` 为 `#1D2235` 。这意味着你可以通过 `text-black-500` 或 `bg-black-500`来使用这个特定的深度值。
@@ -742,8 +742,8 @@ return (
 
 在这段代码中：
 
-- **`a.group`** **a.group** **a.group**：这是 `@react-spring/three`提供的一个组件，它是对Three.js中 `THREE.Group`的动画化包装。在Three.js中，`Group`对象用于创建对象的集合，这样你可以作为一个单元来平移、旋转和缩放它们。在 `react-spring/three`中，`a.group`允许你对这个组应用动画，比如平移、旋转或透明度变化等。
-- **`<mesh />`** **<mesh />** **<mesh />**：这是一个Three.js中用于表示具有几何形状和材质的物体的组件。在这个示例中，`mesh`组件使用了 `geometry`（几何体）和 `material`（材质）两个属性，分别指定了物体的形状和表面处理。这不是 `react-spring`特有的，而是Three.js中的基本概念，但在这里它被放置在 `a.group`内部，表明你可以对整个组和组内的单个物体进行动画处理。
+- **`a.group`** **a.group** **a.group** **a.group**：这是 `@react-spring/three`提供的一个组件，它是对Three.js中 `THREE.Group`的动画化包装。在Three.js中，`Group`对象用于创建对象的集合，这样你可以作为一个单元来平移、旋转和缩放它们。在 `react-spring/three`中，`a.group`允许你对这个组应用动画，比如平移、旋转或透明度变化等。
+- **`<mesh />`** **<mesh />** **<mesh />** **<mesh />**：这是一个Three.js中用于表示具有几何形状和材质的物体的组件。在这个示例中，`mesh`组件使用了 `geometry`（几何体）和 `material`（材质）两个属性，分别指定了物体的形状和表面处理。这不是 `react-spring`特有的，而是Three.js中的基本概念，但在这里它被放置在 `a.group`内部，表明你可以对整个组和组内的单个物体进行动画处理。
 
 `a`是一个特殊的前缀，用于访问 `react-spring/three`提供的动画化组件。使用 `react-spring/three`，你可以给Three.js的对象添加流畅的物理基础动画，比如弹簧动画。`react-spring`的动画不仅限于简单的过渡，它支持从初始状态到结束状态的自然动画，包括反弹、停止等自然运动的效果。
 
@@ -761,8 +761,8 @@ const { gl, viewport } = useThree();
 
 这行代码的作用是从 `useThree()` 返回的上下文对象中解构出 `gl` 和 `viewport` 两个属性：
 
-- **`gl`** **gl** **gl**：这是对 WebGLRenderer 的引用，即 Three.js 使用的 WebGL 渲染器实例。通过这个实例，你可以控制渲染过程，比如调整清除颜色、执行后处理等。
-- **`viewport`** **viewport** **viewport**：这包含了关于当前视口的信息，如视口的宽度和高度，以及一些用于将屏幕坐标转换为Three.js世界坐标的工具函数。这对于响应式设计和动态布局非常有用。
+- **`gl`** **gl** **gl** **gl**：这是对 WebGLRenderer 的引用，即 Three.js 使用的 WebGL 渲染器实例。通过这个实例，你可以控制渲染过程，比如调整清除颜色、执行后处理等。
+- **`viewport`** **viewport** **viewport** **viewport**：这包含了关于当前视口的信息，如视口的宽度和高度，以及一些用于将屏幕坐标转换为Three.js世界坐标的工具函数。这对于响应式设计和动态布局非常有用。
 
 在Three.js中，`WebGLRenderer`是用来渲染场景（`THREE.Scene`）到一个Web页面上的canvas元素中。它使用WebGL API来绘制定义好的3D对象。
 
@@ -988,13 +988,13 @@ switch (true) {
 这段代码是一个使用Tailwind CSS实现的简单旋转动画示例。它创建了一个居中的圆形div，该div具有旋转动画。下面是详细解析：
 
 - `className='flex justify-center items-center'`：这三个类一起使用，创建了一个flex容器，其中的内容水平（`justify-center`）和垂直（`items-center`）居中。这确保了内部的div（旋转元素）在父容器中居中。
-- **`w-20 h-20`** **w-20 h-20** **w-20 h-20**：设置div的宽度和高度为5rem（根据Tailwind CSS的默认配置，`20`单位等于5rem，如果没有自定义配置的话）。
-- **`border-4`** **border-4** **border-4**：设置边框宽度为4像素。
-- **`border-opacity-20`** **border-opacity-20** **border-opacity-20**：设置边框透明度为20%，使边框颜色较浅。
-- **`border-purple-500`** **border-purple-500** **border-purple-500**：设置边框的默认颜色为紫色，透明度由 `border-opacity-20`控制。
-- **`border-t-purple-800`** **border-t-purple-800** **border-t-purple-800**：特别为上边框设置了较深的紫色（`purple-800`），这在旋转时会产生视觉效果，使得看起来像是在旋转。
-- **`rounded-full`** **rounded-full** **rounded-full**：使div变为圆形。
-- **`animate-spin`** **animate-spin** **animate-spin**：应用Tailwind CSS内置的旋转动画，使div无限期旋转。这个动画是通过CSS的 `@keyframes`实现的，定义了从0%到100%的转动，实现了连续旋转的效果。Tailwind CSS内部定义了这个动画关键帧，实现了元素的360度旋转。动画是循环播放的，因此旋转动画会一直持续，直到被另外的CSS规则覆盖或者从DOM中移除。
+- **`w-20 h-20`** **w-20 h-20** **w-20 h-20** **w-20 h-20**：设置div的宽度和高度为5rem（根据Tailwind CSS的默认配置，`20`单位等于5rem，如果没有自定义配置的话）。
+- **`border-4`** **border-4** **border-4** **border-4**：设置边框宽度为4像素。
+- **`border-opacity-20`** **border-opacity-20** **border-opacity-20** **border-opacity-20**：设置边框透明度为20%，使边框颜色较浅。
+- **`border-purple-500`** **border-purple-500** **border-purple-500** **border-purple-500**：设置边框的默认颜色为紫色，透明度由 `border-opacity-20`控制。
+- **`border-t-purple-800`** **border-t-purple-800** **border-t-purple-800** **border-t-purple-800**：特别为上边框设置了较深的紫色（`purple-800`），这在旋转时会产生视觉效果，使得看起来像是在旋转。
+- **`rounded-full`** **rounded-full** **rounded-full** **rounded-full**：使div变为圆形。
+- **`animate-spin`** **animate-spin** **animate-spin** **animate-spin**：应用Tailwind CSS内置的旋转动画，使div无限期旋转。这个动画是通过CSS的 `@keyframes`实现的，定义了从0%到100%的转动，实现了连续旋转的效果。Tailwind CSS内部定义了这个动画关键帧，实现了元素的360度旋转。动画是循环播放的，因此旋转动画会一直持续，直到被另外的CSS规则覆盖或者从DOM中移除。
 
 ### 匿名函数的()和{}
 

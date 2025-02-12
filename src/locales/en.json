@@ -2,15 +2,28 @@
   "greeting": "Hello, I am",
   "name": "Shealin",
   "basicInfo": "a graduate student from Nanjing, China (currently...)",
+  "concat": "+86-15651736857",
+  "email": "you_yxt@163.com",
+  "policy": "communist",
+  "research": {
+    "main": "Urban Geography, Traffic Planning and Analysis, Story Maps, AR Maps",
+    "gis": "GIS developer: QGIS，Geoserver，PostgreSQL&PostGIS",
+    "fe": "Front End 3D：html&css&js, nodejs, react; BootStrap, ECharts; ThreeJS, Cesium, WebGL",
+    "ar": "AR：Vuforia、U3D、Mapbox SDK for Unity、Lua",
+    "future": "I have a background in GIS, Augmented Reality and front end, so this is like the perfect place for me."
+  },
   "aboutMe": {
-    "title": "About",
-    "info": "I have a lot of experiences in studying and job hunting, and I am constantly improving myself...",
+    "title": "Student life",
+    "info": "I have a lot of experiences in studying and researching, and I am constantly improving myself...",
     "btnText": "Learn more"
   },
   "projects": {
     "title": "Projects",
     "info": "I have written interesting projects by myself, and have worked with multiple teams...",
-    "btnText": "View projects"
+    "btnText": "View projects",
+    "fr": "My",
+    "ed": "Projects and Internship",
+    "basicIntro": "I've embarked on numerous projects throughout the years, but these are the ones I hold closest to my heart. Many of them are open-source, so if you come across something that piques your interest, feel free to explore the codebase and contribute your ideas for further enhancements. You collaboration is highly valued!"
   },
   "contact": {
     "title": "Contact",
