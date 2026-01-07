@@ -3,8 +3,8 @@ import * as Three from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import { MTLLoader } from 'three/examples/jsm/loaders/MTLLoader.js'
 import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader.js'
-import mtlFile from '/gltfModels/earth_star/earth.mtl'
-import objFile from '/gltfModels/earth_star/earth.obj'
+import mtlFile from '/gltf-models/earth_star/earth.mtl'
+import objFile from '/gltf-models/earth_star/earth.obj'
 
 const EarthStar = () => {
   let scene = null,

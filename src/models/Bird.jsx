@@ -9,7 +9,6 @@ const Bird = () => {
 
   const { actions } = useAnimations(animations, birdRef);
 
-  // 每次组件渲染后都会执行
   useEffect(() => {
     actions['Take 001'].play();
   }, []);

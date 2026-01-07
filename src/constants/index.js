@@ -43,7 +43,13 @@ import {
 } from '../models'
 
 import { MapboxSimple, MilkStory } from '../MapboxDemos'
-
+import {
+  CesiumBasic,
+  Imagery,
+  TdTilesExt1,
+  DataInfo,
+  ModelColoring,
+} from '../CesisumDemos'
 import {
   BarGraph,
   CanvasDemo,
@@ -51,6 +57,7 @@ import {
   randomTree,
   roughUsage,
   WebglUseage,
+  CssSecrets,
 } from '../visualizedDemos'
 
 import {
@@ -66,6 +73,7 @@ import {
   SplitLine,
   TwoBand,
   VerticalCenter,
+  WebPerformance,
 } from '../CssScene'
 // Languages: Javascript, HTML+CSS, C#, Python, SQL
 // Libraries : React, Vue, ThreeJS, Cesium, Vuforia, Mapbox, Matplotlib
@@ -626,13 +634,56 @@ export const mapboxDemos = [
   },
 ]
 
+export const cesiumDemos = [
+  {
+    name: 'CesiumBasic',
+    img: 'https://s2.loli.net/2025/12/17/FGDImgwEJaAx7Re.png',
+    path: prefix + 'cesium-basic',
+    component: CesiumBasic,
+    type: 'cesium',
+    info: 'cesium基础',
+  },
+  {
+    name: 'Imagery',
+    img: 'https://s2.loli.net/2025/12/17/NDtUVF8W1AgX4Em.png',
+    path: prefix + 'imagery',
+    component: Imagery,
+    type: 'cesium',
+    info: 'cesium底图影像服务',
+  },
+  {
+    name: 'Entity',
+    img: 'https://s2.loli.net/2025/12/23/b5S7ugcBpVYMOZX.png',
+    path: prefix + 'entity',
+    component: TdTilesExt1,
+    type: 'cesium',
+    info: 'cesium entity',
+  },
+  {
+    name: 'DataInfo',
+    img: 'https://s2.loli.net/2025/12/23/IlCDcrnt2jmHS9d.png',
+    path: prefix + 'data-info',
+    component: DataInfo,
+    type: 'cesium',
+    info: 'cesium 数据信息',
+  },
+  {
+    name: 'ModelColoring',
+    img: '',
+    path: prefix + 'model-coloring',
+    component: ModelColoring,
+    type: 'cesium',
+    info: 'cesium 模型着色',
+  },
+]
+
 export const visualizeDemos = [
   {
     name: 'html+css 柱状图饼图',
     img: 'https://s2.loli.net/2024/11/16/KmZYDPr6bvtiW5V.png',
     path: prefix + 'bar-pie',
     component: BarGraph,
-    type: 'html+css',
+    type: 'h5c3',
     info: '柱状图和饼图',
   },
   {
@@ -674,6 +725,14 @@ export const visualizeDemos = [
     component: ParametricEquation,
     type: 'parametric',
     info: '参数方程绘制不同曲线',
+  },
+  {
+    name: 'CssSecrets',
+    img: '',
+    path: prefix + 'css-secrets',
+    component: CssSecrets,
+    type: 'h5c3',
+    info: 'css解密的案例',
   },
 ]
 
@@ -773,5 +832,13 @@ export const cssLayouts = [
     component: CssDrawPoly,
     type: 'css',
     info: 'CSS画三角形和平行四边形',
+  },
+  {
+    name: '性能问题',
+    img: '',
+    path: prefix + 'web-performance',
+    component: WebPerformance,
+    type: 'web',
+    info: '性能优化记录',
   },
 ]

@@ -1,0 +1,28 @@
+{
+  "folders": [
+    {
+      "name": "hexo-framework",
+      "path": "../BlogYXT",
+    },
+    {
+      "name": "portfolio",
+      "path": "../about_portfolio",
+    }
+
+  ],
+  "settings": {
+    // 工作区级别的设置（会覆盖单个项目的设置）
+    "files.exclude": {
+      // 排除所有项目中的node_modules
+    "**/node_modules": true,
+    // 排除项目的dist目录
+    "reactivity/**/dist": true,
+    // 排除所有.git目录
+    "**/.git": true,
+    // 排除特定类型文件（如.log、.tmp）
+    "**/*.log": true,
+    "**/*.tmp": true
+    },
+    "liveServer.settings.multiRootWorkspaceName": "portfolio"
+  }
+}

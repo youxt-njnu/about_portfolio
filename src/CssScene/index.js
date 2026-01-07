@@ -10,6 +10,7 @@ import VerticalCenter from './VerticalCenter'
 import px10 from './px10'
 import TwoBand from './TwoBand'
 import Line05 from './Line05'
+import { WebPerformance } from './WebPerformance'
 
 export {
   CssDrawPoly,
@@ -24,4 +25,5 @@ export {
   px10,
   TwoBand,
   Line05,
+  WebPerformance,
 }

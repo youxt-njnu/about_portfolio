@@ -4,6 +4,7 @@ import WebglUseage from './WebglUseage'
 import roughUsage from './roughUsage'
 import randomTree from './randomTree'
 import ParametricEquation from './ParametricEquation'
+import { CssSecrets } from './CssSecrets'
 
 export {
   BarGraph,
@@ -12,4 +13,5 @@ export {
   roughUsage,
   randomTree,
   ParametricEquation,
+  CssSecrets,
 }
