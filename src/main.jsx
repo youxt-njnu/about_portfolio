@@ -1,10 +1,11 @@
+import i18next from 'i18next';
 import ReactDOM from 'react-dom/client';
+import { I18nextProvider } from 'react-i18next';
 import App from './App';
 import './index.css';
-import { I18nextProvider } from 'react-i18next';
-import i18next from 'i18next';
 import enTranslation from './locales/en.json';
 import zhTranslation from './locales/zh.json';
+import { initCesiumConfig } from './utils/cesiumConfig';
 
 // 初始化 i18next
 i18next.init({
@@ -16,6 +17,8 @@ i18next.init({
   },
 });
 
+// 初始化 Cesium 全局配置
+initCesiumConfig();
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <I18nextProvider i18n={i18next}>

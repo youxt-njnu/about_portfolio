@@ -1,4 +1,4 @@
-import { Ion, IonResource } from 'cesium';
+import { Ion, IonResource, Terrain } from 'cesium';
 import { useRef } from 'react';
 import { Viewer, Cesium3DTileset } from 'resium';
 
@@ -14,8 +14,14 @@ export const CesiumBasic = () => {
     }
   };
 
+  // 添加水面遮罩
+  const terrain = new Terrain.fromWorldTerrain({
+    requestWaterMask: true,
+    requestVertexNormals: true,
+  })
+
   return (
-    <Viewer full ref={viewerRef} infoBox={false}>
+    <Viewer full ref={viewerRef} infoBox={false} terrain={terrain}>
       <Cesium3DTileset url={IonResource.fromAssetId(75343)} onReady={handleReady} />
     </Viewer>
   )

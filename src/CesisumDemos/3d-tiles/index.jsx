@@ -1,5 +1,5 @@
-import { Cartesian3, HeadingPitchRoll, Ion, Math, Transforms, Color } from 'cesium';
-import { useState, useRef } from 'react';
+import { Cartesian3, HeadingPitchRoll, Ion, Math, Transforms } from 'cesium';
+import { useRef, useState } from 'react';
 import { Entity, Viewer } from 'resium';
 
 // todo 这里的horse模型本身有问题，bird和fox模型是正常的
@@ -65,7 +65,7 @@ export const TdTilesExt1 = () => {
           </option>
         ))}
       </select>
-      <Viewer full ref={viewerRef} infoBox='false' shadows='true' shouldAnimate='true' >
+      <Viewer full ref={viewerRef} infoBox={false} shadows={true} shouldAnimate={true} >
         {createModel(selectedModel)}
       </Viewer>
     </>

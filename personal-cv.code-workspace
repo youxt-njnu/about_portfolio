@@ -2,13 +2,15 @@
   "folders": [
     {
       "name": "hexo-framework",
-      "path": "../BlogYXT",
+      "path": "../BlogYXT"
     },
     {
       "name": "portfolio",
-      "path": "../about_portfolio",
+      "path": "../about_portfolio"
+    },
+    {
+      "path": "../../ThreeDGIS/cesium_vue_proj1/src"
     }
-
   ],
   "settings": {
     // 工作区级别的设置（会覆盖单个项目的设置）

@@ -49,6 +49,11 @@ import {
   TdTilesExt1,
   DataInfo,
   ModelColoring,
+  EventUsage,
+  ImageryAdvanced,
+  TdTilesCDB,
+  CustomWidgets,
+  PhotogrammetryClassify,
 } from '../CesisumDemos'
 import {
   BarGraph,
@@ -669,12 +674,52 @@ export const cesiumDemos = [
   },
   {
     name: 'ModelColoring',
-    img: '',
+    img: 'https://s2.loli.net/2026/01/11/6l49GTWd1EsNSDe.png',
     path: prefix + 'model-coloring',
     component: ModelColoring,
     type: 'cesium',
     info: 'cesium 模型着色',
   },
+  {
+    name: 'EventUsage',
+    img: 'https://s2.loli.net/2026/01/13/LeFVN7BzMS63Dm9.png',
+    path: prefix + 'event-usage',
+    component: EventUsage,
+    type: 'cesium',
+    info: 'cesium 事件使用',
+  },
+  {
+    name: 'ImageryAdvanced',
+    img: 'https://s2.loli.net/2026/01/13/Qsie6jI4lzqVvaM.png',
+    path: prefix + 'imagery-advanced',
+    component: ImageryAdvanced,
+    type: 'cesium',
+    info: 'cesium 影像服务高级应用',
+  },
+  // {
+  //   name: 'TdTilesCDB',
+  //   img: '',
+  //   path: prefix + 'td-tiles-cdb',
+  //   component: TdTilesCDB,
+  //   type: 'cesium',
+  //   info: 'cesium 天地图CDB服务',
+  // },
+  {
+    name: 'CustomWidgets',
+    img: 'https://s2.loli.net/2026/01/12/ArhInpg3iLjNcFY.png',
+    path: prefix + 'custom-widgets',
+    component: CustomWidgets,
+    type: 'cesium',
+    info: 'cesium 自定义控件',
+  },
+  // {
+  //   name: 'PhotogrammetryClassify',
+  //   img: '',
+  //   path: prefix + 'photogrammetry-classify',
+  //   component: PhotogrammetryClassify,
+  //   type: 'cesium',
+  //   info: 'cesium 摄影测量分类',
+  // },
 ]
 
 export const visualizeDemos = [
