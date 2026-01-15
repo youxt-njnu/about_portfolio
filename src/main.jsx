@@ -7,9 +7,6 @@ import enTranslation from './locales/en.json';
 import zhTranslation from './locales/zh.json';
 import { initCesiumConfig } from './utils/cesiumConfig';
 
-// 设置 Cesium 基础 URL
-window.CESIUM_BASE_URL = '/about_portfolio/cesium/';
-
 // 初始化 i18next
 i18next.init({
   interpolation: { escapeValue: false },  // React 已经处理了 XSS
