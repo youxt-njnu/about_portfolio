@@ -696,14 +696,14 @@ export const cesiumDemos = [
     type: 'cesium',
     info: 'cesium 影像服务高级应用',
   },
-  // {
-  //   name: 'TdTilesCDB',
-  //   img: '',
-  //   path: prefix + 'td-tiles-cdb',
-  //   component: TdTilesCDB,
-  //   type: 'cesium',
-  //   info: 'cesium 天地图CDB服务',
-  // },
+  {
+    name: 'TdTilesCDB',
+    img: 'https://s2.loli.net/2026/01/15/WAZluf2UkT9xXEV.png',
+    path: prefix + 'td-tiles-cdb',
+    component: TdTilesCDB,
+    type: 'cesium',
+    info: '3d tileset数据分类交互的可视化',
+  },
   {
     name: 'CustomWidgets',
     img: 'https://s2.loli.net/2026/01/12/ArhInpg3iLjNcFY.png',
@@ -712,14 +712,14 @@ export const cesiumDemos = [
     type: 'cesium',
     info: 'cesium 自定义控件',
   },
-  // {
-  //   name: 'PhotogrammetryClassify',
-  //   img: '',
-  //   path: prefix + 'photogrammetry-classify',
-  //   component: PhotogrammetryClassify,
-  //   type: 'cesium',
-  //   info: 'cesium 摄影测量分类',
-  // },
+  {
+    name: 'PhotogrammetryClassify',
+    img: 'https://s2.loli.net/2026/01/16/8G6o9h7z4LeUVDM.png',
+    path: prefix + 'photogrammetry-classify',
+    component: PhotogrammetryClassify,
+    type: 'cesium',
+    info: 'shader实现3d tileset数据分类交互的可视化',
+  },
 ]
 
 export const visualizeDemos = [

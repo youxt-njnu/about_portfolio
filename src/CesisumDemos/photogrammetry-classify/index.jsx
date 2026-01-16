@@ -1,71 +1,33 @@
 import {
   Cartesian3,
-  Math as CesiumMath,
-  CustomShader,
-  HeadingPitchRoll,
+  Cesium3DTileColorBlendMode,
+  defined,
   Ion,
-  LightingModel,
+  IonResource,
   Matrix4,
   ScreenSpaceEventHandler,
-  ScreenSpaceEventType,
-  UniformType,
-  defined
+  ScreenSpaceEventType
 } from 'cesium';
 import { useEffect, useRef, useState } from 'react';
 import { Cesium3DTileset, Viewer } from 'resium';
+import {
+  goldenShader,
+  multipleFeatureShader,
+  NOTHING_SELECTED,
+  pbrShader,
+  unlitShader,
+} from './shader';
+import { adjustGUI, destroyGUI, viewCameraChanged } from './viewChange';
 
-// Shader code inline
-const emptyFragmentShader = `
-void fragmentMain(FragmentInput fsInput, inout czm_modelMaterial material) {}
-`;
 
-const pbrFragmentShader = `
-const int INDIVIDUAL = 0;
-const int CORPORATION = 1;
-const int PARTNERSHIP = 2;
-const int CONDO = 3;
-const int NYSTATE = 4;
-const int HOISING = 5;
-const int DEPENETRY = 6;
-const int NYCHOUSING = 7;
-const int DEPADMINI = 8;
-const int NYCHEALTH = 9;
-const int OTHERGOVERN = 10;
-const int OTHER = 11;
-
-void fragmentMain(FragmentInput fsInput, inout czm_modelMaterial material) {
-  int featureId = fsInput.featureIds.featureId_0;
-
-  if (featureId == INDIVIDUAL) {
-    material.specular = vec3(0.98, 0.9, 0.59);
-    material.roughness = 0.1;
-  } else if (featureId == NYSTATE || featureId == NYCHOUSING || featureId == NYCHEALTH) {
-    material.specular = vec3(0.91, 0.92, 0.92);
-    material.roughness = 0.5;
-  } else if (featureId == DEPENETRY || featureId == DEPADMINI) {
-    material.emissive = vec3(1.0, 0.3, 0.0);
-    material.alpha = 0.5;
-  } else if (featureId == OTHERGOVERN || featureId == OTHER) {
-    material.diffuse = mix(material.diffuse, vec3(1.0), 0.8);
-    material.roughness = 0.9;
-  } else {
-    material.diffuse += 0.05;
-    material.roughness = 0.9;
-  }
+const setDefaultStyle = (tileset) => {
+  Object.assign(tileset, {
+    style: undefined,
+    customShader: unlitShader,
+    colorBlendMode: Cesium3DTileColorBlendMode.HIGHLIGHT,
+    colorBlendAmount: 0.5,
+  });
 }
-`;
-
-const goldenFragmentShader = `
-const int NOTHING_SELECTED = 12;
-void fragmentMain(FragmentInput fsInput, inout czm_modelMaterial material) {
-  int featureId = fsInput.featureIds.featureId_0;
-
-  if (uSelectedFeature < NOTHING_SELECTED && featureId == uSelectedFeature) {
-    material.specular = vec3(1.0, 0.85, 0.57);
-    material.roughness = 0.1;
-  }
-}
-`;
 
 export const PhotogrammetryClassify = () => {
   const viewerRef = useRef(null);
@@ -90,29 +52,6 @@ export const PhotogrammetryClassify = () => {
     Other: 11,
   };
 
-  const NOTHING_SELECTED = 12;
-
-  const unlitShader = new CustomShader({
-    lightingModel: LightingModel.UNLIT,
-    fragmentShaderText: emptyFragmentShader,
-  });
-
-  const pbrShader = new CustomShader({
-    lightingModel: LightingModel.PBR,
-    fragmentShaderText: pbrFragmentShader,
-  });
-
-  const goldenShader = new CustomShader({
-    uniforms: {
-      uSelectedFeature: {
-        type: UniformType.INT,
-        value: NOTHING_SELECTED,
-      },
-    },
-    lightingModel: LightingModel.PBR,
-    fragmentShaderText: goldenFragmentShader,
-  });
-
   const handleTilesetReady = (tileset) => {
     tilesetRef.current = tileset;
 
@@ -123,26 +62,20 @@ export const PhotogrammetryClassify = () => {
 
     const translation = new Cartesian3(-1.398521324920626, 0.7823052871729486, 0.7015244410592609);
     tileset.modelMatrix = Matrix4.fromTranslation(translation);
-    tileset.maximumScreenSpaceError = 8.0;
+    tileset.maximumScreenSpaceError = 8.0; // todo 和上面的那个参数有什么关系
     scene.pickTranslucentDepth = true;
     scene.light.intensity = 7.0;
 
-    // Set up camera
-    viewer.camera.flyTo({
-      destination: Cartesian3.fromDegrees(-74.2, 40.5, 4500),
-      orientation: new HeadingPitchRoll(
-        CesiumMath.toRadians(0.0),
-        CesiumMath.toRadians(-60.0),
-        CesiumMath.toRadians(0.0)
-      ),
-      duration: 0,
-    });
+    viewCameraChanged(viewer);
+    setDefaultStyle(tileset);
 
-    // Set default style
-    tileset.style = undefined;
-    tileset.customShader = unlitShader;
+    // Drive time uniform for Golden shader animations
+    scene.postRender.addEventListener((_, time) => {
+      goldenShader.setUniform('uTime', time.secondsOfDay);
+    });
   };
 
+  // 设置新的属性，并保证是shader里可以用的整数
   const handleTileLoad = (tile) => {
     const content = tile.content;
     const featuresLength = content.featuresLength;
@@ -158,62 +91,71 @@ export const PhotogrammetryClassify = () => {
   };
 
   useEffect(() => {
-    if (!viewerRef.current || !viewerRef.current.cesiumElement) return;
+    let handler, nameOverlay;
+    requestAnimationFrame(() => {
+      if (!viewerRef.current || !viewerRef.current.cesiumElement) return;
 
-    const viewer = viewerRef.current.cesiumElement;
-    const scene = viewer.scene;
+      const viewer = viewerRef.current.cesiumElement;
+      const scene = viewer.scene;
 
-    const nameOverlay = document.createElement('div');
-    viewer.container.appendChild(nameOverlay);
-    Object.assign(nameOverlay.style, {
-      display: 'none',
-      position: 'absolute',
-      bottom: '0',
-      left: '0',
-      pointerEvents: 'none',
-      padding: '4px',
-      color: 'white',
-      backgroundColor: 'black',
-      whiteSpace: 'pre-line',
-      fontSize: '12px',
-    });
+      nameOverlay = document.createElement('div');
+      viewer.container.appendChild(nameOverlay);
+      Object.assign(nameOverlay.style, {
+        display: 'none',
+        position: 'absolute',
+        bottom: '0',
+        left: '0',
+        pointerEvents: 'none',
+        padding: '4px',
+        color: 'white',
+        backgroundColor: 'black',
+        whiteSpace: 'pre-line',
+        fontSize: '12px',
+      });
+      adjustGUI(viewer);
 
-    const handler = new ScreenSpaceEventHandler(scene.canvas);
+      handler = new ScreenSpaceEventHandler(scene.canvas);
 
-    handler.setInputAction((movement) => {
-      if (enablePicking) {
-        const pickedObject = scene.pick(movement.endPosition);
-        if (pickedObject?.content?.batchTable !== undefined) {
-          nameOverlay.style.display = 'block';
-          nameOverlay.style.bottom = `${scene.canvas.clientHeight - movement.endPosition.y}px`;
-          nameOverlay.style.left = `${movement.endPosition.x}px`;
-          const ownership = pickedObject.getProperty('Majority_Ownership_Type');
-          const message = `Ownership: ${ownership}\nFeature ID: ${pickedObject.featureId}`;
-          nameOverlay.textContent = message;
+      handler.setInputAction((movement) => {
+        if (enablePicking) {
+          const pickedObject = scene.pick(movement.endPosition);
+          // console.log(pickedObject) // 通过打印，发现数据类型是Cesium3DTileContent，所以不是鼠标交互的问题，是数据类型的问题，换了一套3dtileset
+          if (pickedObject?.content?.batchTable !== undefined) {
+            nameOverlay.style.display = 'block';
+            nameOverlay.style.bottom = `${scene.canvas.clientHeight - movement.endPosition.y}px`;
+            nameOverlay.style.left = `${movement.endPosition.x}px`;
+            const ownership = pickedObject.getProperty('Majority_Ownership_Type');
+            const message = `Ownership: ${ownership}\nFeature ID: ${pickedObject.featureId}`;
+            nameOverlay.textContent = message;
+          } else {
+            nameOverlay.style.display = 'none';
+          }
         } else {
           nameOverlay.style.display = 'none';
         }
-      } else {
-        nameOverlay.style.display = 'none';
-      }
-    }, ScreenSpaceEventType.MOUSE_MOVE);
+      }, ScreenSpaceEventType.MOUSE_MOVE);
 
-    handler.setInputAction((movement) => {
-      if (enablePicking) {
-        const pickedObject = scene.pick(movement.position);
-        if (defined(pickedObject) && defined(pickedObject.featureId)) {
-          goldenShader.setUniform('uSelectedFeature', pickedObject.featureId);
-        } else {
-          goldenShader.setUniform('uSelectedFeature', NOTHING_SELECTED);
+      handler.setInputAction((movement) => {
+        if (enablePicking) {
+          const pickedObject = scene.pick(movement.position);
+          if (defined(pickedObject) && defined(pickedObject.featureId)) {
+            goldenShader.setUniform('uSelectedFeature', pickedObject.featureId);
+            unlitShader.setUniform('uSelectedFeature', pickedObject.featureId);
+            multipleFeatureShader.setUniform('uSelectedFeature', pickedObject.featureId);
+          } else {
+            goldenShader.setUniform('uSelectedFeature', NOTHING_SELECTED);
+            unlitShader.setUniform('uSelectedFeature', NOTHING_SELECTED);
+            multipleFeatureShader.setUniform('uSelectedFeature', NOTHING_SELECTED);
+          }
         }
-      }
-    }, ScreenSpaceEventType.LEFT_CLICK);
-
+      }, ScreenSpaceEventType.LEFT_CLICK);
+    });
     return () => {
       handler.destroy();
       if (nameOverlay.parentNode) {
         nameOverlay.parentNode.removeChild(nameOverlay);
       }
+      destroyGUI();
     };
   }, [enablePicking]);
 
@@ -223,11 +165,12 @@ export const PhotogrammetryClassify = () => {
         full
         ref={viewerRef}
         infoBox={false}
-        maximumScreenSpaceError={12}
-        orderIndependentTranslucency={false}
+        maximumScreenSpaceError={12}// Higher values will provide better performance, lower values will provide higher visual quality.
+        orderIndependentTranslucency={false} // If true and the configuration supports it, use order independent translucency.
       >
+        {/* load 3d tiles photogrammetry */}
         <Cesium3DTileset
-          url={Ion.IonResource.fromAssetId(75343)}
+          url={IonResource.fromAssetId(75343)}
           onReady={handleTilesetReady}
           onTileLoad={handleTileLoad}
         />
@@ -254,29 +197,42 @@ export const PhotogrammetryClassify = () => {
             if (!tilesetRef.current) return;
             const tileset = tilesetRef.current;
             const index = e.target.selectedIndex;
-
             if (index === 0) {
               // Show Classification
-              tileset.style = undefined;
-              tileset.customShader = unlitShader;
+              setDefaultStyle(tileset);
             } else if (index === 1) {
-              // Stylized PBR Materials
-              tileset.style = undefined;
-              tileset.customShader = pbrShader;
+              // show Alternative Classification
+              setDefaultStyle(tileset);
+              // tileset.customShader = ;
             } else if (index === 2) {
+              // Translucent Windows
+              setDefaultStyle(tileset);
+              // tileset.customShader = ;
+            }
+            else if (index === 3) {
+              // Stylized PBR Materials
+              setDefaultStyle(tileset);
+              tileset.customShader = pbrShader;
+            } else if (index === 4) {
               // Golden Touch
-              tileset.style = undefined;
+              setDefaultStyle(tileset);
               tileset.customShader = goldenShader;
-            } else if (index === 3) {
+            } else if (index === 5) {
+              // Multiple Feature ID sets
+              setDefaultStyle(tileset);
+              tileset.customShader = multipleFeatureShader;
+            } else if (index === 6) {
               // No Classification
-              tileset.style = undefined;
-              tileset.customShader = undefined;
+              setDefaultStyle(tileset);
             }
           }}
         >
           <option>Show Classification</option>
+          <option>Show Alternative Classification</option>
+          <option>Translucent Windows</option>
           <option>Stylized PBR Materials</option>
           <option>Golden Touch</option>
+          <option>Multiple Feature ID sets</option>
           <option>No Classification</option>
         </select>
 

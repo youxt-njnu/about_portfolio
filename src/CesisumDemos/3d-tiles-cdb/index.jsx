@@ -1,4 +1,4 @@
-import { Cartesian3, Cesium3DTileStyle, Color, Cesium3DTileset as Cesium3DTilesetCesium, EasingFunction, Ion, ScreenSpaceEventHandler, ScreenSpaceEventType, Light, defined } from 'cesium';
+import { Cartesian3, Cesium3DTileStyle, Color, EasingFunction, Ion, IonResource, ScreenSpaceEventHandler, ScreenSpaceEventType, Light, defined } from 'cesium';
 import { useEffect, useRef, useState } from 'react';
 import { Cesium3DTileset, Viewer, Scene } from 'resium';
 
@@ -68,9 +68,24 @@ export const TdTilesCDB = () => {
       // ["${name} === 'DRYGROUND'", "color('#9B7653')"],
       // ["${name} === 'WETGROUND'", "color('#5a4332')"],
       // ["${name} === 'SAND'", "color('gold')"],
-      conditions: [['true', "color('#9B7653')"]],
+      conditions: [['true', "color('green')"]],
     },
   });
+
+  // 查看要素的属性
+  const getProperties = (feature) => {
+    if (feature?.content?.batchTable !== undefined) {
+      console.log('------------------------')
+      const propertyIds = feature.getPropertyIds()
+      const length = propertyIds.length
+      for (let i = 0; i < length; ++i) {
+        const propertyId = propertyIds[i]
+        // console.log(`{propertyId}: ${feature.getProperty(propertyId)}`)
+        console.log(`{propertyId}: ${propertyId}`)
+      }
+
+    }
+  }
 
   const flyCameraTo = (transform, duration = 2.0) => {
     if (!viewerRef.current || !viewerRef.current.cesiumElement) return;
@@ -128,104 +143,146 @@ export const TdTilesCDB = () => {
   };
 
   useEffect(() => {
-    if (!viewerRef.current || !viewerRef.current.cesiumElement) return;
+    requestAnimationFrame(() => {
+      if (!viewerRef.current || !viewerRef.current.cesiumElement) return;
+      const viewer = viewerRef.current.cesiumElement;
+      const scene = viewer.scene;
+      scene.light.intensity = 7.0;
+      const handler = new ScreenSpaceEventHandler(scene.canvas);
+      const metadataOverlay = document.createElement('div');
+      viewer.container.appendChild(metadataOverlay);
+      metadataOverlay.className = 'backdrop';
+      Object.assign(metadataOverlay.style, {
+        display: 'none',
+        position: 'absolute',
+        bottom: '0',
+        left: '0',
+        pointerEvents: 'none',
+        padding: '4px',
+        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+        whiteSpace: 'pre-line',
+        fontSize: '16px',
+        borderRadius: '4px',
+        color: 'white',
+      });
 
-    const viewer = viewerRef.current.cesiumElement;
+      // Mouse move handler - highlight buildings
+      handler.setInputAction((movement) => {
+        if (enablePicking) {
+          if (defined(highlightedRef.current.feature)) {
+            highlightedRef.current.feature.color = highlightedRef.current.originalColor;
+            highlightedRef.current.feature = undefined;
+          }
+          // 拾取鼠标所在处的要素
+          const feature = scene.pick(movement.endPosition);
+          const featurePicked = feature?.content?.batchTable !== undefined;
+          // getProperties(feature);
+          const isTerrainFeature =
+            featurePicked && feature.hasProperty('substrates');
+          const isBuildingFeature = featurePicked && feature.hasProperty('cesium#estimatedHeight');
 
-    const handler = new ScreenSpaceEventHandler(scene.canvas);
+          // 因为地形数据不匹配，所以获取不到对应的属性，所以这里的代码只是一个示例
+          if (isTerrainFeature) {
+            metadataOverlay.style.display = 'block'
+            metadataOverlay.style.bottom = `${viewer.canvas.clientHeight - movement.endPosition.y
+              }px`
+            metadataOverlay.style.left = `${movement.endPosition.x}px`
 
-    const metadataOverlay = document.createElement('div');
-    viewer.container.appendChild(metadataOverlay);
-    metadataOverlay.className = 'backdrop';
-    Object.assign(metadataOverlay.style, {
-      display: 'none',
-      position: 'absolute',
-      bottom: '0',
-      left: '0',
-      pointerEvents: 'none',
-      padding: '4px',
-      backgroundColor: 'rgba(0, 0, 0, 0.5)',
-      whiteSpace: 'pre-line',
-      fontSize: '16px',
-      borderRadius: '4px',
-      color: 'white',
-    });
+            tableHtmlScratch = `<table><thead><tr><td>Material:</td><th><tt>${feature.getProperty(
+              'name'
+            )}</tt></th></tr></thead><tbody>`
+            materialScratch = feature.getProperty('substrates')
+            weightScratch = feature.getProperty('weights')
+            tableHtmlScratch +=
+              "<tr><td colspan = '2' style='text-align: center;'><b>Substrates</b></td></tr>"
 
-    // Mouse move handler - highlight buildings
-    handler.setInputAction((movement) => {
-      if (enablePicking) {
-        if (defined(highlightedRef.current.feature)) {
-          highlightedRef.current.feature.color = highlightedRef.current.originalColor;
-          highlightedRef.current.feature = undefined;
+            for (i = 0; i < materialScratch.length; i++) {
+              tableHtmlScratch += `<tr><td><tt>${materialScratch[i].slice(
+                3
+              )}</tt></td><td style='text-aligh: right;'><tt>${weightScratch[i]
+                }%</tt></td></tr>`
+            }
+            tableHtmlScratch += '</tbody></table>'
+            metadataOverlay.innerHTML = tableHtmlScratch
+          } else {
+            metadataOverlay.style.display = 'none'
+          }
+
+          if (isBuildingFeature) {
+            console.log('highlight');
+            // hightlight the feature if it's not already selected
+            if (feature !== selectedRef.current.feature) {
+              highlightedRef.current.feature = feature;
+              Color.clone(feature.color, highlightedRef.current.originalColor);
+              feature.color = Color.YELLOW;
+            }
+          }
+        }
+      }, ScreenSpaceEventType.MOUSE_MOVE);
+
+      // Left click handler - select buildings
+      handler.setInputAction((movement) => {
+        if (defined(selectedRef.current.feature)) {
+          selectedRef.current.feature.color = selectedRef.current.originalColor;
+          selectedRef.current.feature = undefined;
         }
 
-        const feature = scene.pick(movement.endPosition);
+        const feature = scene.pick(movement.position);
         const featurePicked = feature?.content?.batchTable !== undefined;
         const isBuildingFeature = featurePicked && feature.hasProperty('cesium#estimatedHeight');
 
         if (isBuildingFeature) {
-          if (feature !== selectedRef.current.feature) {
-            highlightedRef.current.feature = feature;
-            Color.clone(feature.color, highlightedRef.current.originalColor);
-            feature.color = Color.YELLOW;
+          if (feature === selectedRef.current.feature) return;
+
+          selectedRef.current.feature = feature;
+
+          if (feature === highlightedRef.current.feature) {
+            Color.clone(highlightedRef.current.originalColor, selectedRef.current.originalColor);
+            highlightedRef.current.feature = undefined;
+          } else {
+            Color.clone(feature.color, selectedRef.current.originalColor);
           }
-        }
-      }
-    }, ScreenSpaceEventType.MOUSE_MOVE);
+          feature.color = Color.LIME;
 
-    // Left click handler - select buildings
-    handler.setInputAction((movement) => {
-      if (defined(selectedRef.current.feature)) {
-        selectedRef.current.feature.color = selectedRef.current.originalColor;
-        selectedRef.current.feature = undefined;
-      }
+          let tableHtml = "<table class='cesium-infoBox-defaultTable'>";
+          tableHtml += '<tr><th>Property Name</th><th>Value</th></tr><tbody>';
+          const propertyIds = feature.getPropertyIds();
+          for (let i = 0; i < propertyIds.length; i++) {
+            const propertyId = propertyIds[i];
+            const propertyValue = feature.getProperty(propertyId);
+            const property = metadataClass.properties[propertyId] // 这种源表的获取方式似乎拿不到一些详细的属性，我不知道是数据的问题还是我代码的问题
 
-      const feature = scene.pick(movement.position);
-      const featurePicked = feature?.content?.batchTable !== undefined;
-      const isBuildingFeature = featurePicked && feature.hasProperty('cesium#estimatedHeight');
+            // let propertyType = null
+            // 通过浏览器打断点，需要先判断是否定义，然后再设置propertyType,但现有的这套数据似乎获取不到这个类型
 
-      if (isBuildingFeature) {
-        if (feature === selectedRef.current.feature) return;
-
-        selectedRef.current.feature = feature;
-
-        if (feature === highlightedRef.current.feature) {
-          Color.clone(highlightedRef.current.originalColor, selectedRef.current.originalColor);
-          highlightedRef.current.feature = undefined;
-        } else {
-          Color.clone(feature.color, selectedRef.current.originalColor);
-        }
-        feature.color = Color.LIME;
-
-        let tableHtml = "<table class='cesium-infoBox-defaultTable'>";
-        tableHtml += '<tr><th>Property Name</th><th>Value</th></tr><tbody>';
-        const propertyIds = feature.getPropertyIds();
-        for (let i = 0; i < propertyIds.length; i++) {
-          const propertyId = propertyIds[i];
-          const propertyValue = feature.getProperty(propertyId);
-          if (propertyValue !== undefined) {
-            tableHtml += `<tr style='font-family: monospace;'><th>${propertyId}</th><td>${propertyValue}</td></tr>`;
+            if (propertyValue !== undefined) {
+              // propertyType =
+              //   property !== undefined &&
+              //   Cesium.defaultValue(property.componentType, property.type) // Returns the first parameter if defined, otherwise the second parameter
+              tableHtml += `<tr style='font-family
+            : monospace;'><th>${propertyId}</th><td>${propertyValue}</td></tr>`;
+            }
           }
+          tableHtml += "<tr><th colspan='4'><i style='font-size:10px'>Hover on a row for description</i></th></tr></tbody></table>";
+          viewer.selectedEntity = { description: tableHtml };
         }
-        tableHtml += "<tr><th colspan='4'><i style='font-size:10px'>Hover on a row for description</i></th></tr></tbody></table>";
-        viewer.selectedEntity = { description: tableHtml };
-      }
-    }, ScreenSpaceEventType.LEFT_CLICK);
+      }, ScreenSpaceEventType.LEFT_CLICK);
 
-    // Hide metadata overlay when mouse over infobox
-    const infoBoxContainer = document.getElementsByClassName('cesium-viewer-infoBoxContainer')[0];
-    if (infoBoxContainer) {
-      infoBoxContainer.onmouseover = () => {
-        metadataOverlay.style.display = 'none';
+      // Hide metadata overlay when mouse over infobox
+      const infoBoxContainer = document.getElementsByClassName('cesium-viewer-infoBoxContainer')[0];
+      if (infoBoxContainer) {
+        infoBoxContainer.onmouseover = () => {
+          metadataOverlay.style.display = 'none';
+        };
+      }
+
+      return () => {
+        handler.destroy();
+        if (metadataOverlay.parentNode) {
+          metadataOverlay.parentNode.removeChild(metadataOverlay);
+        }
       };
-    }
-
-    return () => {
-      handler.destroy();
-      if (metadataOverlay.parentNode) {
-        metadataOverlay.parentNode.removeChild(metadataOverlay);
-      }
-    };
+    });
   }, [enablePicking]);
 
   return (
@@ -236,15 +293,12 @@ export const TdTilesCDB = () => {
         shadows={true}
         shouldAnimate={true}
       >
-        <Scene
-          light={new Light({ intensity: 7.0 })}
-        />
         <Cesium3DTileset
-          url={Cesium3DTilesetCesium.fromIonAssetId(2275207)}
+          url={IonResource.fromAssetId(2275207)}
           onReady={handleTerrainReady}
         />
         <Cesium3DTileset
-          url={Cesium3DTilesetCesium.fromIonAssetId(96188)}
+          url={IonResource.fromAssetId(96188)}
           maximumScreenSpaceError={12}
           onReady={handleBuildingReady}
           onTileVisible={handleBuildingTileVisible}
